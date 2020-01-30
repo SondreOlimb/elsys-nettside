@@ -1,11 +1,25 @@
 @import "../styles";
 
-.Header {
-  font-family: "Montserrat";
-  max-height: 3vh;
-  padding: 1em 0;
-  background-color: map-get($colors, Compoent);
-  //border: 1px solid darken(map-get($colors, Component), 10%);
-  margin-bottom: 10px;
-  color: map-get($colors, Prim-text);
+.FlexContainer {
+  display: flex;
+  justify-content: flex-end;
+  justify-content: space-between;
+  max-height: 10vh;
+  margin: 0;
+  background-color: map-get($colors, Component);
+  .items-container {
+    display: flex;
+    flex-direction: row;
+    margin: aut0;
+  }
+
+  .pic {
+    height: 80%;
+  }
+
+  .Nav-item {
+    text-decoration: none;
+    margin: 1rem;
+    color: map-get($colors, Prim-text);
+  }
 }

@@ -1,0 +1,11 @@
+@import "../styles";
+
+.Home {
+  font-family: "Montserrat";
+  max-height: 3vh;
+  padding: 1em 0;
+
+  //border: 1px solid darken(map-get($colors, Component), 10%);
+  margin-bottom: 10px;
+  color: map-get($colors, Prim-text);
+}
