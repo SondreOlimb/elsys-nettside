@@ -10,8 +10,8 @@ function Home() {
         <h1>HOME</h1>
 
         <iframe
-          width="420"
-          height="315"
+          width="820"
+          height="630"
           src="https://www.youtube.com/embed/6yGigYxDCa4?autoplay=1"
         ></iframe>
       </div>
