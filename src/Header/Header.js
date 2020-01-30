@@ -3,8 +3,8 @@ import React from "react";
 import "./Header.scss";
 
 function Header() {
-  return <div className="Header">Hei</div>;
-  <h1>nei</h1>;
+  return <div className="Header">Heisann</div>;
+  <h1>test</h1>;
 }
 
 export default Header;
