@@ -20,6 +20,10 @@ function Header() {
         <Link to="/about" className="Nav-item">
           About
         </Link>
+
+        <Link to="/loginn" className="log-inn">
+          Log inn
+        </Link>
       </li>
     </ul>
   );

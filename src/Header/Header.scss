@@ -4,22 +4,82 @@
   display: flex;
   justify-content: flex-end;
   justify-content: space-between;
+  align-self: center;
   max-height: 10vh;
   margin: 0;
   background-color: map-get($colors, Component);
+
   .items-container {
     display: flex;
     flex-direction: row;
+
     margin: aut0;
+  }
+  .logo {
+    border: 1px solid red;
+    display: flex;
+    align-self: center;
+  }
+  .logolink {
+    border: 1px solid green;
+    display: flex;
+    align-self: center;
   }
 
   .pic {
     height: 80%;
+    width: 40%;
+
+    border: 1px solid map-get($colors, Prim-text);
   }
 
   .Nav-item {
     text-decoration: none;
-    margin: 1rem;
+    margin: 0;
+    padding: 1rem;
+
     color: map-get($colors, Prim-text);
+    background-color: map-get($colors, Component);
+
+    &:hover {
+      color: map-get($colors, t-green);
+      padding: 1rem;
+
+      background-color: darken(map-get($colors, Component), 5%);
+      border-color: ligthen(map-get($colors, Component), 5%);
+      border-radius: 5px;
+    }
+  }
+
+  .log-inn {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+
+    padding-right: 1rem;
+    padding-left: 1rem;
+    font-size: 25px;
+
+    color: map-get($colors, Prim-text);
+    background-color: darken(map-get($colors, Component), 5%);
+    border: 2px outset map-get($colors, t-green);
+
+    border-radius: 300px;
+
+    &:hover {
+      color: map-get($colors, t-green);
+
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+      padding-right: 1rem;
+      padding-left: 1rem;
+
+      background-color: darken(map-get($colors, Component), 5%);
+      //border: 10px outset ligthen(map-get($colors, t-green), 40%);
+      border-radius: 300px;
+    }
   }
 }

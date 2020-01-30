@@ -1,6 +1,6 @@
 @import "../styles";
 
-.Home {
+.LogInn {
   display: flex;
   //justify-content: center;
   flex-direction: column;
@@ -15,11 +15,7 @@
   color: map-get($colors, Prim-text);
   border: 1px solid green; //bare for å markere hvor ting ligger
 
-  .H-el {
-    text-align: center;
-  }
-
   h1 {
-    border: 1px solid green; //bare for å markere hvor ting ligger
+    color: map-get($colors, Prim-text);
   }
 }
