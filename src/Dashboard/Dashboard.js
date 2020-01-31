@@ -3,6 +3,7 @@ import "./Dashboard.scss";
 import firebase from "firebase";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import Navbar from "../Navbar/Navbar";
+import Maps from "../Components/Maps/Maps";
 
 firebase.initializeApp({
   apiKey: "AIzaSyArbzbL-IzJtEaqfRCPuOhP5sMGbsuc2bE",
@@ -34,9 +35,27 @@ class Dashboard extends Component {
     return (
       <div className="Dashboard">
         {this.state.isSignedIn ? (
-          <span>
+          <span className="Dash">
             <div>
               <Navbar />
+            </div>
+            <div className="screen">
+              <div className="Element">
+                <Maps className="Maps"></Maps>
+              </div>
+              <div className="Element">
+                <h2>Data</h2>
+                <p>noe data</p>
+              </div>
+
+              <li className="Element">
+                <iframe
+                  width="320"
+                  height="280"
+                  title="sandman"
+                  src="https://www.youtube.com/embed/tgbNymZ7vqY"
+                ></iframe>
+              </li>
             </div>
           </span>
         ) : (
