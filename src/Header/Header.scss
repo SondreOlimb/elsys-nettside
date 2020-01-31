@@ -16,12 +16,12 @@
     margin-right: 2vh;
   }
   .logo {
-    border: 1px solid red;
+    //border: 1px solid red;
     display: flex;
     align-self: center;
   }
   .logolink {
-    border: 1px solid green;
+    //border: 1px solid green;
     display: flex;
     align-self: center;
   }
@@ -30,7 +30,7 @@
     height: 80%;
     width: 40%;
 
-    border: 1px solid map-get($colors, Prim-text);
+    //border: 1px solid map-get($colors, Prim-text);
   }
 
   .Nav-item {
