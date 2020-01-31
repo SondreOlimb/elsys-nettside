@@ -82,6 +82,7 @@
 
     &:hover {
       color: map-get($colors, t-green);
+      border: 2px outset map-get($colors, t-pink);
 
       margin-top: 1rem;
       margin-bottom: 1rem;

@@ -8,6 +8,7 @@
   max-height: 10vh;
   margin: 0;
   background-color: map-get($colors, Component);
+  //border: 1px solid green;
 
   .items-container {
     display: flex;
@@ -19,11 +20,13 @@
     //border: 1px solid red;
     display: flex;
     align-self: center;
+    margin: 0;
   }
   .logolink {
     //border: 1px solid green;
     display: flex;
     align-self: center;
+    margin-left: -2vw;
   }
 
   .pic {
@@ -71,6 +74,7 @@
 
     &:hover {
       color: map-get($colors, t-green);
+      border: 2px solid map-get($colors, t-pink);
 
       margin-top: 1rem;
       margin-bottom: 1rem;

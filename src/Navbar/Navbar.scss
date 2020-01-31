@@ -57,7 +57,7 @@
   }
   .user {
     text-align: center;
-    font-size: 1.3rem;
+    font-size: 1.4rem;
     margin: 0;
   }
 
@@ -65,19 +65,22 @@
     text-decoration: none;
     text-align: center;
     margin: 0;
-    padding: 1rem;
+    max-width: 100%;
+    padding: 0.5rem;
+    font-size: 2rem;
     //border: 3px solid red;
 
     color: map-get($colors, Prim-text);
     background-color: map-get($colors, Component);
 
+    border-top: 1px solid darken(map-get($colors, Component), 5%);
+
     &:hover {
       color: map-get($colors, t-green);
-      padding: 1rem;
+      padding: o.5rem;
 
       background-color: darken(map-get($colors, Component), 5%);
       border-color: ligthen(map-get($colors, Component), 5%);
-      border-radius: 5px;
     }
   }
 }

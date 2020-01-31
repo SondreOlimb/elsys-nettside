@@ -42,8 +42,8 @@ class Dashboard extends Component {
 
             <div className="screen">
               <iframe
-                class="YT"
-                type="text/html"
+                className="YT"
+                title="sandman"
                 width="380"
                 height="300"
                 src="http://www.youtube.com/embed/3TdPBB9Z_cs"
