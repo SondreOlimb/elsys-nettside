@@ -1,7 +1,8 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import "./Dashboard.scss";
 import firebase from "firebase";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
+import Navbar from "../Navbar/Navbar";
 
 firebase.initializeApp({
   apiKey: "AIzaSyArbzbL-IzJtEaqfRCPuOhP5sMGbsuc2bE",
@@ -34,24 +35,12 @@ class Dashboard extends Component {
       <div className="Dashboard">
         {this.state.isSignedIn ? (
           <span>
-            <div>Signed In!</div>
-            <button
-              onClick={() => firebase.auth().signOut()}
-              className="signout"
-            >
-              Sign out!
-            </button>
-            <h1>Welcome {firebase.auth().currentUser.displayName}</h1>
-
-            <iframe
-              width="820"
-              height="630"
-              title="thebird"
-              src="https://www.youtube.com/embed/6yGigYxDCa4?autoplay=1"
-            ></iframe>
+            <div>
+              <Navbar />
+            </div>
           </span>
         ) : (
-          <span>
+          <span className="signin">
             <h1>Sign in to se your Dashboard</h1>
             <StyledFirebaseAuth
               uiConfig={this.uiConfig}

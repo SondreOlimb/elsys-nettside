@@ -1,22 +1,33 @@
-import React from "react";
+import React, { withReducer } from "react";
 
 import "./App.scss";
 import Header from "./Header/Header.js";
 import Home from "./Home/Home.js";
 import About from "./About/About.js";
 import Dashboard from "./Dashboard/Dashboard.js";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  withRouter
+} from "react-router-dom";
 import Footer from "./Footer/Footer.js";
 
 function App() {
   return (
     <Router>
       <div className="App">
-        <Header className="header" />
+        <Header />
+
         <Switch>
           <Route path="/" exact component={Home} className="home" />
           <Route path="/about" component={About} className="About" />
-          <Route path="/loginn" component={Dashboard} className="Dashboard" />
+          <Route
+            path="/dashboard"
+            exact
+            component={Dashboard}
+            className="Dashboard"
+          />
         </Switch>
         <Footer className="Footer" />
       </div>

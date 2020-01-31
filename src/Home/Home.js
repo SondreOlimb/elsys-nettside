@@ -1,4 +1,5 @@
 import React from "react";
+import Header from "../Header/Header.js";
 //import logo from "../Bilder//bird-logos-png.png";
 
 import "./Home.scss";

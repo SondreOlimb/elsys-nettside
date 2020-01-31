@@ -21,8 +21,8 @@ function Header() {
           About
         </Link>
 
-        <Link to="/loginn" className="log-inn">
-          Log in
+        <Link to="/dashboard" className="log-inn">
+          Dashboard
         </Link>
       </li>
     </ul>
