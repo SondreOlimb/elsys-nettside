@@ -8,13 +8,6 @@ function Home() {
     <div className="Home">
       <div className="H-el">
         <h1>HOME</h1>
-
-        <iframe
-          width="820"
-          height="630"
-          title="thebird"
-          src="https://www.youtube.com/embed/6yGigYxDCa4?autoplay=1"
-        ></iframe>
       </div>
     </div>
   );
