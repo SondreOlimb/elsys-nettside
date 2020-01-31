@@ -46,7 +46,7 @@ class Dashboard extends Component {
                 type="text/html"
                 width="380"
                 height="300"
-                src="http://www.youtube.com/embed/3TdPBB9Z_cs?ps=docs&controls=1"
+                src="http://www.youtube.com/embed/3TdPBB9Z_cs"
                 frameborder="0"
                 allowfullscreen
               ></iframe>
