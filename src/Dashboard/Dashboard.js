@@ -39,7 +39,17 @@ class Dashboard extends Component {
             <div>
               <Navbar />
             </div>
+
             <div className="screen">
+              <iframe
+                class="YT"
+                type="text/html"
+                width="380"
+                height="300"
+                src="http://www.youtube.com/embed/3TdPBB9Z_cs?ps=docs&controls=1"
+                frameborder="0"
+                allowfullscreen
+              ></iframe>
               <div className="Element">
                 <Maps className="Maps"></Maps>
               </div>
@@ -47,15 +57,6 @@ class Dashboard extends Component {
                 <h2>Data</h2>
                 <p>noe data</p>
               </div>
-
-              <li className="Element">
-                <iframe
-                  width="320"
-                  height="280"
-                  title="sandman"
-                  src="https://www.youtube.com/embed/tgbNymZ7vqY"
-                ></iframe>
-              </li>
             </div>
           </span>
         ) : (
