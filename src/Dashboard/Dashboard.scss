@@ -32,10 +32,11 @@
     margin-bottom: 1rem;
     font-weight: bold;
 
-    padding-right: 1rem;
-    padding-left: 1rem;
-    font-size: 25px;
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
+    font-size: 20px;
 
+    text-align: center;
     color: map-get($colors, Prim-text);
     background-color: darken(map-get($colors, Component), 5%);
     border: 2px outset map-get($colors, t-green);

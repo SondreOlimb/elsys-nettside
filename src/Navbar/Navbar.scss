@@ -16,15 +16,12 @@
 
   font-size: 1rem;
   width: 5vw;
-  .signin {
-    align-self: center;
-  }
 
   .items-container {
     display: flex;
     flex-direction: column;
-    align-content: center;
-    justify-content: center;
+    align-content: space-between;
+    justify-content: space-between;
     font-size: 1.2rem;
     font-weight: bold;
 
@@ -39,6 +36,9 @@
   }
   .logolink {
     margin: 0;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+
     display: flex;
     flex-direction: column;
     align-content: center;

@@ -7,7 +7,7 @@ import firebase from "firebase";
 function Navbar() {
   return (
     <ul className="Flex-navbar">
-      <li className="logo">
+      <li className="items-container">
         <Link to="/" className="logolink">
           <img
             alt="pic"
@@ -15,13 +15,12 @@ function Navbar() {
             className="pic"
           />
         </Link>
-      </li>
 
-      <li className="items-container">
         <p className="user"> {firebase.auth().currentUser.displayName}</p>
         <button onClick={() => firebase.auth().signOut()} className="signout">
-          Sign out!
+          Sign out
         </button>
+
         <Link to="/" className="Nav-item">
           Maps
         </Link>
