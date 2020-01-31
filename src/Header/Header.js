@@ -22,7 +22,7 @@ function Header() {
         </Link>
 
         <Link to="/loginn" className="log-inn">
-          Log inn
+          Log in
         </Link>
       </li>
     </ul>

@@ -1,0 +1,53 @@
+@import "../styles";
+
+.Dashboard {
+  display: flex;
+  //justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  font-family: "Montserrat";
+
+  padding: 1em 0;
+  width: 100vw;
+  height: 110vh;
+
+  margin-bottom: 10px;
+  color: map-get($colors, Prim-text);
+  border: 3px solid red; //bare for å markere hvor ting ligger
+
+  h1 {
+    color: map-get($colors, Prim-text);
+  }
+
+  .signout {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-weight: bold;
+
+    padding-right: 1rem;
+    padding-left: 1rem;
+    font-size: 25px;
+
+    color: map-get($colors, Prim-text);
+    background-color: darken(map-get($colors, Component), 5%);
+    border: 2px outset map-get($colors, t-green);
+
+    border-radius: 300px;
+
+    &:hover {
+      color: map-get($colors, t-green);
+
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+      padding-right: 1rem;
+      padding-left: 1rem;
+
+      background-color: darken(map-get($colors, Component), 5%);
+      //border: 10px outset ligthen(map-get($colors, t-green), 40%);
+      border-radius: 300px;
+    }
+  }
+}
