@@ -33,7 +33,7 @@
   }
 
   .F-Logo {
-    max-height: 9vh;
+    max-height: 6vh;
     //border: 1px solid red;
     padding-right: 3vh; //er det det høres ut som
   }
@@ -44,7 +44,8 @@
   color: map-get($colors, t-green);
   font-weight: bold;
   font-size: 50%;
-  margin: 1%;
+  margin-right: 1%;
+  margin-left: 1%;
   width: 90%;
   text-align: center;
 }
