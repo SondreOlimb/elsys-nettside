@@ -50,12 +50,10 @@ class Dashboard extends Component {
                 frameborder="0"
                 allowfullscreen
               ></iframe>
-              //meg:
               <div className="Element">
                 <h2> My devices</h2>
                 <p> Liste med alle enheter. Trykker på valgt enhet for å få en fil med all måledata fra den?</p>
               </div>
-              //slutt meg
               <div className="Element">
                 <Maps className="Maps"></Maps>
               </div>
