@@ -5,14 +5,14 @@ import ntnu from "../Bilder/logo_stor.svg";
 
 function Footer() {
   return (
-    <ul className="FlexFooter">
-      <li className="F-items">
+    <div className="FlexFooter">
+      <div className="F-items">
         <img src={ntnu} alt="" className="F-Logo" />
-      </li>
-      <li className="F-items">
+      </div>
+      <div className="F-items">
         <img src={elsys} alt="" className="F-Logo" />
-      </li>
-    </ul>
+      </div>
+    </div>
   );
 }
 

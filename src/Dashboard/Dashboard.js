@@ -4,6 +4,13 @@ import firebase from "firebase";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import Navbar from "../Navbar/Navbar";
 import Maps from "../Components/Maps/Maps";
+import Default from "../Components/Default/Default";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  withRouter
+} from "react-router-dom";
 
 firebase.initializeApp({
   apiKey: "AIzaSyArbzbL-IzJtEaqfRCPuOhP5sMGbsuc2bE",
@@ -35,30 +42,28 @@ class Dashboard extends Component {
     return (
       <div className="Dashboard">
         {this.state.isSignedIn ? (
-          <span className="Dash">
-            <div>
-              <Navbar />
-            </div>
-
-            <div className="screen">
-              <iframe
-                className="YT"
-                title="sandman"
-                width="380"
-                height="300"
-                src="http://www.youtube.com/embed/3TdPBB9Z_cs"
-                frameborder="0"
-                allowfullscreen
-              ></iframe>
-              <div className="Element">
-                <Maps className="Maps"></Maps>
+          <div className="Dash">
+            <Router>
+              <div className="navbar">
+                <Navbar />
               </div>
-              <div className="Element">
-                <h2>Data</h2>
-                <p>noe data</p>
+              <div className="screen">
+                <Switch>
+                  <Route
+                    path="/dashboard/"
+                    exact
+                    component={Default}
+                    className="Default"
+                  />
+                  <Route
+                    path="/dashboard/maps"
+                    component={Maps}
+                    className="Maps"
+                  />
+                </Switch>
               </div>
-            </div>
-          </span>
+            </Router>
+          </div>
         ) : (
           <span className="signin">
             <h1>Sign in to se your Dashboard</h1>

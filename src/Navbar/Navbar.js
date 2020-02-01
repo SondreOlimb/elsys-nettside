@@ -6,8 +6,8 @@ import firebase from "firebase";
 
 function Navbar() {
   return (
-    <ul className="Flex-navbar">
-      <li className="items-container">
+    <div className="Flex-navbar">
+      <div className="items-container">
         <Link to="/" className="logolink">
           <img
             alt="pic"
@@ -21,15 +21,15 @@ function Navbar() {
           Sign out
         </button>
 
-        <Link to="/" className="Nav-item">
-          Maps
+        <Link to="/dashboard/" className="Nav-item">
+          Dash
         </Link>
 
-        <Link to="/about" className="Nav-item">
-          About
+        <Link to="/dashboard/maps" className="Nav-item">
+          Maps
         </Link>
-      </li>
-    </ul>
+      </div>
+    </div>
   );
 }
 

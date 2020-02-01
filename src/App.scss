@@ -10,12 +10,7 @@ body {
   font-family: "Montserrat";
   font-size: 35px;
   background-color: map-get($colors, BG);
-  height: 100%;
+
   display: flex;
   flex-direction: column;
-
-  home {
-    padding: 100rem;
-    margin: 100rem;
-  }
 }

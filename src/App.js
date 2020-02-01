@@ -18,7 +18,6 @@ function App() {
     <Router>
       <div className="App">
         <Header />
-
         <Switch>
           <Route path="/" exact component={Home} className="home" />
           <Route path="/about" component={About} className="About" />
@@ -29,7 +28,7 @@ function App() {
             className="Dashboard"
           />
         </Switch>
-        <Footer className="Footer" />
+        <Footer />
       </div>
     </Router>
   );
