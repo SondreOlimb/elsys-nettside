@@ -42,10 +42,36 @@ class Dashboard extends Component {
     return (
       <div className="Dashboard">
         {this.state.isSignedIn ? (
+<<<<<<< HEAD
           <div className="Dash">
             <Router>
               <div className="navbar">
                 <Navbar />
+=======
+          <span className="Dash">
+            <div>
+              <Navbar />
+            </div>
+
+            <div className="screen">
+              <iframe
+                className="YT"
+                title="sandman"
+                width="380"
+                height="300"
+                src="http://www.youtube.com/embed/3TdPBB9Z_cs"
+                frameborder="0"
+                allowfullscreen
+              ></iframe>
+              //meg:
+              <div className="Element">
+                <h2> My devices</h2>
+                <p> Liste med alle enheter. Trykker på valgt enhet for å få en fil med all måledata fra den?</p>
+              </div>
+              //slutt meg
+              <div className="Element">
+                <Maps className="Maps"></Maps>
+>>>>>>> 37731fb4c6e6b810fd189c6672f501bce0b3ae33
               </div>
               <div className="screen">
                 <Switch>
