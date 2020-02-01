@@ -3,29 +3,48 @@
 .FlexFooter {
   display: flex; //Flexbox vedig nyttig se denne lenken "https://css-tricks.com/snippets/css/a-guide-to-flexbox/"
 
-  justify-content: flex-start; //del av flexbox
+  justify-content: space-between; //del av flexbox
   align-items: center; //del av flexbox
   position: absolute; // låser footer på bånd
   bottom: 0px; //det samme her
   align-self: center;
   width: 100%;
 
-  min-height: 10vh;
+  min-height: 8vh;
   margin: 0;
   background-color: map-get($colors, Component);
   //border: 1px solid green; //bare for å markere hvor ting ligger
   margin-top: 2vh;
 
-  .F-items {
+  .component {
     display: flex;
-    //border: 1px solid green;
+    justify-content: space-between;
+    margin: 1%;
+    min-width: 12%;
+    //border: 1px solid red;
 
-    align-items: center;
-    max-height: 90vh;
+    .F-items {
+      display: flex;
+      //border: 1px solid green;
+
+      align-items: center;
+      max-height: 90vh;
+    }
   }
+
   .F-Logo {
     max-height: 9vh;
     //border: 1px solid red;
     padding-right: 3vh; //er det det høres ut som
   }
+}
+
+.BirdLogo {
+  text-decoration: none;
+  color: map-get($colors, t-green);
+  font-weight: bold;
+  font-size: 50%;
+  margin: 1%;
+  width: 90%;
+  text-align: center;
 }

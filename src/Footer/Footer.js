@@ -6,11 +6,21 @@ import ntnu from "../Bilder/logo_stor.svg";
 function Footer() {
   return (
     <div className="FlexFooter">
-      <div className="F-items">
-        <img src={ntnu} alt="" className="F-Logo" />
+      <div className="component">
+        <div className="F-items">
+          <img src={ntnu} alt="" className="F-Logo" />
+        </div>
+        <div className="F-items">
+          <img src={elsys} alt="" className="F-Logo" />
+        </div>
       </div>
-      <div className="F-items">
-        <img src={elsys} alt="" className="F-Logo" />
+      <div className="component">
+        <a
+          className="BirdLogo"
+          href="https://webstockreview.net/image/sample-png-images/2237843.html?fbclid=IwAR3_ezc2F8ttQFWn4SlH8hNcSSEOIJh-ehFaoII1K_v83kUy0tWgZ7oOU3I"
+        >
+          Logo attribution
+        </a>
       </div>
     </div>
   );
