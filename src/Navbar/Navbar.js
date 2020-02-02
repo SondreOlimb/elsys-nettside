@@ -31,6 +31,9 @@ function Navbar() {
         <Link to="/dashboard/maps" className="Nav-item">
           Maps
         </Link>
+        <Link to="/dashboard/data" className="Nav-item">
+          Data
+        </Link>
       </div>
     </div>
   );

@@ -5,6 +5,7 @@ import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import Navbar from "../Navbar/Navbar";
 import Maps from "../Components/Maps/Maps";
 import Default from "../Components/Default/Default";
+import Data from "../Components/Data/Data";
 import {
   BrowserRouter as Router,
   Switch,
@@ -59,6 +60,11 @@ class Dashboard extends Component {
                     path="/dashboard/maps"
                     component={Maps}
                     className="Maps"
+                  />
+                  <Route
+                    path="/dashboard/data"
+                    component={Data}
+                    className="Data"
                   />
                 </Switch>
               </div>
