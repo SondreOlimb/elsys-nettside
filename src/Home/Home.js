@@ -1,5 +1,7 @@
 import React from "react";
-import Header from "../Header/Header.js";
+
+import logo from "../Bilder/bird-logos-png.png";
+import ntnu from "../Bilder/logo_stor.svg";
 //import logo from "../Bilder//bird-logos-png.png";
 
 import "./Home.scss";
@@ -8,14 +10,10 @@ function Home() {
   return (
     <div className="Home">
       <div className="H-el">
-        <h1>HOME</h1>
-        <iframe
-          width="320"
-          height="280"
-          title="sandman"
-          src="https://www.youtube.com/embed/tgbNymZ7vqY"
-        ></iframe>
+        <img className="pic" src={logo} alt="" />
       </div>
+
+      <h1>Enabling renewable energy</h1>
     </div>
   );
 }

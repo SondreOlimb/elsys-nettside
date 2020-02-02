@@ -6,7 +6,13 @@ import "./About.scss";
 function About() {
   return (
     <div className="About">
-      <h1>About</h1>
+      <div className="cont">
+        <h1 className="h1">About</h1>
+        <h3 className="tekst">
+          A groupe of stutdents at the Norwegian University of Science and
+          Technology poised to change the world.
+        </h3>
+      </div>
     </div>
   );
 }
