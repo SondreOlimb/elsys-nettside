@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./Maps.scss";
 import { Map, GoogleApiWrapper } from "google-maps-react";
+import Weather from "../Weather/Weather";
 
 const mapStyles = {
   width: "20%",
