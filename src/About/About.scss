@@ -16,15 +16,19 @@
   .cont {
     display: flex;
     flex-direction: column;
+    //border: 2px solid map-get($colors, t-pink);
 
     margin: 0 auto;
+
     width: 50%;
     .h1 {
+      color: map-get($colors, t-green);
     }
   }
 }
 .tekst {
   color: white;
   margin: 0 auto;
+  margin-bottom: 10%;
   width: 70%;
 }
