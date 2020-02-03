@@ -1,37 +1,50 @@
-import React, { Component, useState } from "react";
+import React, { useState } from "react";
+import MapGL, { GeolocateControl } from "react-map-gl";
 import "./Maps.scss";
-import { Map, GoogleApiWrapper } from "google-maps-react";
-import Weather from "../Weather/Weather";
-import { getBred, getLeng } from "../../Context";
 
-const mapStyles = {
-  width: "80%",
-  height: "60%"
+import "mapbox-gl/dist/mapbox-gl.css";
+
+const TOKEN =
+  "pk.eyJ1Ijoib2xpbWIiLCJhIjoiY2s2NndxaG05MDJkajNqc2RoZDY4bjhjcyJ9.qYYAaBGI80WGqTHL6NrP5A";
+
+const geolocateStyle = {
+  float: "left",
+  margin: "50px",
+  padding: "10px"
 };
 
-export class MapContainer extends Component {
-  render() {
-    return (
-      <div className="MyMap">
-        <div className="section">
-          <Map
-            className="maps"
-            google={this.props.google}
-            zoom={14}
-            style={mapStyles}
-            initialCenter={{
-              lat: getLeng,
-              lng: getBred
-            }}
-          />
-        </div>
-      </div>
-    );
-  }
-}
+const Maps = () => {
+  const [viewport, setViewPort] = useState({
+    width: "100%",
+    height: 900,
+    latitude: 63.4189,
+    longitude: 10.4027,
+    zoom: 12
+  });
 
-export { getBred, getLeng };
+  const _onViewportChange = viewport =>
+    setViewPort({ ...viewport, transitionDuration: 3000 });
 
-export default GoogleApiWrapper({
-  apiKey: "AIzaSyArbzbL-IzJtEaqfRCPuOhP5sMGbsuc2bE"
-})(MapContainer);
+  return (
+    <div className="Maps">
+      <h1 className="tekst">
+        GeoLocator: Click To Find Your Location or click{" "}
+        <a href="/search">here</a> to search for a location
+      </h1>
+      <MapGL
+        {...viewport}
+        mapboxApiAccessToken={TOKEN}
+        mapStyle="mapbox://styles/mapbox/dark-v8"
+        onViewportChange={_onViewportChange}
+      >
+        <GeolocateControl
+          style={geolocateStyle}
+          positionOptions={{ enableHighAccuracy: true }}
+          trackUserLocation={true}
+        />
+      </MapGL>
+    </div>
+  );
+};
+
+export default Maps;
