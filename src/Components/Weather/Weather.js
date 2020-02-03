@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./Weather.scss";
 import Maps from "../Maps/Maps";
 import { getB } from "../Maps/Maps";
+import MapGL, { GeolocateControl } from "react-map-gl";
 
 function Weather() {
   const [city, setItems] = useState("");
