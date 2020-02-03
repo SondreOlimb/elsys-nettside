@@ -27,10 +27,6 @@ const Maps = () => {
 
   return (
     <div className="Maps">
-      <h1 className="tekst">
-        GeoLocator: Click To Find Your Location or click{" "}
-        <a href="/search">here</a> to search for a location
-      </h1>
       <MapGL
         {...viewport}
         mapboxApiAccessToken={TOKEN}
