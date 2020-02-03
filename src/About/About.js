@@ -9,7 +9,7 @@ function About() {
       <div className="cont">
         <h1 className="h1">About</h1>
         <h3 className="tekst">
-          A groupe of stutdents at the Norwegian University of Science and
+          A group of students at the Norwegian University of Science and
           Technology poised to change the world.
         </h3>
       </div>
