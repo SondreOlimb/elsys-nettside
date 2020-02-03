@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./Weather.scss";
+import Maps from "../Maps/Maps";
+import { getB } from "../Maps/Maps";
 
 function Weather() {
   const [city, setItems] = useState("");
@@ -7,7 +9,7 @@ function Weather() {
   const [weather, setWeather] = useState("");
   const [icon, getIcon] = useState("04d");
   const [Long, getLong] = useState();
-  const [Lati, getLat] = useState();
+  let [Lati, getLat] = useState();
 
   const [searce, setSearce] = useState("");
 
@@ -37,7 +39,7 @@ function Weather() {
     try {
       setItems(items.name);
       setTemp(items.main.temp);
-      setWeather(items.weather[0].main);
+      setWeather(items.weather[0].description);
       getIcon(items.weather[0].icon);
       getLat(items.coord.lat);
       getLong(items.coord.lon);

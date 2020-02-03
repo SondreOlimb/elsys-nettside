@@ -10,7 +10,7 @@
 
   margin: 1%;
   color: map-get($colors, Prim-text);
-  //border: 1pc solid yellow;
+  border: 1px solid yellow;
   margin-bottom: 3%;
 
   .Card {
@@ -19,6 +19,7 @@
     height: 30%;
     background-color: map-get($colors, Component);
     margin: 1%;
+    border: 1px solid red;
     .pic {
       width: 100%;
       height: 100%;

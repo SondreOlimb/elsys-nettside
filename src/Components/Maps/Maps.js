@@ -1,7 +1,8 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import "./Maps.scss";
 import { Map, GoogleApiWrapper } from "google-maps-react";
 import Weather from "../Weather/Weather";
+import { getBred, getLeng } from "../../Context";
 
 const mapStyles = {
   width: "80%",
@@ -19,8 +20,8 @@ export class MapContainer extends Component {
             zoom={14}
             style={mapStyles}
             initialCenter={{
-              lat: 63.4305,
-              lng: 10.3951
+              lat: getLeng,
+              lng: getBred
             }}
           />
         </div>
@@ -28,6 +29,8 @@ export class MapContainer extends Component {
     );
   }
 }
+
+export { getBred, getLeng };
 
 export default GoogleApiWrapper({
   apiKey: "AIzaSyArbzbL-IzJtEaqfRCPuOhP5sMGbsuc2bE"
