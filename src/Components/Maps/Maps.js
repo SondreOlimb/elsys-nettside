@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import MapGL, { GeolocateControl } from "react-map-gl";
+import ReactMapGL, { GeolocateControl, NavigationControl } from "react-map-gl";
 import "./Maps.scss";
+import MyMapController from "./Map-controller";
 
 import "mapbox-gl/dist/mapbox-gl.css";
 
@@ -13,32 +14,38 @@ const geolocateStyle = {
   padding: "10px"
 };
 
+const mapController = new MyMapController();
+
 const Maps = () => {
   const [viewport, setViewPort] = useState({
     width: "100%",
-    height: 900,
+    height: 800,
     latitude: 63.4189,
     longitude: 10.4027,
     zoom: 12
   });
 
   const _onViewportChange = viewport =>
-    setViewPort({ ...viewport, transitionDuration: 3000 });
+    setViewPort({ ...viewport, transitionDuration: 1 });
 
   return (
     <div className="Maps">
-      <MapGL
+      <ReactMapGL
+        controller={mapController}
         {...viewport}
         mapboxApiAccessToken={TOKEN}
         mapStyle="mapbox://styles/mapbox/dark-v8"
         onViewportChange={_onViewportChange}
       >
+        <div style={{ position: "absolute", right: 0 }}>
+          <NavigationControl visualizePitch={true} />
+        </div>
         <GeolocateControl
           style={geolocateStyle}
           positionOptions={{ enableHighAccuracy: true }}
           trackUserLocation={true}
         />
-      </MapGL>
+      </ReactMapGL>
     </div>
   );
 };
