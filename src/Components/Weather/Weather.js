@@ -9,8 +9,8 @@ function Weather() {
   const [temp, setTemp] = useState("");
   const [weather, setWeather] = useState("");
   const [icon, getIcon] = useState("04d");
-  const [Long, getLong] = useState();
-  let [Lati, getLat] = useState();
+  let [Long, getLong] = useState(0);
+  let [Lati, getLat] = useState(0);
 
   const [searce, setSearce] = useState("");
 
