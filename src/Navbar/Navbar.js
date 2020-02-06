@@ -32,7 +32,7 @@ function Navbar() {
           Maps
         </Link>
         <Link to="/dashboard/data" className="Nav-item">
-          Data
+          Data.
         </Link>
       </div>
     </div>
