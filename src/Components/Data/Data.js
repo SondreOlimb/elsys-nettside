@@ -17,12 +17,15 @@ function Data() {
   }
 
   React.useEffect(() => {
-    const fetchData = async () => {
-      const db = firebase.firestore();
-      const data = await db.collection("Data").get();
-      setData(data.docs.map(doc => ({ ...doc.data(), id: doc.id })));
-    };
-    fetchData();
+    const db = firebase.firestore();
+    return db.collection("Data").onSnapshot(snapsshot => {
+      const intData = [];
+      snapsshot.forEach(doc => intData.push({ ...doc.data(), id: doc.id }));
+      setData(intData);
+    });
+
+    //const data = await db.collection("Data").get();
+    //setData(data.docs.map(doc => ({ ...doc.data(), id: doc.id })));
   }, []);
 
   const onCreate = () => {
