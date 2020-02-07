@@ -1,6 +1,6 @@
 import React, { Component, useState } from "react";
 import "./Dashboard.scss";
-import firebase from "firebase";
+import firebase from "../firebase.js";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 import Navbar from "../Navbar/Navbar";
 import Maps from "../Components/Maps/Maps";
@@ -12,11 +12,6 @@ import {
   Route,
   withRouter
 } from "react-router-dom";
-
-firebase.initializeApp({
-  apiKey: "AIzaSyArbzbL-IzJtEaqfRCPuOhP5sMGbsuc2bE",
-  authDomain: "elsys-266317.firebaseapp.com"
-});
 
 class Dashboard extends Component {
   state = { isSignedIn: false };

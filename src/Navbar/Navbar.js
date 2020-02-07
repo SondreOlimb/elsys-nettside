@@ -2,7 +2,7 @@ import React from "react";
 import logo from "../Bilder/profile.jpg";
 import { Link } from "react-router-dom";
 import "./Navbar.scss";
-import firebase from "firebase";
+import firebase from "../firebase";
 
 function Navbar() {
   var img = new Image();
@@ -32,7 +32,7 @@ function Navbar() {
           Maps
         </Link>
         <Link to="/dashboard/data" className="Nav-item">
-          Data.
+          Data
         </Link>
       </div>
     </div>
