@@ -7,6 +7,14 @@ import "./Data.scss";
 function Data() {
   const [Data, setData] = React.useState([]);
   const [newData, setNewData] = React.useState();
+  let nrBird = [];
+  let x;
+  nrBird = Data;
+
+  for (var i = 0; i < nrBird.length; i++) {
+    x = x + nrBird[i].Birds;
+    //Do something
+  }
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -38,6 +46,8 @@ function Data() {
             <DataInput myData={myData} />
           </div>
         ))}
+
+        <h3 className="counter">Total Birds: {nrBird.length}</h3>
       </div>
     </div>
   );

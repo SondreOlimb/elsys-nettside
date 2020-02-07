@@ -71,8 +71,8 @@ p {
 .Bird {
   display: flex;
   justify-content: space-between;
+}
 
-  .counter {
-    color: map-get($colors, t-green);
-  }
+.counter {
+  color: map-get($colors, t-green);
 }
