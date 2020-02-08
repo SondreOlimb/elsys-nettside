@@ -31,11 +31,11 @@
 
       color: map-get($colors, Prim-text);
       background-color: darken(map-get($colors, Component), 5%);
-      border: 2px outset map-get($colors, t-green);
+      border: 1px outset map-get($colors, Prim-text);
 
       &:hover {
         color: map-get($colors, t-green);
-        border: 2px outset map-get($colors, t-pink);
+        border: 1px outset map-get($colors, t-pink);
 
         margin-top: 1rem;
         margin-bottom: 1rem;
@@ -47,6 +47,7 @@
     }
 
     .dataBar {
+      width: 10%;
       font-size: 20px;
       background-color: lighten(map-get($colors, Component), 5%);
 

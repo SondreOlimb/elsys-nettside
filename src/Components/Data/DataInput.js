@@ -22,7 +22,7 @@ export const DataInput = ({ myData }) => {
   return (
     <div className="Bird">
       <div className="BirdCount">
-        <h3 className="counter">{Birds}: </h3>
+        <h3 className="counter">Birds: </h3>
       </div>
       <div className="BirdCount">
         <input

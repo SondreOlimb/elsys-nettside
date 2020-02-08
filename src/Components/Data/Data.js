@@ -33,7 +33,7 @@ function Data() {
 
   const onCreate = () => {
     const db = firebase.firestore();
-    db.collection("Data").add({ Birds: newData });
+    db.collection("Data").add({ Birds: parseInt(newData) });
   };
   const y = x;
 
@@ -49,6 +49,14 @@ function Data() {
     title: {
       text: "Birds",
       color: "#000000"
+    },
+    plotOptions: {
+      series: {
+        label: {
+          connectorAllowed: false
+        },
+        pointStart: 2010
+      }
     },
     series: [
       {
