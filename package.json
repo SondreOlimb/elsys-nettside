@@ -9,6 +9,8 @@
     "firebase": "^7.8.1",
     "firebaseui": "^4.4.0",
     "google-maps-react": "^2.0.2",
+    "highcharts": "github:highcharts/highcharts-dist#nightly",
+    "highcharts-react-official": "^2.2.2",
     "mapbox-gl": "^1.7.0",
     "node-sass": "^4.13.1",
     "react": "^16.12.0",

@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import firebase from "../../firebase.js";
 import { DataInput } from "./DataInput";
+import HighchartsReact from "highcharts-react-official";
+import Highcharts from "highcharts";
 
 import "./Data.scss";
 
@@ -8,11 +10,12 @@ function Data() {
   const [Data, setData] = React.useState([]);
   const [newData, setNewData] = React.useState();
   let nrBird = [];
-  let x;
+  let x = [];
   nrBird = Data;
+  console.log(newData);
 
   for (var i = 0; i < nrBird.length; i++) {
-    x = x + nrBird[i].Birds;
+    x.push(parseInt(Data[i].Birds));
     //Do something
   }
 
@@ -32,11 +35,33 @@ function Data() {
     const db = firebase.firestore();
     db.collection("Data").add({ Birds: newData });
   };
+  const y = x;
+
+  const options = {
+    chart: {
+      backgroundColor: "#1d1d1d",
+      textColor: "#000000"
+    },
+    style: {
+      width: "200px",
+      textColor: "#000000"
+    },
+    title: {
+      text: "Birds",
+      color: "#000000"
+    },
+    series: [
+      {
+        data: x
+      }
+    ]
+  };
 
   return (
     <div className="Data">
       <div className="Card">
         <input
+          type="number"
           className="dataBar"
           value={newData}
           onChange={e => setNewData(e.target.value)}
@@ -50,7 +75,10 @@ function Data() {
           </div>
         ))}
 
-        <h3 className="counter">Total Birds: {nrBird.length}</h3>
+        <h3 className="counter">Total Birds: {Data.length}</h3>
+      </div>
+      <div className="Card">
+        <HighchartsReact highcharts={Highcharts} options={options} />
       </div>
     </div>
   );
