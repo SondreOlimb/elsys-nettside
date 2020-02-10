@@ -12,28 +12,44 @@ function Data() {
   let nrBird = [];
   let x = [];
   nrBird = Data;
-  console.log(newData);
 
   for (var i = 0; i < nrBird.length; i++) {
-    x.push(parseInt(Data[i].Birds));
+    x.push(parseInt(Data[i].Bird));
     //Do something
   }
 
   React.useEffect(() => {
     const db = firebase.firestore();
-    return db.collection("Data").onSnapshot(snapsshot => {
-      const intData = [];
-      snapsshot.forEach(doc => intData.push({ ...doc.data(), id: doc.id }));
-      setData(intData);
-    });
+    return db
+      .collection("Unit")
+      .doc("Node1")
+      .collection("Activity")
+      .onSnapshot(snapsshot => {
+        const intData = [];
+        snapsshot.forEach(doc => intData.push({ ...doc.data(), id: doc.id }));
+
+        setData(intData);
+      });
 
     //const data = await db.collection("Data").get();
     //setData(data.docs.map(doc => ({ ...doc.data(), id: doc.id })));
   }, []);
 
+  console.log(Data);
+
+  const d = new Date().getTime() / 1000;
+  const da = Math.round(d);
+  const test = firebase.firestore.FieldValue.serverTimestamp();
+
   const onCreate = () => {
     const db = firebase.firestore();
-    db.collection("Data").add({ Birds: parseInt(newData) });
+    db.collection("Unit")
+      .doc("Node1")
+      .collection("Activity")
+      .add({
+        Bird: parseInt(newData),
+        Date: test
+      });
   };
   const y = x;
 
@@ -285,7 +301,7 @@ function Data() {
           Creat
         </button>
         {Data.map(myData => (
-          <div key={myData.Birds}>
+          <div key={myData.Bird}>
             <DataInput myData={myData} />
           </div>
         ))}

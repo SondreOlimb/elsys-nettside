@@ -3,18 +3,22 @@ import firebase from "../../firebase.js";
 import "./Data.scss";
 
 export const DataInput = ({ myData }) => {
-  const [Birds, setBird] = React.useState(myData.Birds);
+  const [Bird, setBird] = React.useState(myData.Bird);
 
   const onUpdate = () => {
     const db = firebase.firestore();
-    db.collection("Data")
+    db.collection("Unit")
+      .doc("Node1")
+      .collection("Activity")
       .doc(myData.id)
-      .set({ ...myData, Birds });
+      .set({ ...myData, Bird });
   };
 
   const onDelete = () => {
     const db = firebase.firestore();
-    db.collection("Data")
+    db.collection("Unit")
+      .doc("Node1")
+      .collection("Activity")
       .doc(myData.id)
       .delete();
   };
@@ -22,12 +26,12 @@ export const DataInput = ({ myData }) => {
   return (
     <div className="Bird">
       <div className="BirdCount">
-        <h3 className="counter">Birds: </h3>
+        <h3 className="counter">Bird: </h3>
       </div>
       <div className="BirdCount">
         <input
           className="dataBar"
-          value={Birds}
+          value={Bird}
           onChange={e => {
             setBird(e.target.value);
           }}
