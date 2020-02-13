@@ -11,7 +11,6 @@ export const DataInput = ({ myData }) => {
     for (var i = 0; i < myData.length; i++) {
       const oneBird = myData[i].Bird;
       const oneDate = myData[i].TimeStamp * 1000;
-      console.log(oneDate);
 
       det.push([oneDate, oneBird]);
     }

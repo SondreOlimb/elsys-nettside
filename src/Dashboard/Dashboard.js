@@ -48,16 +48,12 @@ class Dashboard extends Component {
                   <Route
                     path="/dashboard/"
                     exact
-                    component={
-                      Data //Default
-                    }
+                    component={Default}
                     className="Default"
                   />
                   <Route
                     path="/dashboard/maps"
-                    component={
-                      Data //Maps
-                    }
+                    component={Maps}
                     className="Maps"
                   />
                   <Route
