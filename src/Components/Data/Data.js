@@ -1,8 +1,6 @@
-import React, { Component } from "react";
+import React from "react";
 import firebase from "../../firebase.js";
 import { DataInput } from "./DataInput";
-import HighchartsReact from "highcharts-react-official";
-import Highcharts from "highcharts";
 
 import "./Data.scss";
 
@@ -38,22 +36,6 @@ function Data() {
     //setData(data.docs.map(doc => ({ ...doc.data(), id: doc.id })));
   }, []);
 
-  const d = new Date().getTime() / 1000;
-  const da = Math.round(d);
-  const test = firebase.firestore.FieldValue.serverTimestamp();
-  let inter;
-
-  const onCreate = () => {
-    const db = firebase.firestore();
-    db.collection("Unit")
-      .doc("Node1")
-      .collection("Activity")
-      .add({
-        Bird: parseInt(newData),
-        Date: test
-      });
-  };
-
   const setTime = () => {
     let intData = [];
     for (var i = 0; i < Data.length; i++) {
@@ -66,8 +48,6 @@ function Data() {
 
     setCorrectObs(intData);
   };
-
-  const y = x;
 
   return (
     <div className="Data">

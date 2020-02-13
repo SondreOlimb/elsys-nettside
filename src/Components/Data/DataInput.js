@@ -254,8 +254,6 @@ export const DataInput = ({ myData }) => {
   // Apply the theme
   Highcharts.setOptions(Highcharts.theme);
 
-  const [Bird, setBird] = React.useState();
-
   return (
     <div className="Bird">
       <HighchartsReact highcharts={Highcharts} options={options} />

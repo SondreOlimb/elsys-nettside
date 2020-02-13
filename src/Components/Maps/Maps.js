@@ -4,7 +4,6 @@ import "./Maps.scss";
 import MyMapController from "./Map-controller";
 
 import "mapbox-gl/dist/mapbox-gl.css";
-import Weather from "../Weather/Weather";
 
 const TOKEN =
   "pk.eyJ1Ijoib2xpbWIiLCJhIjoiY2s2NndxaG05MDJkajNqc2RoZDY4bjhjcyJ9.qYYAaBGI80WGqTHL6NrP5A";

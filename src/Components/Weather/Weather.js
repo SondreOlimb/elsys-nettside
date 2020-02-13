@@ -1,8 +1,5 @@
-import React, { useState, useEffect, setState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Weather.scss";
-import { cord } from "../Maps/Maps";
-import { getB } from "../Maps/Maps";
-import MapGL, { GeolocateControl } from "react-map-gl";
 
 function Weather() {
   const [city, setItems] = useState("");
@@ -15,7 +12,6 @@ function Weather() {
   const [searce, setSearce] = useState("");
 
   const [click, setClick] = useState("rya");
-  const [PH, setPH] = useState("Enter location"); // sertter placeholder
 
   useEffect(() => {
     fetchItems();
