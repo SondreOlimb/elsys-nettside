@@ -4,7 +4,7 @@ import "./Data.scss";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
 
-export const DataInput = ({ myData }) => {
+export const DataInput = ({ myData, timeInterval, timeFrom, timeTo }) => {
   const det = [];
 
   try {
@@ -255,7 +255,7 @@ export const DataInput = ({ myData }) => {
   Highcharts.setOptions(Highcharts.theme);
 
   return (
-    <div className="Bird">
+    <div className="Chart">
       <HighchartsReact highcharts={Highcharts} options={options} />
     </div>
   );

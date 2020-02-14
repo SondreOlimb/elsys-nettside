@@ -13,6 +13,7 @@ function Data() {
   let x = [];
   nrBird = Data;
   const [correctObs, setCorrectObs] = React.useState([{ id: 1 }]);
+  const [myButtons, setMyButtons] = React.useState([]);
 
   for (var i = 0; i < nrBird.length; i++) {
     x.push(parseInt(Data[i].Bird));
@@ -47,6 +48,17 @@ function Data() {
     }
 
     setCorrectObs(intData);
+    setMyButtons([1]);
+  };
+
+  const setDay = () => {
+    setMyButtons([...myButtons, 1]);
+  };
+  const setWeek = () => {
+    setMyButtons([...myButtons, 2]);
+  };
+  const setMonth = () => {
+    setMyButtons([...myButtons, 3]);
   };
 
   return (
@@ -87,11 +99,29 @@ function Data() {
           </button>
         </div>
       </div>
-      <div className="Card">
-        <div key={correctObs.id}>
-          <DataInput myData={correctObs} />
-        </div>
+      <div className="selectButtons">
+        <button className="selectButton" onClick={setDay}>
+          Day
+        </button>
+        <button className="selectButton" onClick={setWeek}>
+          Week
+        </button>
+        <button className="selectButton" onClick={setMonth}>
+          Month
+        </button>
       </div>
+      {myButtons.map(timeInterval => (
+        <div className="Card">
+          <div id="chart" key={correctObs.id}>
+            <DataInput
+              myData={correctObs}
+              timeInterval={timeInterval}
+              timeFrom={timeFrom}
+              timeTo={timeTo}
+            />
+          </div>
+        </div>
+      ))}
     </div>
   );
 }
