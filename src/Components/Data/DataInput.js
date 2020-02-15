@@ -7,15 +7,55 @@ import Highcharts from "highcharts";
 export const DataInput = ({ myData, timeInterval, timeFrom, timeTo }) => {
   const det = [];
 
-  try {
-    for (var i = 0; i < myData.length; i++) {
-      const oneBird = myData[i].Bird;
-      const oneDate = myData[i].TimeStamp * 1000;
+  const date = new Date(1313564400000);
+  const month = date.getMonth();
 
-      det.push([oneDate, oneBird]);
+  //try {
+  if (timeInterval == 1) {
+    //håndterer dag intervaler
+    let day = timeFrom * 1000;
+    let dayAdd1 = timeFrom * 1000 + 24 * 60 * 60 * 1000;
+
+    while (day <= timeTo * 1000) {
+      let countBird = 0;
+      for (var i = 0; i < myData.length; i++) {
+        //const oneBird = myData[i].Bird;
+        const oneDate = myData[i].TimeStamp * 1000;
+
+        if (oneDate >= day && dayAdd1 >= oneDate) {
+          countBird = countBird + 1;
+        }
+      }
+
+      det.push([day, countBird]);
+      day = dayAdd1;
+      dayAdd1 = dayAdd1 + 24 * 60 * 60 * 1000;
     }
-  } catch (e) {
-    console.log("error");
+  }
+  //} catch (e) {
+  //  console.log("error");
+  //}
+
+  if (timeInterval == 2) {
+    //håndterer månede intervaler
+    let day = timeFrom * 1000;
+    let dayAdd1 = timeFrom * 1000 + 24 * 60 * 60 * 1000;
+
+    while (day <= timeTo * 1000) {
+      let countBird = 0;
+      for (var i = 0; i < myData.length; i++) {
+        //const oneBird = myData[i].Bird;
+        const oneDate = myData[i].TimeStamp * 1000;
+
+        if (oneDate >= day && dayAdd1 >= oneDate) {
+          countBird = countBird + 1;
+        }
+      }
+
+      det.push([day, countBird]);
+      day = dayAdd1;
+      dayAdd1 = dayAdd1 + 24 * 60 * 60 * 1000;
+    }
   }
 
   const options = {

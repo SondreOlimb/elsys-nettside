@@ -1,53 +1,80 @@
-import React, { useState } from "react";
-import ReactMapGL, { GeolocateControl, NavigationControl } from "react-map-gl";
+import React, { PureComponent, useState } from "react";
+import { render } from "react-dom";
+import { StaticMap, NavigationControl } from "react-map-gl";
+
+import DeckGL from "@deck.gl/react";
+import { HeatmapLayer } from "@deck.gl/aggregation-layers";
 import "./Maps.scss";
-import MyMapController from "./Map-controller";
+// Set your mapbox token here
+const MAPBOX_TOKEN =
+  "pk.eyJ1Ijoib2xpbWIiLCJhIjoiY2s2NndxaG05MDJkajNqc2RoZDY4bjhjcyJ9.qYYAaBGI80WGqTHL6NrP5A"; // eslint-disable-line
+const DATA_URL =
+  "https://raw.githubusercontent.com/uber-common/deck.gl-data/master/examples/screen-grid/uber-pickup-locations.json"; // eslint-disable-line
 
-import "mapbox-gl/dist/mapbox-gl.css";
-
-const TOKEN =
-  "pk.eyJ1Ijoib2xpbWIiLCJhIjoiY2s2NndxaG05MDJkajNqc2RoZDY4bjhjcyJ9.qYYAaBGI80WGqTHL6NrP5A";
-
-const geolocateStyle = {
-  float: "left",
-  margin: "50px",
-  padding: "10px"
+const INITIAL_VIEW_STATE = {
+  width: 10,
+  height: 10,
+  longitude: -73.75,
+  latitude: 40.73,
+  zoom: 9,
+  maxZoom: 16,
+  pitch: 0,
+  bearing: 0
 };
 
-const mapController = new MyMapController();
+//const view = new View({ width: "50%", height: "50%" });
 
-const Maps = () => {
-  const [viewport, setViewPort] = useState({
-    width: "100%",
-    height: 800,
-    latitude: 63.4189,
-    longitude: 10.4027,
-    zoom: 12
-  });
+export default class Maps extends PureComponent {
+  _renderLayers() {
+    const {
+      data = DATA_URL,
+      intensity = 1,
+      threshold = 0.03,
+      radiusPixels = 30
+    } = this.props;
 
-  const _onViewportChange = viewport =>
-    setViewPort({ ...viewport, transitionDuration: 1 });
+    return [
+      new HeatmapLayer({
+        data,
+        id: "heatmp-layer",
+        pickable: false,
+        getPosition: d => [d[0], d[1]],
+        getWeight: d => d[2],
+        radiusPixels,
+        intensity,
+        threshold
+      })
+    ];
+  }
 
-  return (
-    <div className="Maps">
-      <ReactMapGL
-        controller={mapController}
-        {...viewport}
-        mapboxApiAccessToken={TOKEN}
-        mapStyle="mapbox://styles/mapbox/dark-v8"
-        onViewportChange={_onViewportChange}
-      >
-        <div style={{ position: "absolute", right: 0 }}>
-          <NavigationControl visualizePitch={true} />
-        </div>
-        <GeolocateControl
-          style={geolocateStyle}
-          positionOptions={{ enableHighAccuracy: true }}
-          trackUserLocation={true}
-        />
-      </ReactMapGL>
-    </div>
-  );
-};
+  render() {
+    const { mapStyle = "mapbox://styles/mapbox/dark-v9" } = this.props;
 
-export default Maps;
+    return (
+      <div className="Maps" style={{ position: "relative" }}>
+        <DeckGL
+          className="Maps"
+          //className="deck"
+          initialViewState={INITIAL_VIEW_STATE}
+          controller={true}
+          layers={this._renderLayers()}
+          height="100%"
+          width="100%"
+          position="relative"
+        >
+          <StaticMap
+            reuseMaps
+            mapStyle={mapStyle}
+            preventStyleDiffing={true}
+            mapboxApiAccessToken={MAPBOX_TOKEN}
+            position="absolute"
+          />
+        </DeckGL>
+      </div>
+    );
+  }
+}
+
+export function renderToDOM(container) {
+  render(<Maps />, container);
+}

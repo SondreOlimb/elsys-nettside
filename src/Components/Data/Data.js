@@ -48,7 +48,6 @@ function Data() {
     }
 
     setCorrectObs(intData);
-    setMyButtons([1]);
   };
 
   const setDay = () => {
