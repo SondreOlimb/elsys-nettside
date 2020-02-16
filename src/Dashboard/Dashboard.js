@@ -36,7 +36,7 @@ class Dashboard extends Component {
 
   render() {
     return (
-      <div className="Dashboard">
+      <div id="Dashboard" className="Dashboard">
         {this.state.isSignedIn ? (
           <div className="Dash">
             <Router>

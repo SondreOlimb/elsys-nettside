@@ -1,12 +1,11 @@
 @import "src/styles.scss";
 
 .Weather {
-  min-height: 90vh;
   padding: 1em 0;
 
   width: 70%;
 
-  height: 100%;
+  max-height: 100%;
 
   color: white;
 
