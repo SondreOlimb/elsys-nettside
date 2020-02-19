@@ -3,16 +3,23 @@ import firebase from "../../firebase.js";
 import "./Data.scss";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
+//import getMonth from 'date-fns/get_month'
 
 export const DataInput = ({ myData, timeInterval, timeFrom, timeTo }) => {
   const det = [];
+  
+  let tittelen; //brukes til å sette riktig tittel på grafen
+  let typeXakse;//brukes til å få riktig indeksering på x-aksen
+  let isMonth = false;
 
   const date = new Date(1313564400000);
   const month = date.getMonth();
-
+  
   //try {
   if (timeInterval == 1) {
     //håndterer dag intervaler
+    tittelen = "dager";
+    typeXakse = "datetime";
     let day = timeFrom * 1000;
     let dayAdd1 = timeFrom * 1000 + 24 * 60 * 60 * 1000;
 
@@ -36,25 +43,67 @@ export const DataInput = ({ myData, timeInterval, timeFrom, timeTo }) => {
   //  console.log("error");
   //}
 
-  if (timeInterval == 2) {
-    //håndterer månede intervaler
+  
+  if (timeInterval == 2){
+    //håndterer ukesintervaller
+    
+    tittelen = "uker";
+    typeXakse = "linear"; 
+
+    function getWeekNumber(date){ //ikke sikker på om denne funker for alle edgecaser
+      var d = new Date(+date);
+      d.setHours(0,0,0);
+      d.setDate(d.getDate()+4-(d.getDay()||7));
+      return Math.ceil((((d-new Date(d.getFullYear(),0,1))/8.64e7)+1)/7);
+    };
+
+    var day = timeFrom * 1000;
+    var dayAdd1 = day + 24*60*60*1000;
+    
+    while (day <= timeTo*1000){ //så lenge starten av uken er inne i ønsket intervall
+      var uke = getWeekNumber(day);
+      var birdCounting = 0;
+      while(getWeekNumber(day) == uke && day <= timeTo*1000){ //så lenge dagen vi ser på fortsatt er inne i samme uke og i gyldighetsområdet
+        for (var i = 0; i < myData.length; ++i){
+          const oneDate = myData[i].TimeStamp * 1000;
+          if (oneDate>= day && dayAdd1>=oneDate){
+            ++birdCounting; // øker tellevariabelen med 1
+          }
+        }
+        day = dayAdd1; //ser på neste dag
+        dayAdd1 += 24*60*60*1000; //øker neste dag med en
+      }
+      det.push([uke, birdCounting]);
+    }
+  }
+
+  if (timeInterval == 3) {
+    //håndterer måned-intervaler
+    tittelen = "month";
+    typeXakse = "category";
+    isMonth = true;
+    
     let day = timeFrom * 1000;
     let dayAdd1 = timeFrom * 1000 + 24 * 60 * 60 * 1000;
-
+    
+    const monthNames = ["January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     while (day <= timeTo * 1000) {
+      const date = new Date(day);
+      var monthNum = date.getMonth();
       let countBird = 0;
-      for (var i = 0; i < myData.length; i++) {
-        //const oneBird = myData[i].Bird;
-        const oneDate = myData[i].TimeStamp * 1000;
-
-        if (oneDate >= day && dayAdd1 >= oneDate) {
-          countBird = countBird + 1;
+      var dato = new Date (day);
+      while(dato.getMonth() == monthNum && day <= timeTo*1000){ //så lenge dagen vi ser på fortsatt er inne i samme måned og i gyldighetsområdet
+        for (var i = 0; i < myData.length; ++i){
+          const oneDate = myData[i].TimeStamp * 1000;
+          if (oneDate>= day && dayAdd1>=oneDate){
+            ++countBird; // øker tellevariabelen med 1
+          }
         }
+        day = dayAdd1; //ser på neste dag
+        dayAdd1 += 24*60*60*1000; //øker neste dag med en
+        dato = new Date (day);
       }
-
-      det.push([day, countBird]);
-      day = dayAdd1;
-      dayAdd1 = dayAdd1 + 24 * 60 * 60 * 1000;
+      det.push([monthNames[monthNum], countBird]);
     }
   }
 
@@ -63,13 +112,16 @@ export const DataInput = ({ myData, timeInterval, timeFrom, timeTo }) => {
       backgroundColor: "#1d1d1d",
       textColor: "#000000"
     },
-    xAxis: { type: "datetime" },
+    xAxis : { allowDecimals : false,//vil ikke ha halve uker
+      type: typeXakse
+    },
     style: {
       width: "200px",
       textColor: "#000000"
     },
     title: {
-      text: "Birds",
+      //text: "Birds",
+      text: tittelen,
       color: "#000000"
     },
     plotOptions: {
@@ -82,6 +134,7 @@ export const DataInput = ({ myData, timeInterval, timeFrom, timeTo }) => {
     },
     series: [
       {
+        name: "Bird activity",
         data: det
       }
     ]
@@ -144,6 +197,7 @@ export const DataInput = ({ myData, timeInterval, timeFrom, timeTo }) => {
       }
     },
     yAxis: {
+      allowDecimals : false, //ingen halve fugler
       gridLineColor: "#707073",
       labels: {
         style: {
