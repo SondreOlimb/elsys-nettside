@@ -6,6 +6,7 @@ import Navbar from "../Navbar/Navbar";
 import Maps from "../Components/Maps/Maps";
 import Default from "../Components/Default/Default";
 import Data from "../Components/Data/Data";
+import DataViz from "../Components/Data/DataViz";
 import {
   BrowserRouter as Router,
   Switch,
@@ -48,7 +49,7 @@ class Dashboard extends Component {
                   <Route
                     path="/dashboard/"
                     exact
-                    component={Default}
+                    component={DataViz}
                     className="Default"
                   />
                   <Route

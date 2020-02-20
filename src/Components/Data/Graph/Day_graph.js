@@ -1,61 +1,39 @@
 import React from "react";
-import firebase from "../../firebase.js";
-import "./Data.scss";
+import firebase from "../../../firebase.js";
+//import "./Data.scss";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
 
-export const DataInput = ({ myData, timeInterval, timeFrom, timeTo }) => {
-  const det = [];
+export const DataInput = ({
+  myData,
+  dateFrom,
+  dateTo,
+  timeFrom,
+  timeTo,
+  seriesName
+}) => {
+  //dette ellementet render en graf med som sammler all data for en node pr dag
+  //hvis timeFrom og timeTo ineholder data skal dette tas hensyn til eller ikke.
+  //seriesName er navnet på grafhen
 
-  const date = new Date(1313564400000);
-  const month = date.getMonth();
+  //håndterer dag intervaler
+  let day = timeFrom * 1000;
+  let dayAdd1 = timeFrom * 1000 + 24 * 60 * 60 * 1000;
 
-  //try {
-  if (timeInterval == 1) {
-    //håndterer dag intervaler
-    let day = timeFrom * 1000;
-    let dayAdd1 = timeFrom * 1000 + 24 * 60 * 60 * 1000;
+  while (day <= timeTo * 1000) {
+    let countBird = 0;
+    for (var i = 0; i < myData.length; i++) {
+      //const oneBird = myData[i].Bird;
+      const oneDate = myData[i].TimeStamp * 1000;
 
-    while (day <= timeTo * 1000) {
-      let countBird = 0;
-      for (var i = 0; i < myData.length; i++) {
-        //const oneBird = myData[i].Bird;
-        const oneDate = myData[i].TimeStamp * 1000;
-
-        if (oneDate >= day && dayAdd1 >= oneDate) {
-          countBird = countBird + 1;
-        }
+      if (oneDate >= day && dayAdd1 >= oneDate) {
+        countBird = countBird + 1;
       }
-
-      det.push([day, countBird]);
-      day = dayAdd1;
-      dayAdd1 = dayAdd1 + 24 * 60 * 60 * 1000;
     }
-  }
-  //} catch (e) {
-  //  console.log("error");
-  //}
 
-  if (timeInterval == 2) {
-    //håndterer månede intervaler
-    let day = timeFrom * 1000;
-    let dayAdd1 = timeFrom * 1000 + 24 * 60 * 60 * 1000;
-
-    while (day <= timeTo * 1000) {
-      let countBird = 0;
-      for (var i = 0; i < myData.length; i++) {
-        //const oneBird = myData[i].Bird;
-        const oneDate = myData[i].TimeStamp * 1000;
-
-        if (oneDate >= day && dayAdd1 >= oneDate) {
-          countBird = countBird + 1;
-        }
-      }
-
-      det.push([day, countBird]);
-      day = dayAdd1;
-      dayAdd1 = dayAdd1 + 24 * 60 * 60 * 1000;
-    }
+    det.push([day, countBird]);
+    day = dayAdd1;
+    dayAdd1 = dayAdd1 + 24 * 60 * 60 * 1000;
   }
 
   const options = {

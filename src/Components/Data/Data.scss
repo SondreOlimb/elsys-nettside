@@ -158,6 +158,26 @@ p {
   justify-content: center;
   width: 100%;
   height: auto;
+  //border: 1px solid blue;
 
   margin: 0;
+}
+
+.Wrapper {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  // border: 1px solid red;
+}
+
+.Chart {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  //border: 1px solid yellow;
+}
+
+.TheChart {
+  width: 100%;
+  //border: 1px solid green;
 }

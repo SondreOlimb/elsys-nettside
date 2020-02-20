@@ -2,11 +2,12 @@ import React from "react";
 import firebase from "../../firebase.js";
 import { DataInput } from "./DataInput";
 
-import "./Data.scss";
+import "./DataViz.scss";
 
-function Data() {
+function DataViz() {
+  React.state = {};
+
   const [Data, setData] = React.useState([]);
-  const [newData, setNewData] = React.useState();
   const [dateFrom, setDateFrom] = React.useState();
   const [dateTo, setDateTo] = React.useState();
   const [timeFrom, setTimeFrom] = React.useState();
@@ -16,11 +17,6 @@ function Data() {
   nrBird = Data;
   const [correctObs, setCorrectObs] = React.useState([{ id: 1 }]);
   const [myButtons, setMyButtons] = React.useState([]);
-
-  for (var i = 0; i < nrBird.length; i++) {
-    x.push(parseInt(Data[i].Bird));
-    //Do something
-  }
 
   React.useEffect(() => {
     const db = firebase.firestore();
@@ -34,15 +30,10 @@ function Data() {
 
         setData(intData);
       });
-
-    //const data = await db.collection("Data").get();
-    //setData(data.docs.map(doc => ({ ...doc.data(), id: doc.id })));
   }, []);
 
   const setTime = () => {
     let intData = [];
-    console.log(timeTo);
-    console.log(timeFrom);
 
     for (var i = 0; i < Data.length; i++) {
       if (Data[i].TimeStamp >= dateFrom && Data[i].TimeStamp <= dateTo) {
@@ -146,4 +137,4 @@ function Data() {
   );
 }
 
-export default Data;
+export default DataViz;

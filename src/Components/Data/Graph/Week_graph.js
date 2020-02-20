@@ -1,72 +1,31 @@
 import React from "react";
-import firebase from "../../firebase.js";
-import "./Data.scss";
+import firebase from "../../../firebase.js";
+//import "./Data.scss";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
 
-export const DataInput = ({ myData, timeInterval, timeFrom, timeTo }) => {
+export const DataInput = ({
+  myData,
+  dateFrom,
+  dateTo,
+  timeFrom,
+  timeTo,
+  seriesName
+}) => {
+  //dette ellementet render en graf med som sammler all data for en node pr uke
+  //hvis timeFrom og timeTo ineholder data skal dette tas hensyn til eller ikke.
+  //seriesName er navnet på grafhen
+
   const det = [];
-
-  const date = new Date(1313564400000);
-  const month = date.getMonth();
-
-  //try {
-  if (timeInterval == 1) {
-    //håndterer dag intervaler
-    let day = timeFrom * 1000;
-    let dayAdd1 = timeFrom * 1000 + 24 * 60 * 60 * 1000;
-
-    while (day <= timeTo * 1000) {
-      let countBird = 0;
-      for (var i = 0; i < myData.length; i++) {
-        //const oneBird = myData[i].Bird;
-        const oneDate = myData[i].TimeStamp * 1000;
-
-        if (oneDate >= day && dayAdd1 >= oneDate) {
-          countBird = countBird + 1;
-        }
-      }
-
-      det.push([day, countBird]);
-      day = dayAdd1;
-      dayAdd1 = dayAdd1 + 24 * 60 * 60 * 1000;
-    }
-  }
-  //} catch (e) {
-  //  console.log("error");
-  //}
-
-  if (timeInterval == 2) {
-    //håndterer månede intervaler
-    let day = timeFrom * 1000;
-    let dayAdd1 = timeFrom * 1000 + 24 * 60 * 60 * 1000;
-
-    while (day <= timeTo * 1000) {
-      let countBird = 0;
-      for (var i = 0; i < myData.length; i++) {
-        //const oneBird = myData[i].Bird;
-        const oneDate = myData[i].TimeStamp * 1000;
-
-        if (oneDate >= day && dayAdd1 >= oneDate) {
-          countBird = countBird + 1;
-        }
-      }
-
-      det.push([day, countBird]);
-      day = dayAdd1;
-      dayAdd1 = dayAdd1 + 24 * 60 * 60 * 1000;
-    }
-  }
 
   const options = {
     chart: {
-      type: "spline",
-      //width: 900,
       backgroundColor: "#1d1d1d",
       textColor: "#000000"
     },
     xAxis: { type: "datetime" },
     style: {
+      width: "200px",
       textColor: "#000000"
     },
     title: {
@@ -74,11 +33,11 @@ export const DataInput = ({ myData, timeInterval, timeFrom, timeTo }) => {
       color: "#000000"
     },
     plotOptions: {
-      line: {
-        dataLabels: {
-          enabled: true
-        },
-        enableMouseTracking: true
+      series: {
+        label: {
+          connectorAllowed: false
+        }
+        //pointStart: 0
       }
     },
     series: [
@@ -297,11 +256,7 @@ export const DataInput = ({ myData, timeInterval, timeFrom, timeTo }) => {
 
   return (
     <div className="Chart">
-      <HighchartsReact
-        highcharts={Highcharts}
-        options={options}
-        containerProps={{ style: { width: "100%" } }}
-      />
+      <HighchartsReact highcharts={Highcharts} options={options} />
     </div>
   );
 };
