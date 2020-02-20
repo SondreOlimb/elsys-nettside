@@ -20,28 +20,34 @@ export const DataInput = ({
 
   const options = {
     chart: {
+      type: "line",
+      //width: 900,
       backgroundColor: "#1d1d1d",
       textColor: "#000000"
     },
-    xAxis: { type: "datetime" },
+    xAxis: {
+      allowDecimals: false, //vil ikke ha halve uker
+      type: typeXakse
+    },
     style: {
-      width: "200px",
       textColor: "#000000"
     },
     title: {
-      text: "Birds",
+      //text: "Birds",
+      text: tittelen,
       color: "#000000"
     },
     plotOptions: {
-      series: {
-        label: {
-          connectorAllowed: false
-        }
-        //pointStart: 0
+      line: {
+        dataLabels: {
+          enabled: true
+        },
+        enableMouseTracking: true
       }
     },
     series: [
       {
+        name: "Bird activity",
         data: det
       }
     ]
@@ -104,6 +110,7 @@ export const DataInput = ({
       }
     },
     yAxis: {
+      allowDecimals: false, //ingen halve fugler
       gridLineColor: "#707073",
       labels: {
         style: {
@@ -256,7 +263,11 @@ export const DataInput = ({
 
   return (
     <div className="Chart">
-      <HighchartsReact highcharts={Highcharts} options={options} />
+      <HighchartsReact
+        highcharts={Highcharts}
+        options={options}
+        containerProps={{ style: { width: "100%" } }}
+      />
     </div>
   );
 };

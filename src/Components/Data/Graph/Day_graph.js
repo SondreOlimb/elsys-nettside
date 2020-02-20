@@ -38,17 +38,21 @@ export const DataInput = ({
 
   const options = {
     chart: {
-      type: "spline",
+      type: "line",
       //width: 900,
       backgroundColor: "#1d1d1d",
       textColor: "#000000"
     },
-    xAxis: { type: "datetime" },
+    xAxis: {
+      allowDecimals: false, //vil ikke ha halve uker
+      type: typeXakse
+    },
     style: {
       textColor: "#000000"
     },
     title: {
-      text: "Birds",
+      //text: "Birds",
+      text: tittelen,
       color: "#000000"
     },
     plotOptions: {
@@ -61,6 +65,7 @@ export const DataInput = ({
     },
     series: [
       {
+        name: "Bird activity",
         data: det
       }
     ]
@@ -123,6 +128,7 @@ export const DataInput = ({
       }
     },
     yAxis: {
+      allowDecimals: false, //ingen halve fugler
       gridLineColor: "#707073",
       labels: {
         style: {
