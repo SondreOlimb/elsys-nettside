@@ -58,6 +58,12 @@ function Data() {
   const setDay = () => {
     setMyButtons([...myButtons, 1]);
   };
+  const setWeek = () => {
+    setMyButtons([...myButtons, 2]);
+  };
+  const setMonth = () => {
+    setMyButtons([...myButtons, 3]);
+  };
 
   return (
     <div className="Data">
@@ -101,10 +107,10 @@ function Data() {
         <button className="selectButton" onClick={setDay}>
           Day
         </button>
-        <button className="selectButton" onClick={setDay}>
+        <button className="selectButton" onClick={setWeek}>
           Week
         </button>
-        <button className="selectButton" onClick={setDay}>
+        <button className="selectButton" onClick={setMonth}>
           Month
         </button>
         <input

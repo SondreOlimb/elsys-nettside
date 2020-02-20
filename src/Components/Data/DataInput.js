@@ -7,14 +7,14 @@ import Highcharts from "highcharts";
 
 export const DataInput = ({ myData, timeInterval, timeFrom, timeTo }) => {
   const det = [];
-  
+
   let tittelen; //brukes til å sette riktig tittel på grafen
-  let typeXakse;//brukes til å få riktig indeksering på x-aksen
+  let typeXakse; //brukes til å få riktig indeksering på x-aksen
   let isMonth = false;
 
   const date = new Date(1313564400000);
   const month = date.getMonth();
-  
+
   //try {
   if (timeInterval == 1) {
     //håndterer dag intervaler
@@ -43,35 +43,39 @@ export const DataInput = ({ myData, timeInterval, timeFrom, timeTo }) => {
   //  console.log("error");
   //}
 
-  
-  if (timeInterval == 2){
+  if (timeInterval == 2) {
     //håndterer ukesintervaller
-    
-    tittelen = "uker";
-    typeXakse = "linear"; 
 
-    function getWeekNumber(date){ //ikke sikker på om denne funker for alle edgecaser
+    tittelen = "uker";
+    typeXakse = "linear";
+
+    function getWeekNumber(date) {
+      //ikke sikker på om denne funker for alle edgecaser
       var d = new Date(+date);
-      d.setHours(0,0,0);
-      d.setDate(d.getDate()+4-(d.getDay()||7));
-      return Math.ceil((((d-new Date(d.getFullYear(),0,1))/8.64e7)+1)/7);
-    };
+      d.setHours(0, 0, 0);
+      d.setDate(d.getDate() + 4 - (d.getDay() || 7));
+      return Math.ceil(
+        ((d - new Date(d.getFullYear(), 0, 1)) / 8.64e7 + 1) / 7
+      );
+    }
 
     var day = timeFrom * 1000;
-    var dayAdd1 = day + 24*60*60*1000;
-    
-    while (day <= timeTo*1000){ //så lenge starten av uken er inne i ønsket intervall
+    var dayAdd1 = day + 24 * 60 * 60 * 1000;
+
+    while (day <= timeTo * 1000) {
+      //så lenge starten av uken er inne i ønsket intervall
       var uke = getWeekNumber(day);
       var birdCounting = 0;
-      while(getWeekNumber(day) == uke && day <= timeTo*1000){ //så lenge dagen vi ser på fortsatt er inne i samme uke og i gyldighetsområdet
-        for (var i = 0; i < myData.length; ++i){
+      while (getWeekNumber(day) == uke && day <= timeTo * 1000) {
+        //så lenge dagen vi ser på fortsatt er inne i samme uke og i gyldighetsområdet
+        for (var i = 0; i < myData.length; ++i) {
           const oneDate = myData[i].TimeStamp * 1000;
-          if (oneDate>= day && dayAdd1>=oneDate){
+          if (oneDate >= day && dayAdd1 >= oneDate) {
             ++birdCounting; // øker tellevariabelen med 1
           }
         }
         day = dayAdd1; //ser på neste dag
-        dayAdd1 += 24*60*60*1000; //øker neste dag med en
+        dayAdd1 += 24 * 60 * 60 * 1000; //øker neste dag med en
       }
       det.push([uke, birdCounting]);
     }
@@ -82,26 +86,40 @@ export const DataInput = ({ myData, timeInterval, timeFrom, timeTo }) => {
     tittelen = "month";
     typeXakse = "category";
     isMonth = true;
-    
+
     let day = timeFrom * 1000;
     let dayAdd1 = timeFrom * 1000 + 24 * 60 * 60 * 1000;
-    
-    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+    const monthNames = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
+    ];
     while (day <= timeTo * 1000) {
       const date = new Date(day);
       var monthNum = date.getMonth();
       let countBird = 0;
-      var dato = new Date (day);
-      while(dato.getMonth() == monthNum && day <= timeTo*1000){ //så lenge dagen vi ser på fortsatt er inne i samme måned og i gyldighetsområdet
-        for (var i = 0; i < myData.length; ++i){
+      var dato = new Date(day);
+      while (dato.getMonth() == monthNum && day <= timeTo * 1000) {
+        //så lenge dagen vi ser på fortsatt er inne i samme måned og i gyldighetsområdet
+        for (var i = 0; i < myData.length; ++i) {
           const oneDate = myData[i].TimeStamp * 1000;
-          if (oneDate>= day && dayAdd1>=oneDate){
+          if (oneDate >= day && dayAdd1 >= oneDate) {
             ++countBird; // øker tellevariabelen med 1
           }
         }
         day = dayAdd1; //ser på neste dag
-        dayAdd1 += 24*60*60*1000; //øker neste dag med en
-        dato = new Date (day);
+        dayAdd1 += 24 * 60 * 60 * 1000; //øker neste dag med en
+        dato = new Date(day);
       }
       det.push([monthNames[monthNum], countBird]);
     }
@@ -109,12 +127,13 @@ export const DataInput = ({ myData, timeInterval, timeFrom, timeTo }) => {
 
   const options = {
     chart: {
-      type: "spline",
+      type: "line",
       //width: 900,
       backgroundColor: "#1d1d1d",
       textColor: "#000000"
     },
-    xAxis : { allowDecimals : false,//vil ikke ha halve uker
+    xAxis: {
+      allowDecimals: false, //vil ikke ha halve uker
       type: typeXakse
     },
     style: {
@@ -198,7 +217,7 @@ export const DataInput = ({ myData, timeInterval, timeFrom, timeTo }) => {
       }
     },
     yAxis: {
-      allowDecimals : false, //ingen halve fugler
+      allowDecimals: false, //ingen halve fugler
       gridLineColor: "#707073",
       labels: {
         style: {
