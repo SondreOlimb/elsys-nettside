@@ -86,7 +86,7 @@ export const DataInput = ({ myData, timeInterval, timeFrom, timeTo }) => {
     let day = timeFrom * 1000;
     let dayAdd1 = timeFrom * 1000 + 24 * 60 * 60 * 1000;
     
-    const monthNames = ["January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
     while (day <= timeTo * 1000) {
       const date = new Date(day);
       var monthNum = date.getMonth();
