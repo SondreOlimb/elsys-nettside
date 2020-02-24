@@ -9,8 +9,7 @@ export default function TimeMonth({ myData }) {
   const det = [];
   const dateTo = Math.round(new Date().getTime() / 1000);
   const dateFrom = dateTo - 60 * 60 * 24 * 30;
-  console.log(dateTo);
-  console.log(dateFrom);
+
   const [timeData, setTimeData] = React.useState([]);
   let intData = [];
 
