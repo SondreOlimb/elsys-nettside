@@ -49,12 +49,12 @@ class Dashboard extends Component {
                   <Route
                     path="/dashboard/"
                     exact
-                    component={DataViz}
+                    component={Default}
                     className="Default"
                   />
                   <Route
                     path="/dashboard/maps"
-                    component={Maps}
+                    component={DataViz}
                     className="Maps"
                   />
                   <Route

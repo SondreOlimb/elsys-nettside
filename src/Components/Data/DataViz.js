@@ -1,50 +1,56 @@
-import React from "react";
+import React, { useState } from "react";
 import firebase from "../../firebase.js";
 import { DataInput } from "./DataInput";
+import App from "./../Maps/Maps.js";
 
 import "./DataViz.scss";
+import { PieWheel } from "./Graph/PieWheel.js";
+import Maps from "../Maps/Maps.js";
 
 function DataViz() {
   React.state = {};
 
-  const [Data, setData] = React.useState([]);
+  const [Node, setNode] = React.useState([]);
+  const [mapData, setData] = React.useState([]);
   const [dateFrom, setDateFrom] = React.useState();
   const [dateTo, setDateTo] = React.useState();
   const [timeFrom, setTimeFrom] = React.useState();
   const [timeTo, setTimeTo] = React.useState();
   let nrBird = [];
   let x = [];
-  nrBird = Data;
+
   const [correctObs, setCorrectObs] = React.useState([{ id: 1 }]);
   const [myButtons, setMyButtons] = React.useState([]);
+  let i = 1;
 
   React.useEffect(() => {
+    let intData2 = [];
+    let intData3 = [];
+    let intData4 = [];
+
     const db = firebase.firestore();
     return db
       .collection("Unit")
-      .doc("Node1")
+      .doc("Node2")
       .collection("Activity")
       .onSnapshot(snapsshot => {
         const intData = [];
         snapsshot.forEach(doc => intData.push({ ...doc.data(), id: doc.id }));
+        for (let i = 0; i < intData.length; i++) {
+          intData3 = intData[i].Cord;
 
-        setData(intData);
+          try {
+            intData4 = [intData3[0], intData3[1], 1];
+            intData2.push(intData4);
+          } catch (error) {
+            console.error(error);
+          }
+        }
+
+        setData(intData2);
+        setMyButtons([1]);
       });
   }, []);
-
-  const setTime = () => {
-    let intData = [];
-
-    for (var i = 0; i < Data.length; i++) {
-      if (Data[i].TimeStamp >= dateFrom && Data[i].TimeStamp <= dateTo) {
-        intData.push(Data[i]);
-      }
-
-      //inter = Data[i];
-    }
-
-    setCorrectObs(intData);
-  };
 
   const setDay = () => {
     setMyButtons([...myButtons, 1]);
@@ -52,87 +58,13 @@ function DataViz() {
 
   return (
     <div className="Data">
-      <div className="Dato">
-        <div className="datoBoks">
-          <label for="Node">Choose a node:</label>
-
-          <select className="nodeSelect" id="Node">
-            <option value="Node 1">Node 1</option>
-            <option value="Node 2">Node 2</option>
-            <option value="Node 3">Node 3</option>
-          </select>
-        </div>
-        <div className="datoBoks">
-          <h4 className="fromTo">From:</h4>
-
-          <input
-            type="date"
-            className="dateForm"
-            valueAsNumber={dateFrom}
-            onChange={e => setDateFrom(e.target.valueAsNumber / 1000)}
-          />
-        </div>
-        <div className="datoBoks">
-          <h4 className="fromTo">To:</h4>
-
-          <input
-            type="date"
-            className="dateForm"
-            valueAsNumber={dateTo}
-            onChange={e => setDateTo(e.target.valueAsNumber / 1000)}
-          />
-        </div>
-        <div className="datoBoks">
-          <button id="demo" className="dataButton" onClick={setTime}>
-            Get data from node
-          </button>
-        </div>
-      </div>
-      <div className="selectButtons">
-        <button className="selectButton" onClick={setDay}>
-          Day
-        </button>
-        <button className="selectButton" onClick={setDay}>
-          Week
-        </button>
-        <button className="selectButton" onClick={setDay}>
-          Month
-        </button>
-        <input
-          type="time"
-          id="appt"
-          name="appt"
-          valueAsNumber={timeTo}
-          min="00:00"
-          max="23:59"
-          required
-          onChange={e => setTimeTo(e.target.valueAsNumber / 1000)}
-        ></input>
-        <input
-          type="time"
-          id="appt"
-          name="appt"
-          valueAsNumber={timeFrom}
-          min="00:00"
-          max="23:59"
-          required
-          onChange={e => setTimeFrom(e.target.valueAsNumber / 1000)}
-        ></input>
-      </div>
-      <div className="Wrapper">
-        {myButtons.map(timeInterval => (
-          <div className="Card">
-            <div className="TheChart" id="chart" key={correctObs.id}>
-              <DataInput
-                myData={correctObs}
-                timeInterval={timeInterval}
-                timeFrom={dateFrom}
-                timeTo={dateTo}
-              />
-            </div>
+      {myButtons.map(timeInterval => (
+        <div className="Card">
+          <div className="TheChart" id="chart" key={(i = i + 1)}>
+            <Maps myData={mapData} />
           </div>
-        ))}
-      </div>
+        </div>
+      ))}
     </div>
   );
 }

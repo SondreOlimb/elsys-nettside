@@ -34,15 +34,10 @@ function Data() {
 
         setData(intData);
       });
-
-    //const data = await db.collection("Data").get();
-    //setData(data.docs.map(doc => ({ ...doc.data(), id: doc.id })));
   }, []);
 
   const setTime = () => {
     let intData = [];
-    console.log(timeTo);
-    console.log(timeFrom);
 
     for (var i = 0; i < Data.length; i++) {
       if (Data[i].TimeStamp >= dateFrom && Data[i].TimeStamp <= dateTo) {

@@ -1,8 +1,28 @@
 .Default {
-  justify-content: center;
-
   width: 100%;
-  .Weather {
-    margin: 0 auto;
+  justify-items: stretch;
+  align-items: stretch;
+
+  display: grid;
+  grid-template-columns: 33% 33% 33%;
+  grid-template-rows: auto;
+  grid-template-areas:
+    "element1 element2 element3 "
+    "element4 element5 element3";
+
+  .element1 {
+    grid-area: element1;
+  }
+  .element2 {
+    grid-area: element2;
+  }
+  .element3 {
+    grid-area: element3;
+  }
+  .element4 {
+    grid-area: element4;
+  }
+  .element5 {
+    grid-area: element5;
   }
 }

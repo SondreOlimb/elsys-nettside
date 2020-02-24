@@ -1,60 +1,56 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import { render } from "react-dom";
 import DeckGL, { ArcLayer, HeatmapLayer, HexagonLayer } from "deck.gl";
 
 import ReactMapGL, {
   NavigationControl,
   GeolocateControl,
-  FullscreenControl
+  FullscreenControl,
+  MapState
 } from "react-map-gl";
 import "./Maps.scss";
-import { mapData } from "./MapData";
+import { mapData, mapData2 } from "./MapData";
 import "mapbox-gl/dist/mapbox-gl.css";
+import firebase from "../../firebase.js";
+
+import { GetMapData } from "./GetMapData.js";
 
 const TOKEN =
   "pk.eyJ1Ijoib2xpbWIiLCJhIjoiY2s2NndxaG05MDJkajNqc2RoZDY4bjhjcyJ9.qYYAaBGI80WGqTHL6NrP5A"; // Set your mapbox token here
 const DATA_URL = mapData;
 
-const geolocateStyle = {
-  float: "left",
-  margin: "50px",
-  padding: "10px"
-};
+function Maps({ myData }) {
+  const [layerData, setData] = React.useState([]);
+  const [testData, setTestData] = React.useState(mapData);
 
-export default class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      viewport: {
-        longitude: 10.4035,
-        latitude: 63.4135,
-        zoom: 12,
-        bearing: 0,
-        pitch: 30
-      }
-    };
-  }
+  const data = myData;
+  const intensity = 1;
+  const threshold = 0.03;
+  const radiusPixels = 20;
 
-  _renderLayers() {
-    const {
-      data = DATA_URL,
-      intensity = 1,
-      threshold = 0.03,
-      radiusPixels = 20
-    } = this.props;
+  const [viewport, setViewport] = useState({
+    width: "100%",
+    height: "70vh",
+    latitude: 63.42111,
+    longitude: 10.40262,
+    zoom: 12
+  });
 
-    return [
-      new HeatmapLayer({
-        data,
-        id: "heatmp-layer",
-        pickable: false,
-        getPosition: d => [d[0], d[1]],
-        getWeight: d => d[2],
-        radiusPixels,
-        intensity,
-        threshold
-      }),
+  const [renderLayers, setRenderLayers] = useState([
+    new HeatmapLayer({
+      data,
+      id: "heatmp-layer",
+      pickable: false,
+      getPosition: d => [d[0], d[1]],
+      getWeight: 1,
+      radiusPixels,
+      intensity,
+      threshold
+    })
+  ]);
 
+  const setLayer = () => {
+    setRenderLayers([
       new HexagonLayer({
         id: "hexagon-layer",
         data,
@@ -63,7 +59,7 @@ export default class App extends Component {
         radius: 100,
         elevationScale: 3,
         getPosition: d => [d[0], d[1]],
-        getWeight: d => d[2],
+        getWeight: 1,
         radiusPixels,
         intensity,
         threshold
@@ -72,46 +68,31 @@ export default class App extends Component {
              http://deck.gl/#/documentation/developer-guide/adding-interactivity?section=example-display-a-tooltip-for-hovered-object
           */
       })
-    ];
-  }
-
-  _onViewportChange = viewport => {
-    this.setState({ viewport });
+    ]);
   };
 
-  render() {
-    const { viewport } = this.state;
-    const { mapStyle = "mapbox://styles/mapbox/dark-v9" } = this.props;
-
-    return (
-      <div className="Maps">
-        <ReactMapGL
-          {...viewport}
-          width="100%"
-          height="90vh"
-          maxPitch={85}
-          onViewportChange={this._onViewportChange}
-          mapboxApiAccessToken={TOKEN}
-          mapStyle={mapStyle}
-        >
-          <DeckGL viewState={viewport} layers={this._renderLayers()} />
-          <div style={{ position: "absolute", right: 0 }}>
-            <NavigationControl visualizePitch={true} />
-            <FullscreenControl
-              container={document.querySelector("#Dashboard")}
-            />
-            <GeolocateControl
-              //style={geolocateStyle}
-              positionOptions={{ enableHighAccuracy: true }}
-              trackUserLocation={true}
-            />
-          </div>
-        </ReactMapGL>
-      </div>
-    );
-  }
+  return (
+    <div className="Maps">
+      <ReactMapGL
+        {...viewport}
+        onViewportChange={setViewport}
+        mapboxApiAccessToken={TOKEN}
+        mapStyle={"mapbox://styles/mapbox/dark-v9"}
+      >
+        <DeckGL viewState={viewport} layers={renderLayers} />
+        <div style={{ position: "absolute", right: 0 }}>
+          <NavigationControl visualizePitch={true} />
+          <FullscreenControl container={document.querySelector("#Dashboard")} />
+          <GeolocateControl
+            //style={geolocateStyle}
+            positionOptions={{ enableHighAccuracy: true }}
+            trackUserLocation={true}
+          />
+          <button onClick={setLayer}>T</button>
+        </div>
+      </ReactMapGL>
+    </div>
+  );
 }
 
-export function renderToDom(container) {
-  render(<App />, container);
-}
+export default Maps;
