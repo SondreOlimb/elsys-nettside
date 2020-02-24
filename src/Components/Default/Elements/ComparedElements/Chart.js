@@ -1,63 +1,91 @@
 import React from "react";
-import firebase from "../../../firebase.js";
-import "./../Data.scss";
+//import firebase from "../../../firebase.js";
+
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
-//import getMonth from 'date-fns/get_month'
 
-function PieWheel({ myData = [], timeInterval, timeFrom, timeTo }) {
-  const det = [];
-  const [Data, setData] = React.useState([]);
+export const Chart = ({
+  myData,
+  dateFrom,
+  dateTo,
+  timeFrom,
+  timeTo,
+  seriesName
+}) => {
+  //dette ellementet render en graf med som sammler all data for en node pr dag
+  //hvis timeFrom og timeTo ineholder data skal dette tas hensyn til eller ikke.
+  //seriesName er navnet på grafhen
+
+  //håndterer dag intervaler
+  //let day = timeFrom * 1000;
+  //let dayAdd1 = timeFrom * 1000 + 24 * 60 * 60 * 1000;
+  const [myNode, setMyNode] = React.useState([]);
+  let day = timeFrom * 1000;
+  let dayAdd1 = timeFrom * 1000 + 24 * 60 * 60 * 1000;
+  let det = [];
 
   React.useEffect(() => {
-    const db = firebase.firestore();
-    for (let i = 0; i < myData.length; i++) {
-      const intData2 = [];
+    let countBird = 0;
+    for (let j = 0; j < myData.length; j++) {
+      const intName = myData[j].name;
+      while (day <= timeTo * 1000) {
+        for (let i = 0; i < myData[j].y.length; i++) {
+          //const oneBird = myData[i].Bird;
+          const oneDate = myData[j].y[i] * 1000;
 
-      db.collection("Unit")
-        .doc(myData[i])
-        .collection("Activity")
-        .onSnapshot(snapsshot => {
-          let intData = [];
-          snapsshot.forEach(doc => intData.push({ ...doc.data(), id: doc.id }));
+          if (oneDate >= day && dayAdd1 >= oneDate) {
+            countBird = countBird + 1;
+          }
+        }
+        if (countBird == 0) {
+          det.push([day, null]);
+        } else {
+          det.push([day, countBird]);
+        }
+        countBird = 0;
 
-          setData(Data => [...Data, { name: myData[i], y: intData.length }]);
-        });
+        day = dayAdd1;
+        dayAdd1 = dayAdd1 + 24 * 60 * 60 * 1000;
+      }
+
+      const test = det;
+
+      setMyNode(myNode => [...myNode, { name: intName, data: test }]);
+      det = [];
+      day = timeFrom * 1000;
+      dayAdd1 = timeFrom * 1000 + 24 * 60 * 60 * 1000;
     }
     return;
   }, []);
-  //console.log(Data);
 
   const options = {
     chart: {
-      plotBackgroundColor: null,
-      plotBorderWidth: null,
-      plotShadow: false,
-      type: "pie"
+      type: "line",
+      //width: 900,
+      backgroundColor: "#1d1d1d",
+      textColor: "#000000"
+    },
+    xAxis: {
+      allowDecimals: false, //vil ikke ha halve uker
+      type: "datetime"
+    },
+    style: {
+      textColor: "#000000"
     },
     title: {
-      text: "Bird activity compared"
-    },
-    tooltip: {
-      pointFormat: "{series.name}: <b>{point.percentage:.1f}%</b>"
+      //text: "Birds",
+      text: "last",
+      color: "#000000"
     },
     plotOptions: {
-      pie: {
-        allowPointSelect: true,
-        cursor: "pointer",
+      line: {
         dataLabels: {
-          enabled: true,
-          format: "<b>{point.name}</b>: {point.percentage:.1f} %"
-        }
+          enabled: true
+        },
+        enableMouseTracking: true
       }
     },
-    series: [
-      {
-        name: "Brands",
-        colorByPoint: true,
-        data: Data
-      }
-    ]
+    series: myNode
   };
 
   Highcharts.theme = {
@@ -117,6 +145,7 @@ function PieWheel({ myData = [], timeInterval, timeFrom, timeTo }) {
       }
     },
     yAxis: {
+      allowDecimals: false, //ingen halve fugler
       gridLineColor: "#707073",
       labels: {
         style: {
@@ -276,6 +305,4 @@ function PieWheel({ myData = [], timeInterval, timeFrom, timeTo }) {
       />
     </div>
   );
-}
-
-export default PieWheel;
+};

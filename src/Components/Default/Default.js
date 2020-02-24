@@ -6,6 +6,7 @@ import firebase from "../../firebase.js";
 import "./Default.scss";
 import PieWheel from "../Data/Graph/PieWheel";
 import DataViz from "../Data/DataViz";
+import Compared from "./Elements/Compared.js";
 
 function Default() {
   const [Node, setNode] = React.useState([]);
@@ -28,16 +29,19 @@ function Default() {
   }, []);
 
   let myNodes;
+  let myCompared;
 
   if (Node.length > 0) {
     myNodes = <PieWheel myData={Node} />;
+    myCompared = <Compared myData={Node} />;
   } else {
-    myNodes = <p>Loading..</p>;
+    myNodes = <p>Loading...</p>;
+    myCompared = <p>Loading...</p>;
   }
 
   return (
     <div className="Default">
-      <div className="element1">Element 1</div>
+      <div className="element1">{myCompared}</div>
       <div className="element2">Element 2</div>
       <div className="element3">
         <DataViz />

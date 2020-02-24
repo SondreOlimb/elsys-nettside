@@ -49,26 +49,46 @@ function Maps({ myData }) {
     })
   ]);
 
-  const setLayer = () => {
-    setRenderLayers([
-      new HexagonLayer({
-        id: "hexagon-layer",
-        data,
-        pickable: true,
-        extruded: true,
-        radius: 100,
-        elevationScale: 3,
-        getPosition: d => [d[0], d[1]],
-        getWeight: 1,
-        radiusPixels,
-        intensity,
-        threshold
+  const [Dimension, setDimension] = useState("3D");
 
-        /* Update tooltip
+  const setLayer = () => {
+    if (Dimension == "3D") {
+      setDimension("2D");
+
+      setRenderLayers([
+        new HexagonLayer({
+          id: "hexagon-layer",
+          data,
+          pickable: true,
+          extruded: true,
+          radius: 100,
+          elevationScale: 3,
+          getPosition: d => [d[0], d[1]],
+          getWeight: 1,
+          radiusPixels,
+          intensity,
+          threshold
+
+          /* Update tooltip
              http://deck.gl/#/documentation/developer-guide/adding-interactivity?section=example-display-a-tooltip-for-hovered-object
           */
-      })
-    ]);
+        })
+      ]);
+    } else {
+      setRenderLayers([
+        new HeatmapLayer({
+          data,
+          id: "heatmp-layer",
+          pickable: false,
+          getPosition: d => [d[0], d[1]],
+          getWeight: 1,
+          radiusPixels,
+          intensity,
+          threshold
+        })
+      ]);
+      setDimension("3D");
+    }
   };
 
   return (
@@ -88,7 +108,9 @@ function Maps({ myData }) {
             positionOptions={{ enableHighAccuracy: true }}
             trackUserLocation={true}
           />
-          <button onClick={setLayer}>T</button>
+          <button className="dimButton" onClick={setLayer}>
+            {Dimension}
+          </button>
         </div>
       </ReactMapGL>
     </div>
