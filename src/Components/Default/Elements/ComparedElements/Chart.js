@@ -3,6 +3,7 @@ import React from "react";
 
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
+import HighchartsExporting from "highcharts/modules/exporting";
 
 export const Chart = ({
   myData,
@@ -74,7 +75,7 @@ export const Chart = ({
     },
     title: {
       //text: "Birds",
-      text: "last",
+      text: "Activity last 30 days",
       color: "#000000"
     },
     plotOptions: {
@@ -90,14 +91,16 @@ export const Chart = ({
 
   Highcharts.theme = {
     colors: [
-      "#2b908f",
-      "#90ee7e",
       "#f45b5b",
+      "#55BF3B",
+
+      "#90ee7e",
+
       "#7798BF",
       "#aaeeee",
       "#ff0066",
       "#eeaaee",
-      "#55BF3B",
+      "#2b908f",
       "#DF5353",
       "#7798BF",
       "#aaeeee"
@@ -301,7 +304,7 @@ export const Chart = ({
       <HighchartsReact
         highcharts={Highcharts}
         options={options}
-        containerProps={{ style: { width: "100%" } }}
+        containerProps={{ style: { width: "100%", height: "auto" } }}
       />
     </div>
   );

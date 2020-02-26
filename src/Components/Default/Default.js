@@ -42,12 +42,12 @@ function Default() {
   return (
     <div className="Default">
       <div className="element1">{myCompared}</div>
-      <div className="element2">Element 2</div>
+      <div className="element2">{myNodes}</div>
       <div className="element3">
         <DataViz />
       </div>
-      <div className="element4">Element 4</div>
-      <div className="element5">{myNodes}</div>
+      <div className="element4">Loading...</div>
+      <div className="element5">Loading...</div>
     </div>
   );
 }

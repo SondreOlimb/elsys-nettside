@@ -3,7 +3,10 @@ import firebase from "../../firebase.js";
 import "./Data.scss";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
+
 //import getMonth from 'date-fns/get_month'
+require("highcharts/modules/exporting")(Highcharts);
+require("highcharts/modules/export-data")(Highcharts);
 
 export const DataInput = ({ myData, timeInterval, timeFrom, timeTo }) => {
   const det = [];

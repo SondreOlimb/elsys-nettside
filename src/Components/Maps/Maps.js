@@ -27,6 +27,7 @@ function Maps({ myData }) {
   const intensity = 1;
   const threshold = 0.03;
   const radiusPixels = 20;
+  const elevationScale = { min: 1, max: 50 };
 
   const [viewport, setViewport] = useState({
     width: "100%",
@@ -45,7 +46,9 @@ function Maps({ myData }) {
       getWeight: 1,
       radiusPixels,
       intensity,
-      threshold
+      threshold,
+      pickable: true,
+      autoHighlight: true
     })
   ]);
 
@@ -67,7 +70,9 @@ function Maps({ myData }) {
           getWeight: 1,
           radiusPixels,
           intensity,
-          threshold
+          threshold,
+          pickable: true,
+          autoHighlight: true
 
           /* Update tooltip
              http://deck.gl/#/documentation/developer-guide/adding-interactivity?section=example-display-a-tooltip-for-hovered-object
@@ -84,7 +89,10 @@ function Maps({ myData }) {
           getWeight: 1,
           radiusPixels,
           intensity,
-          threshold
+          threshold,
+          pickable: true,
+          autoHighlight: true,
+          onHover: true
         })
       ]);
       setDimension("3D");
