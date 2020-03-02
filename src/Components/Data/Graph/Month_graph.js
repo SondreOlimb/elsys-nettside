@@ -1,22 +1,76 @@
 import React from "react";
 import firebase from "../../../firebase.js";
 //import "./Data.scss";
+import "../Data.scss";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
 
-export const DataInput = ({
+export const MonthInput = ({
   myData,
   dateFrom,
   dateTo,
+  timeInterval,
   timeFrom,
   timeTo,
-  seriesName
+ // seriesName
 }) => {
   //dette ellementet render en graf med som sammler all data for en node pr dag
   //hvis timeFrom og timeTo ineholder data skal dette tas hensyn til eller ikke.
   //seriesName er navnet på grafhen
 
+  
+
   const det = [];
+
+  let tittelen = "month"; //brukes til å sette riktig tittel på grafen
+  let typeXakse = "category"; //brukes til å få riktig indeksering på x-aksen
+  let isMonth = true;
+
+  const date = new Date(1313564400000);
+  const month = date.getMonth();
+
+//håndterer måned-intervaler
+tittelen = "month";
+typeXakse = "category";
+isMonth = true;
+
+let day = dateFrom * 1000;
+let dayAdd1 = dateFrom * 1000 + 24 * 60 * 60 * 1000;
+
+const monthNames = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December"
+];
+while (day <= dateTo * 1000) {
+  const date = new Date(day);
+  var monthNum = date.getMonth();
+  let countBird = 0;
+  var dato = new Date(day);
+  while (dato.getMonth() == monthNum && day <= dateTo * 1000) {
+    //så lenge dagen vi ser på fortsatt er inne i samme måned og i gyldighetsområdet
+    for (var i = 0; i < myData.length; ++i) {
+      const oneDate = myData[i].TimeStamp * 1000;
+      if (oneDate >= day+timeFrom*1000 && day+timeTo*1000 >= oneDate) {//innenfor riktig tidsintervall
+        ++countBird; // øker tellevariabelen med 1
+      }
+    }
+    day = dayAdd1; //ser på neste dag
+    dayAdd1 += 24 * 60 * 60 * 1000; //øker neste dag med en
+    dato = new Date(day);
+  }
+  det.push([monthNames[monthNum], countBird]);
+}
+
 
   const options = {
     chart: {
