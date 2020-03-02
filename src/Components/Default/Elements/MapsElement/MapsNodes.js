@@ -1,19 +1,17 @@
 import React from "react";
-import firebase from "../../../firebase.js";
+import firebase from "../../../../firebase";
 
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
-import TimeMonth from "./ComparedElements/TimeMonth";
+import MapsData from "./MapsData";
 
-function Compared({ myData, timeInterval, timeFrom, timeTo }) {
+function MapsNodes({ myData, timeInterval, timeFrom, timeTo }) {
   const det = [];
   const [Data, setData] = React.useState([]);
 
   React.useEffect(() => {
     const db = firebase.firestore();
     for (let i = 0; i < myData.length; i++) {
-      const intData2 = [];
-
       db.collection("Unit")
         .doc(myData[i])
         .collection("Activity")
@@ -31,12 +29,12 @@ function Compared({ myData, timeInterval, timeFrom, timeTo }) {
 
   if (Data.length == myData.length) {
     console.log(Data);
-    Wait = <TimeMonth myData={Data} />;
+    Wait = <MapsData myData={Data} />;
   } else {
-    Wait = <p>Loading...</p>;
+    Wait = <p>Loading</p>;
   }
 
   return <div className="Chart">{Wait}</div>;
 }
 
-export default Compared;
+export default MapsNodes;

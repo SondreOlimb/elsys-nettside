@@ -36,7 +36,7 @@ function PieWheel({ myData = [], timeInterval, timeFrom, timeTo }) {
       type: "pie"
     },
     title: {
-      text: "Bird activity compared"
+      text: "Activity compared"
     },
     tooltip: {
       pointFormat: "{series.name}: <b>{point.percentage:.1f}%</b>"
@@ -53,7 +53,6 @@ function PieWheel({ myData = [], timeInterval, timeFrom, timeTo }) {
     },
     series: [
       {
-        name: "Brands",
         colorByPoint: true,
         data: Data
       }

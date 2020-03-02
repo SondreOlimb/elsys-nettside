@@ -1,72 +1,44 @@
-import React, { useState } from "react";
-import firebase from "../../firebase.js";
-import { DataInput } from "./DataInput";
-import App from "./../Maps/Maps.js";
+import React from "react";
+//import logo from "../Bilder//bird-logos-png.png";
 
+import firebase from "../../firebase.js";
 import "./DataViz.scss";
-import { PieWheel } from "./Graph/PieWheel.js";
-import Maps from "../Maps/Maps.js";
+
+import Compared from "../Default/Elements/Compared";
+import MapsNodes from "../Default/Elements/MapsElement/MapsNodes";
 
 function DataViz() {
-  React.state = {};
-
   const [Node, setNode] = React.useState([]);
-  const [mapData, setData] = React.useState([]);
-  const [dateFrom, setDateFrom] = React.useState();
-  const [dateTo, setDateTo] = React.useState();
-  const [timeFrom, setTimeFrom] = React.useState();
-  const [timeTo, setTimeTo] = React.useState();
-  let nrBird = [];
-  let x = [];
-
-  const [correctObs, setCorrectObs] = React.useState([{ id: 1 }]);
-  const [myButtons, setMyButtons] = React.useState([]);
-  let i = 1;
-
   React.useEffect(() => {
-    let intData2 = [];
-    let intData3 = [];
-    let intData4 = [];
-
+    const intData2 = [];
     const db = firebase.firestore();
     return db
       .collection("Unit")
-      .doc("Node2")
-      .collection("Activity")
+      .doc("Nodes")
+      .collection("Nodes")
       .onSnapshot(snapsshot => {
-        const intData = [];
+        let intData = [];
         snapsshot.forEach(doc => intData.push({ ...doc.data(), id: doc.id }));
-        for (let i = 0; i < intData.length; i++) {
-          intData3 = intData[i].Cord;
-
-          try {
-            intData4 = [intData3[0], intData3[1], 1];
-            intData2.push(intData4);
-          } catch (error) {
-            console.error(error);
-          }
+        for (var i = 0; i < intData[0].Node.length; i++) {
+          intData2.push(intData[0].Node[i]);
         }
 
-        setData(intData2);
-        setMyButtons([1]);
+        setNode(intData2);
       });
   }, []);
 
-  const setDay = () => {
-    setMyButtons([...myButtons, 1]);
-  };
+  let myNodes;
+  let myCompared;
+  let myMaps;
+  console.log(Node.length);
 
-  return (
-    <div className="Data">
-      {myButtons.map(timeInterval => (
-        <div className="Card">
-          <div className="TheChart" id="chart" key={(i = i + 1)}>
-            <Maps myData={mapData} />
-          </div>
-        </div>
-      ))}
-    </div>
-  );
+  if (Node.length > 0) {
+    myMaps = <MapsNodes myData={Node} />;
+  } else {
+    myMaps = <p>Loading...</p>;
+  }
+
+  return <div className="DataViz">{myMaps}</div>;
 }
 
 export default DataViz;

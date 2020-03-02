@@ -1,6 +1,11 @@
 import React, { Component, useState } from "react";
 import { render } from "react-dom";
-import DeckGL, { ArcLayer, HeatmapLayer, HexagonLayer } from "deck.gl";
+import DeckGL, {
+  ArcLayer,
+  HeatmapLayer,
+  HexagonLayer,
+  Viewport
+} from "deck.gl";
 
 import ReactMapGL, {
   NavigationControl,
@@ -58,6 +63,8 @@ function Maps({ myData }) {
     if (Dimension == "3D") {
       setDimension("2D");
 
+      setViewport({ ...viewport, pitch: 40.5 });
+
       setRenderLayers([
         new HexagonLayer({
           id: "hexagon-layer",
@@ -80,19 +87,20 @@ function Maps({ myData }) {
         })
       ]);
     } else {
+      setViewport({ ...viewport, pitch: 0 });
       setRenderLayers([
         new HeatmapLayer({
           data,
           id: "heatmp-layer",
           pickable: false,
+          elevationRange: [0, 3000],
           getPosition: d => [d[0], d[1]],
           getWeight: 1,
           radiusPixels,
           intensity,
           threshold,
           pickable: true,
-          autoHighlight: true,
-          onHover: true
+          autoHighlight: true
         })
       ]);
       setDimension("3D");
