@@ -1,22 +1,64 @@
 import React from "react";
 import firebase from "../../../firebase.js";
-//import "./Data.scss";
+import "../Data.scss";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
 
-export const DataInput = ({
+export const WeekInput = ({
   myData,
   dateFrom,
   dateTo,
+  timeInterval,
   timeFrom,
   timeTo,
-  seriesName
+ // seriesName
 }) => {
+
   //dette ellementet render en graf med som sammler all data for en node pr uke
   //hvis timeFrom og timeTo ineholder data skal dette tas hensyn til eller ikke.
   //seriesName er navnet på grafhen
 
   const det = [];
+ 
+  let isMonth = false;
+  let tittelen = "uker";
+  let typeXakse = "category";
+
+  const date = new Date(1313564400000);
+  const month = date.getMonth();
+
+  function getWeekNumber(date) {
+    //ikke sikker på om denne funker for alle edgecaser
+    var d = new Date(+date);
+    d.setHours(0, 0, 0);
+    d.setDate(d.getDate() + 4 - (d.getDay() || 7));
+    return Math.ceil(
+      ((d - new Date(d.getFullYear(), 0, 1)) / 8.64e7 + 1) / 7
+    );
+  }
+
+  var day = dateFrom * 1000;
+  var dayAdd1 = day + 24 * 60 * 60 * 1000;
+
+  while (day <= dateTo * 1000) {
+    //så lenge starten av uken er inne i ønsket intervall
+    var uke = getWeekNumber(day);
+    var birdCounting = 0;
+    while (getWeekNumber(day) == uke && day <= dateTo * 1000) {
+      //så lenge dagen vi ser på fortsatt er inne i samme uke og i gyldighetsområdet
+      for (var i = 0; i < myData.length; ++i) {
+        const oneDate = myData[i].TimeStamp * 1000;
+        if (oneDate >= day+timeFrom*1000 && day+timeTo*1000 >= oneDate) {//innenfor riktig tidsintervall
+          ++birdCounting; // øker tellevariabelen med 1
+        }
+      }
+      day = dayAdd1; //ser på neste dag
+      dayAdd1 += 24 * 60 * 60 * 1000; //øker neste dag med en
+    }
+    var ukenavn = "Uke " + uke;
+    det.push([ukenavn, birdCounting]);
+  }
+
 
   const options = {
     chart: {

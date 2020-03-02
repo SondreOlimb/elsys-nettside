@@ -1,32 +1,46 @@
 import React from "react";
 import firebase from "../../../firebase.js";
 //import "./Data.scss";
+import "../Data.scss";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
 
-export const DataInput = ({
+export const DayInput = ({
   myData,
+  timeInterval,
   dateFrom,
   dateTo,
   timeFrom,
   timeTo,
-  seriesName
+  //seriesName
 }) => {
+
+  const det = [];
+
+  let tittelen = "Dag"; //brukes til å sette riktig tittel på grafen
+  let typeXakse = "datetime"; //brukes til å få riktig indeksering på x-aksen
+  let isMonth = false;
+
+  //tror disse kan fjernes
+  const date = new Date(1313564400000);
+  const month = date.getMonth();
+
+
   //dette ellementet render en graf med som sammler all data for en node pr dag
   //hvis timeFrom og timeTo ineholder data skal dette tas hensyn til eller ikke.
   //seriesName er navnet på grafhen
 
   //håndterer dag intervaler
-  let day = timeFrom * 1000;
-  let dayAdd1 = timeFrom * 1000 + 24 * 60 * 60 * 1000;
+  let day = dateFrom * 1000;
+  let dayAdd1 = dateFrom * 1000 + 24 * 60 * 60 * 1000;
 
-  while (day <= timeTo * 1000) {
+  while (day <= dateTo * 1000) {
     let countBird = 0;
     for (var i = 0; i < myData.length; i++) {
       //const oneBird = myData[i].Bird;
       const oneDate = myData[i].TimeStamp * 1000;
 
-      if (oneDate >= day && dayAdd1 >= oneDate) {
+      if (oneDate >= day+timeFrom*1000 && day+timeTo*1000 >= oneDate) {//innenfor riktig tidsintervall
         countBird = countBird + 1;
       }
     }

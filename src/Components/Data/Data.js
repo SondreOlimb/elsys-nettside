@@ -1,6 +1,9 @@
 import React from "react";
 import firebase from "../../firebase.js";
 import { DataInput } from "./DataInput";
+import {DayInput} from "./Graph/Day_graph" 
+import {WeekInput} from "./Graph/Week_graph"
+import {MonthInput} from "./Graph/Month_graph"
 
 import "./Data.scss";
 
@@ -16,6 +19,10 @@ function Data() {
   nrBird = Data;
   const [correctObs, setCorrectObs] = React.useState([{ id: 1 }]);
   const [myButtons, setMyButtons] = React.useState([]);
+
+  let dayOpenNow = -1; //vindu ikke oppe: -1. vindu oppe: 1
+  let weekOpenNow = -1;
+  let monthOpenNow = -1; //vinduet er til å begynne med ikke oppe
 
   for (var i = 0; i < nrBird.length; i++) {
     x.push(parseInt(Data[i].Bird));
@@ -59,6 +66,7 @@ function Data() {
   const setMonth = () => {
     setMyButtons([...myButtons, 3]);
   };
+
 
   return (
     <div className="Data">
@@ -112,34 +120,59 @@ function Data() {
           type="time"
           id="appt"
           name="appt"
-          valueAsNumber={timeTo}
-          min="00:00"
-          max="23:59"
-          required
-          onChange={e => setTimeTo(e.target.valueAsNumber / 1000)}
-        ></input>
-        <input
-          type="time"
-          id="appt"
-          name="appt"
           valueAsNumber={timeFrom}
           min="00:00"
           max="23:59"
           required
           onChange={e => setTimeFrom(e.target.valueAsNumber / 1000)}
         ></input>
+        <input
+          type="time"
+          id="appt"
+          name="appt"
+          valueAsNumber={timeTo}
+          min="00:00"
+          max="23:59"
+          required
+          onChange={e => setTimeTo(e.target.valueAsNumber / 1000)}
+        ></input>
       </div>
       <div className="Wrapper">
         {myButtons.map(timeInterval => (
           <div className="Card">
-            <div className="TheChart" id="chart" key={correctObs.id}>
-              <DataInput
+          <div className="TheChart" id="chart" key={correctObs.id}>
+            { (() => {
+            switch(timeInterval){
+              case 1:
+                  return <DayInput
+                  myData={correctObs}
+                  timeInterval={timeInterval}
+                  dateFrom={dateFrom}
+                  dateTo = {dateTo}
+                  timeFrom={timeFrom} //gi disse en defaultverdi
+                  timeTo={timeTo}
+                  />
+              case 2:
+                return <WeekInput
+                myData={correctObs}
+                timeInterval={timeInterval} //det er i timeinterval 1/2/3 fra button ligger?
+                dateFrom={dateFrom}
+                dateTo = {dateTo}
+                timeFrom={timeFrom} //gi disse en defaultverdi
+                timeTo={timeTo}
+              />
+              case 3:
+                return <MonthInput
                 myData={correctObs}
                 timeInterval={timeInterval}
-                timeFrom={dateFrom}
-                timeTo={dateTo}
+                dateFrom={dateFrom}
+                dateTo = {dateTo}
+                timeFrom={timeFrom} //gi disse en defaultverdi
+                timeTo={timeTo}
               />
-            </div>
+            }
+          }) ()}
+          </div>
           </div>
         ))}
       </div>
@@ -148,3 +181,8 @@ function Data() {
 }
 
 export default Data;
+
+
+//fjernes igjen ved klikk
+//kunne legge inn spesifikke start/slutt-tidspunkt. DONE
+//Hente fra flere noder, vil at alle noder skal legge seg inn i samme graf (for lettere sammenlign). 
