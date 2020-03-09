@@ -11,22 +11,27 @@ import MapsNodes from "./Elements/MapsElement/MapsNodes";
 
 function Default() {
   const [Node, setNode] = React.useState([]);
-  React.useEffect(() => {
-    const intData2 = [];
-    const db = firebase.firestore();
-    return db
-      .collection("Unit")
-      .doc("Nodes")
-      .collection("Nodes")
-      .onSnapshot(snapsshot => {
-        let intData = [];
-        snapsshot.forEach(doc => intData.push({ ...doc.data(), id: doc.id }));
-        for (var i = 0; i < intData[0].Node.length; i++) {
-          intData2.push(intData[0].Node[i]);
-        }
 
-        setNode(intData2);
-      });
+  React.useEffect(() => {
+    const fetchData = async () => {
+      let intData2;
+      const intData3 = [];
+      const db = firebase.firestore();
+      const data = await db
+        .collection("Unit")
+        .doc("Nodes")
+        .collection("Nodes")
+        .get();
+      intData2 = data.docs.map(doc => ({ ...doc.data(), id: doc.id }));
+      for (var i = 0; i < intData2[0].Node.length; i++) {
+        intData3.push(intData2[0].Node[i]);
+      }
+
+      console.log(intData3);
+
+      setNode(intData3);
+    };
+    fetchData();
   }, []);
 
   let myNodes;

@@ -1,9 +1,9 @@
 import React from "react";
 import firebase from "../../firebase.js";
 import { DataInput } from "./DataInput";
-import {DayInput} from "./Graph/Day_graph" 
-import {WeekInput} from "./Graph/Week_graph"
-import {MonthInput} from "./Graph/Month_graph"
+import { DayInput } from "./Graph/Day_graph";
+import { WeekInput } from "./Graph/Week_graph";
+import { MonthInput } from "./Graph/Month_graph";
 
 import "./Data.scss";
 
@@ -12,8 +12,8 @@ function Data() {
   const [newData, setNewData] = React.useState();
   const [dateFrom, setDateFrom] = React.useState();
   const [dateTo, setDateTo] = React.useState();
-  const [timeFrom, setTimeFrom] = React.useState();
-  const [timeTo, setTimeTo] = React.useState();
+  const [timeFrom, setTimeFrom] = React.useState(0);
+  const [timeTo, setTimeTo] = React.useState(60 * 60 * 24 - 61);
   let nrBird = [];
   let x = [];
   nrBird = Data;
@@ -45,6 +45,7 @@ function Data() {
 
   const setTime = () => {
     let intData = [];
+    setMyButtons([...myButtons, 1]);
 
     for (var i = 0; i < Data.length; i++) {
       if (Data[i].TimeStamp >= dateFrom && Data[i].TimeStamp <= dateTo) {
@@ -66,7 +67,6 @@ function Data() {
   const setMonth = () => {
     setMyButtons([...myButtons, 3]);
   };
-
 
   return (
     <div className="Data">
@@ -140,39 +140,45 @@ function Data() {
       <div className="Wrapper">
         {myButtons.map(timeInterval => (
           <div className="Card">
-          <div className="TheChart" id="chart" key={correctObs.id}>
-            { (() => {
-            switch(timeInterval){
-              case 1:
-                  return <DayInput
-                  myData={correctObs}
-                  timeInterval={timeInterval}
-                  dateFrom={dateFrom}
-                  dateTo = {dateTo}
-                  timeFrom={timeFrom} //gi disse en defaultverdi
-                  timeTo={timeTo}
-                  />
-              case 2:
-                return <WeekInput
-                myData={correctObs}
-                timeInterval={timeInterval} //det er i timeinterval 1/2/3 fra button ligger?
-                dateFrom={dateFrom}
-                dateTo = {dateTo}
-                timeFrom={timeFrom} //gi disse en defaultverdi
-                timeTo={timeTo}
-              />
-              case 3:
-                return <MonthInput
-                myData={correctObs}
-                timeInterval={timeInterval}
-                dateFrom={dateFrom}
-                dateTo = {dateTo}
-                timeFrom={timeFrom} //gi disse en defaultverdi
-                timeTo={timeTo}
-              />
-            }
-          }) ()}
-          </div>
+            <div className="TheChart" id="chart" key={correctObs.id}>
+              {(() => {
+                switch (timeInterval) {
+                  case 1:
+                    return (
+                      <DayInput
+                        myData={correctObs}
+                        timeInterval={timeInterval}
+                        dateFrom={dateFrom}
+                        dateTo={dateTo}
+                        timeFrom={timeFrom} //gi disse en defaultverdi
+                        timeTo={timeTo}
+                      />
+                    );
+                  case 2:
+                    return (
+                      <WeekInput
+                        myData={correctObs}
+                        timeInterval={timeInterval} //det er i timeinterval 1/2/3 fra button ligger?
+                        dateFrom={dateFrom}
+                        dateTo={dateTo}
+                        timeFrom={timeFrom} //gi disse en defaultverdi
+                        timeTo={timeTo}
+                      />
+                    );
+                  case 3:
+                    return (
+                      <MonthInput
+                        myData={correctObs}
+                        timeInterval={timeInterval}
+                        dateFrom={dateFrom}
+                        dateTo={dateTo}
+                        timeFrom={timeFrom} //gi disse en defaultverdi
+                        timeTo={timeTo}
+                      />
+                    );
+                }
+              })()}
+            </div>
           </div>
         ))}
       </div>
@@ -182,7 +188,6 @@ function Data() {
 
 export default Data;
 
-
 //fjernes igjen ved klikk
 //kunne legge inn spesifikke start/slutt-tidspunkt. DONE
-//Hente fra flere noder, vil at alle noder skal legge seg inn i samme graf (for lettere sammenlign). 
+//Hente fra flere noder, vil at alle noder skal legge seg inn i samme graf (for lettere sammenlign).

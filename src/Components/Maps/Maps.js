@@ -1,4 +1,5 @@
 import React, { Component, useState } from "react";
+import { Deck } from "@deck.gl/core";
 import { render } from "react-dom";
 import DeckGL, {
   ArcLayer,
@@ -80,10 +81,6 @@ function Maps({ myData }) {
           threshold,
           pickable: true,
           autoHighlight: true
-
-          /* Update tooltip
-             http://deck.gl/#/documentation/developer-guide/adding-interactivity?section=example-display-a-tooltip-for-hovered-object
-          */
         })
       ]);
     } else {
@@ -100,7 +97,8 @@ function Maps({ myData }) {
           intensity,
           threshold,
           pickable: true,
-          autoHighlight: true
+          autoHighlight: true,
+          onHover: info => "hello"
         })
       ]);
       setDimension("3D");
