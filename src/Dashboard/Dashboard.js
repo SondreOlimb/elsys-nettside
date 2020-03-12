@@ -7,6 +7,7 @@ import Maps from "../Components/Maps/Maps";
 import Default from "../Components/Default/Default";
 import Data from "../Components/Data/Data";
 import DataViz from "../Components/Data/DataViz";
+import Live from "../Components/Live/Live";
 import {
   BrowserRouter as Router,
   Switch,
@@ -61,6 +62,11 @@ class Dashboard extends Component {
                     path="/dashboard/data"
                     component={Data}
                     className="Data"
+                  />
+                  <Route
+                    path="/dashboard/live"
+                    component={Live}
+                    className="Live"
                   />
                 </Switch>
               </div>

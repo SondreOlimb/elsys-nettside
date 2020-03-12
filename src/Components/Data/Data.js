@@ -68,6 +68,15 @@ function Data() {
     setMyButtons([...myButtons, 3]);
   };
 
+  var options;
+  var options2 = [];
+  if (true) {
+    for (var i = 0; i < 4; i++)
+      options = <option value="Node1">Node {i}</option>;
+    options2.push(options);
+  }
+  console.log(options2);
+
   return (
     <div className="Data">
       <div className="Dato">
@@ -75,9 +84,7 @@ function Data() {
           <label for="Node">Choose a node:</label>
 
           <select className="nodeSelect" id="Node">
-            <option value="Node 1">Node 1</option>
-            <option value="Node 2">Node 2</option>
-            <option value="Node 3">Node 3</option>
+            {options2}
           </select>
         </div>
         <div className="datoBoks">
