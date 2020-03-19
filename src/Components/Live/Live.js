@@ -19,7 +19,7 @@ function Live() {
         let intdata2 = [];
 
         for (var i = intData.length - 5; i < intData.length; i++) {
-          intdata2.push([intData[i].TimeStamp * 1000, 1]);
+          intdata2.push([Math.round(intData[i].TimeStamp * 1000), 1]);
         }
 
         let d = new Date();
@@ -28,7 +28,6 @@ function Live() {
         setData(intdata2);
       });
   }, []);
-  console.log(Data);
 
   const options = {
     chart: {
@@ -274,6 +273,8 @@ function Live() {
   Highcharts.setOptions(Highcharts.theme);
 
   let load;
+  let print;
+  let saveDate = [];
   if (Data.length > 0) {
     load = (
       <HighchartsReact
@@ -282,11 +283,73 @@ function Live() {
         containerProps={{ style: { width: "100%" } }}
       />
     );
+
+    for (var i = 0; i < Data.length; i++) {
+      var months_arr = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec"
+      ];
+
+      // Convert timestamp to milliseconds
+      var date = new Date(Data[i][0]);
+
+      // Year
+      var year = date.getFullYear();
+
+      // Month
+      var month = months_arr[date.getMonth()];
+
+      // Day
+      var day = date.getDate();
+
+      // Hours
+      var hours = date.getHours();
+
+      // Minutes
+      var minutes = "0" + date.getMinutes();
+
+      // Seconds
+      var seconds = "0" + date.getSeconds();
+
+      // Display date time in MM-dd-yyyy h:m:s format
+      var convdataTime =
+        day +
+        "-" +
+        month +
+        "-" +
+        year +
+        " " +
+        hours +
+        ":" +
+        minutes.substr(-2) +
+        ":" +
+        seconds.substr(-2) +
+        " Activity: " +
+        Data[i][1];
+      saveDate.push(convdataTime);
+    }
+
+    print = saveDate.map(item => <p>{item}</p>);
   } else {
     load = "Loading...";
   }
 
-  return <div className="Data">{load}</div>;
+  return (
+    <div className="Data">
+      {load}
+      {print}
+    </div>
+  );
 }
 
 export default Live;

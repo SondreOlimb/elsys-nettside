@@ -40,9 +40,6 @@ function Navbar() {
           <Link to="/dashboard/data" className="Nav-item">
             Data
           </Link>
-          <Link to="/dashboard/live" className="Nav-item">
-            Live
-          </Link>
         </div>
         <div className="seperator">
           <div className="Nav-item">
