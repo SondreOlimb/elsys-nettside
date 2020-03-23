@@ -12,7 +12,8 @@ import ReactMapGL, {
   NavigationControl,
   GeolocateControl,
   FullscreenControl,
-  MapState
+  Marker,
+  Popup
 } from "react-map-gl";
 import "./Maps.scss";
 import { mapData, mapData2 } from "./MapData";

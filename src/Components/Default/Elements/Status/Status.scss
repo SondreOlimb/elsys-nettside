@@ -1,0 +1,41 @@
+@import "../../../../styles";
+
+.StatusCard {
+  margin: 0;
+  height: auto;
+  //padding-top: 0;
+  background-color: map-get($colors, Component);
+  border: 1px solid black;
+  font-size: 70%;
+
+  .SubCard {
+    background-color: lighten(map-get($colors, Component), 10%);
+    //border: 1px solid red;
+    margin: 1.5%;
+    padding: 0.5%;
+    font-size: 70%;
+
+    .NodeLine {
+      display: flex;
+      justify-content: center;
+
+      .Circle {
+        background-color: red;
+        border-radius: 50%;
+        height: 1rem;
+        width: 1rem;
+        align-self: center;
+        margin-left: 1%;
+      }
+
+      .Circle2 {
+        background-color: green;
+        border-radius: 50%;
+        height: 1rem;
+        width: 1rem;
+        align-self: center;
+        margin-left: 1%;
+      }
+    }
+  }
+}

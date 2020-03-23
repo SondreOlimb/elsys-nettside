@@ -31,14 +31,23 @@ function Navbar() {
           </button>
 
           <Link to="/dashboard/" className="Nav-item">
+            <span className="tooltip">
+              This element gives an overview off all the nodes.
+            </span>
             Dash
           </Link>
 
           <Link to="/dashboard/maps" className="Nav-item">
             Maps
+            <span className="tooltip">
+              Map of all the activity on all the Nodes.
+            </span>
           </Link>
           <Link to="/dashboard/data" className="Nav-item">
             Data
+            <span className="tooltip">
+              Request data for a given time intervall.
+            </span>
           </Link>
         </div>
         <div className="seperator">

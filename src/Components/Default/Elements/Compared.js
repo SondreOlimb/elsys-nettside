@@ -30,7 +30,7 @@ function Compared({ myData, timeInterval, timeFrom, timeTo }) {
   let Wait;
 
   if (Data.length == myData.length) {
-    console.log(Data);
+    //console.log(Data);
     Wait = <TimeMonth myData={Data} />;
   } else {
     Wait = <p>Loading...</p>;

@@ -58,7 +58,6 @@ function Default() {
       <div className="element2">{myNodes}</div>
       <div className="element3">{myMaps}</div>
       <div className="element1">{myStatus}</div>
-      <div className="element4">Loading...</div>
     </div>
   );
 }

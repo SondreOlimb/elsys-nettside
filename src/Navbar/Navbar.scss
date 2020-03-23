@@ -100,6 +100,39 @@
       border-color: ligthen(map-get($colors, Component), 5%);
     }
   }
+
+  .Nav-item .tooltip::after {
+    content: " ";
+    position: absolute;
+    top: 50%;
+
+    right: 100%;
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent map-get($colors, Component) transparent
+      transparent;
+  }
+  .Nav-item .tooltip {
+    visibility: hidden;
+    width: 120px;
+    background-color: map-get($colors, Component);
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    font-size: 0.9rem;
+    padding: 1rem;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    margin-left: 10%;
+  }
+
+  .Nav-item:hover .tooltip {
+    visibility: visible;
+  }
 }
 
 .signout {

@@ -28,7 +28,7 @@ function MapsNodes({ myData, timeInterval, timeFrom, timeTo }) {
   let Wait;
 
   if (Data.length == myData.length) {
-    console.log(Data);
+    //console.log(Data);
     Wait = <MapsData myData={Data} />;
   } else {
     Wait = <p>Loading</p>;

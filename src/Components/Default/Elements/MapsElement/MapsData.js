@@ -34,7 +34,7 @@ export default function MapsData({ myData }) {
   }, []);
 
   //<Chart myData={Data} timeFrom={dateFrom} timeTo={dateTo} />
-  console.log(mapsData.length);
+  //console.log(mapsData.length);
   let Wait;
   if (mapsData.length > 0) {
     Wait = <Maps myData={mapsData[0]} />;
