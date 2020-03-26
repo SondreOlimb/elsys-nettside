@@ -11,12 +11,17 @@ export default function MapsData({ myData }) {
   const dateFrom = dateTo - 60 * 60 * 24 * 30;
 
   const [mapsData, setMapsData] = React.useState([]);
+  const [nodeInfo, setNodeInfo] = React.useState([]);
   let intData = [];
   let intdata;
   React.useEffect(() => {
     for (let i = 0; i < myData.length; i++) {
       //setData(Data => [...Data, { name: myData[i], y: [] }])
       const intName = myData[i].name;
+      const nodeCord = setNodeInfo(nodeInfo => [
+        ...nodeInfo,
+        { name: intName, nodeCord: myData[i].y[0].Cord }
+      ]);
 
       const length = myData[i].y.length;
 
@@ -33,11 +38,9 @@ export default function MapsData({ myData }) {
     setMapsData(mapsData => [...mapsData, intData]);
   }, []);
 
-  //<Chart myData={Data} timeFrom={dateFrom} timeTo={dateTo} />
-  //console.log(mapsData.length);
   let Wait;
   if (mapsData.length > 0) {
-    Wait = <Maps myData={mapsData[0]} />;
+    Wait = <Maps myData={mapsData[0]} nodes={nodeInfo} />;
   } else {
     Wait = "Loading...";
   }

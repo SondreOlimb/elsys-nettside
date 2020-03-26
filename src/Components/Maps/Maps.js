@@ -26,7 +26,7 @@ const TOKEN =
   "pk.eyJ1Ijoib2xpbWIiLCJhIjoiY2s2NndxaG05MDJkajNqc2RoZDY4bjhjcyJ9.qYYAaBGI80WGqTHL6NrP5A"; // Set your mapbox token here
 const DATA_URL = mapData;
 
-function Maps({ myData }) {
+function Maps({ myData, nodes }) {
   const [layerData, setData] = React.useState([]);
   const [testData, setTestData] = React.useState(mapData);
 
@@ -43,6 +43,7 @@ function Maps({ myData }) {
     longitude: 10.40262,
     zoom: 12
   });
+  console.log(nodes);
 
   const [renderLayers, setRenderLayers] = useState([
     new HeatmapLayer({
@@ -60,6 +61,10 @@ function Maps({ myData }) {
   ]);
 
   const [Dimension, setDimension] = useState("3D");
+
+  const onClickMap = () => {
+    console.log("test");
+  };
 
   const setLayer = () => {
     if (Dimension == "3D") {
@@ -105,6 +110,25 @@ function Maps({ myData }) {
       setDimension("3D");
     }
   };
+  const Wait = [];
+  for (let i = 0; i < nodes.length; i++) {
+    Wait.push(
+      <Marker
+        latitude={nodes[i].nodeCord[1]}
+        longitude={nodes[i].nodeCord[0]}
+        offsetLeft={-20}
+        offsetTop={-10}
+      >
+        <div className="nodeMarker">
+          <span className="tooltip">
+            <h3>{nodes[i].name}</h3>
+            <p>Lat: {nodes[i].nodeCord[1]} </p>
+            <p>Long: {nodes[i].nodeCord[0]} </p>
+          </span>
+        </div>
+      </Marker>
+    );
+  }
 
   return (
     <div className="Maps">
@@ -113,6 +137,7 @@ function Maps({ myData }) {
         onViewportChange={setViewport}
         mapboxApiAccessToken={TOKEN}
         mapStyle={"mapbox://styles/mapbox/dark-v9"}
+        onClick={onClickMap}
       >
         <DeckGL viewState={viewport} layers={renderLayers} />
         <div style={{ position: "absolute", right: 0 }}>
@@ -127,6 +152,7 @@ function Maps({ myData }) {
             {Dimension}
           </button>
         </div>
+        {Wait}
       </ReactMapGL>
     </div>
   );
