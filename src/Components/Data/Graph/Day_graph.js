@@ -6,7 +6,15 @@ import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
 
 export const DayInput = ({
-  myData,
+  
+  //myData,
+
+  nodesToDisplay,
+  dict,
+  chosenNode,
+  
+
+
   timeInterval,
   dateFrom,
   dateTo,
@@ -14,16 +22,17 @@ export const DayInput = ({
   timeTo,
   //seriesName
 }) => {
+  
+  let myNode = [];
+  let det = [];
 
-  const det = [];
-
-  let tittelen = "Dag"; //brukes til å sette riktig tittel på grafen
+  let tittelen = "Day"; //brukes til å sette riktig tittel på grafen
   let typeXakse = "datetime"; //brukes til å få riktig indeksering på x-aksen
-  let isMonth = false;
+  //let isMonth = false;
 
   //tror disse kan fjernes
-  const date = new Date(1313564400000);
-  const month = date.getMonth();
+  //const date = new Date(1313564400000);
+  //const month = date.getMonth();
 
 
   //dette ellementet render en graf med som sammler all data for en node pr dag
@@ -31,24 +40,34 @@ export const DayInput = ({
   //seriesName er navnet på grafhen
 
   //håndterer dag intervaler
+  for (let j = 0; j<nodesToDisplay.length; ++j){
+    let Data = [];
+    for(var k=0;k<dict.length;k++){
+      if(dict[k]['nodeName'] == nodesToDisplay[j]){
+        Data = dict[k]['nodeData'];
+      }
+    }
+
   let day = dateFrom * 1000;
   let dayAdd1 = dateFrom * 1000 + 24 * 60 * 60 * 1000;
 
   while (day <= dateTo * 1000) {
     let countBird = 0;
-    for (var i = 0; i < myData.length; i++) {
-      //const oneBird = myData[i].Bird;
-      const oneDate = myData[i].TimeStamp * 1000;
-
-      if (oneDate >= day+timeFrom*1000 && day+timeTo*1000 >= oneDate) {//innenfor riktig tidsintervall
-        countBird = countBird + 1;
+      for (var i = 0; i < Data.length; i++) {
+        const oneDate = Data[i].TimeStamp * 1000;
+        if (oneDate >= day+timeFrom*1000 && day+timeTo*1000 >= oneDate) {//innenfor riktig tidsintervall && Data[i].TimeStamp >= dateFrom && Data[i].TimeStamp <= dateTo
+          countBird = countBird + 1;
+        }
       }
-    }
-
-    det.push([day, countBird]);
-    day = dayAdd1;
-    dayAdd1 = dayAdd1 + 24 * 60 * 60 * 1000;
+      
+      det.push([day, countBird]);
+      day = dayAdd1;
+      dayAdd1 = dayAdd1 + 24 * 60 * 60 * 1000;
   }
+  const test = det;
+  det = [];
+  myNode.push({name: nodesToDisplay[j], data: test});
+}
 
   const options = {
     chart: {
@@ -77,12 +96,7 @@ export const DayInput = ({
         enableMouseTracking: true
       }
     },
-    series: [
-      {
-        name: "Bird activity",
-        data: det
-      }
-    ]
+    series: myNode
   };
 
   Highcharts.theme = {

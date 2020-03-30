@@ -14,33 +14,41 @@ function Data() {
   const [dateTo, setDateTo] = React.useState();
   const [timeFrom, setTimeFrom] = React.useState(0);
   const [timeTo, setTimeTo] = React.useState(60 * 60 * 24 - 61);
+  const [chosenNode, setChosenNode] = React.useState([]);
+  const [dayNodesToDisplay, setDayNodesToDisplay] = React.useState([]); 
+  const [weekNodesToDisplay, setWeekNodesToDisplay] = React.useState([]);
+  const [monthNodesToDisplay, setMonthNodesToDisplay] = React.useState([]);
   let nrBird = [];
   let x = [];
   nrBird = Data;
   const [correctObs, setCorrectObs] = React.useState([{ id: 1 }]);
   const [myButtons, setMyButtons] = React.useState([]);
 
-  let dayOpenNow = -1; //vindu ikke oppe: -1. vindu oppe: 1
-  let weekOpenNow = -1;
-  let monthOpenNow = -1; //vinduet er til å begynne med ikke oppe
+  let dayChart; 
+  let weekChart;
+  let monthChart; 
 
   for (var i = 0; i < nrBird.length; i++) {
     x.push(parseInt(Data[i].Bird));
     //Do something
   }
 
+  const nodene = ["Node1", "Node2", "Node3"]; 
+  
+  const [dict, setDict] = React.useState([]);
   React.useEffect(() => {
     const db = firebase.firestore();
-    return db
-      .collection("Unit")
-      .doc("Node1")
-      .collection("Activity")
-      .onSnapshot(snapsshot => {
-        const intData = [];
-        snapsshot.forEach(doc => intData.push({ ...doc.data(), id: doc.id }));
-
-        setData(intData);
-      });
+    for (let i = 0; i < nodene.length; i++) {
+      db.collection("Unit")
+        .doc(nodene[i])
+        .collection("Activity")
+        .onSnapshot(snapsshot => {
+          let intData = [];
+          snapsshot.forEach(doc => intData.push({ ...doc.data(), id: doc.id }));
+          setDict(dict => [...dict, {nodeName: nodene[i], nodeData: intData}]);
+        });
+    }
+    return;
   }, []);
 
   const setTime = () => {
@@ -59,23 +67,50 @@ function Data() {
   };
 
   const setDay = () => {
-    setMyButtons([...myButtons, 1]);
+    setDayNodesToDisplay([...dayNodesToDisplay, chosenNode]); //add the chosenNode to the existing array of nodes to display
+    if (dayChart){
+      setMyButtons([...myButtons, 0]);
+    }
+    else{
+      setMyButtons([...myButtons, 1]);
+    }
   };
   const setWeek = () => {
-    setMyButtons([...myButtons, 2]);
+    //setMyButtons([...myButtons, 2]);
+    setWeekNodesToDisplay([...weekNodesToDisplay, chosenNode]);
+    if (weekChart){
+      setMyButtons([...myButtons, 0]);
+    }
+    else{
+      setMyButtons([...myButtons, 2]);
+    }
   };
   const setMonth = () => {
-    setMyButtons([...myButtons, 3]);
+    setMonthNodesToDisplay([...monthNodesToDisplay, chosenNode]);
+    if (monthChart){
+      setMyButtons([...myButtons, 0]);
+    }
+    else{
+      setMyButtons([...myButtons, 3]);
+    }
+//    setMyButtons([...myButtons, 3]);
   };
 
   var options;
   var options2 = [];
   if (true) {
-    for (var i = 0; i < 4; i++)
-      options = <option value="Node1">Node {i}</option>;
-    options2.push(options);
+    const startOption = <option value= {"None"} >Choose a node</option>; //i tilfelle noen velger tilbake til "Choose a node" er value her satt til Node1
+    options2.push(startOption);
+    for (var i = 0; i < 3; i++){
+      options = <option value= {nodene[i]} >Node {i+1}</option>;
+      options2.push(options);
+    }
   }
   console.log(options2);
+
+  const handleChangedNode = (event) => {
+    setChosenNode(event.target.value);
+  }
 
   return (
     <div className="Data">
@@ -83,7 +118,7 @@ function Data() {
         <div className="datoBoks">
           <label for="Node">Choose a node:</label>
 
-          <select className="nodeSelect" id="Node">
+          <select className="nodeSelect" id="Node" onChange={e => handleChangedNode(e)}>
             {options2}
           </select>
         </div>
@@ -151,9 +186,12 @@ function Data() {
               {(() => {
                 switch (timeInterval) {
                   case 1:
-                    return (
+                    dayChart= (
                       <DayInput
-                        myData={correctObs}
+                        //myData={correctObs}
+                        nodesToDisplay = {dayNodesToDisplay}
+                        dict = {dict}
+                        chosenNode = {chosenNode}
                         timeInterval={timeInterval}
                         dateFrom={dateFrom}
                         dateTo={dateTo}
@@ -161,28 +199,36 @@ function Data() {
                         timeTo={timeTo}
                       />
                     );
+                    return dayChart;
                   case 2:
-                    return (
-                      <WeekInput
-                        myData={correctObs}
+                      weekChart= (<WeekInput
+                        //myData={correctObs}
+                        nodesToDisplay = {weekNodesToDisplay}
+                        dict = {dict}
+                        chosenNode = {chosenNode}
                         timeInterval={timeInterval} //det er i timeinterval 1/2/3 fra button ligger?
                         dateFrom={dateFrom}
                         dateTo={dateTo}
-                        timeFrom={timeFrom} //gi disse en defaultverdi
+                        timeFrom={timeFrom} 
                         timeTo={timeTo}
                       />
                     );
+                    return weekChart;
                   case 3:
-                    return (
+                    monthChart= (
                       <MonthInput
-                        myData={correctObs}
+                        //myData={correctObs}
+                        nodesToDisplay = {monthNodesToDisplay}
+                        dict = {dict}
+                        chosenNode = {chosenNode}
                         timeInterval={timeInterval}
                         dateFrom={dateFrom}
                         dateTo={dateTo}
-                        timeFrom={timeFrom} //gi disse en defaultverdi
+                        timeFrom={timeFrom} 
                         timeTo={timeTo}
                       />
                     );
+                    return monthChart;
                 }
               })()}
             </div>
@@ -197,4 +243,4 @@ export default Data;
 
 //fjernes igjen ved klikk
 //kunne legge inn spesifikke start/slutt-tidspunkt. DONE
-//Hente fra flere noder, vil at alle noder skal legge seg inn i samme graf (for lettere sammenlign).
+//Hente fra flere noder, vil at alle noder skal legge seg inn i samme graf (for lettere sammenlign). DONE

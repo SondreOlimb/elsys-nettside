@@ -6,51 +6,59 @@ import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
 
 export const MonthInput = ({
-  myData,
+  //myData,
+
+  nodesToDisplay,
+  dict,
+  chosenNode,
+  
+  timeInterval,
   dateFrom,
   dateTo,
-  timeInterval,
   timeFrom,
   timeTo,
- // seriesName
+  //seriesName
 }) => {
   //dette ellementet render en graf med som sammler all data for en node pr dag
   //hvis timeFrom og timeTo ineholder data skal dette tas hensyn til eller ikke.
   //seriesName er navnet på grafhen
 
   
-
-  const det = [];
+  let myNode = [];
+  let det = [];
 
   let tittelen = "month"; //brukes til å sette riktig tittel på grafen
   let typeXakse = "category"; //brukes til å få riktig indeksering på x-aksen
-  let isMonth = true;
+  //let isMonth = true;
 
-  const date = new Date(1313564400000);
-  const month = date.getMonth();
-
-//håndterer måned-intervaler
-tittelen = "month";
-typeXakse = "category";
-isMonth = true;
-
-let day = dateFrom * 1000;
-let dayAdd1 = dateFrom * 1000 + 24 * 60 * 60 * 1000;
-
-const monthNames = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December"
-];
+  //const date = new Date(1313564400000);
+  //const month = date.getMonth();
+  
+  const monthNames = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+  ];
+  
+  for (let j = 0; j<nodesToDisplay.length; ++j){
+    let Data = [];
+    for(var k=0;k<dict.length;k++){
+      if(dict[k]['nodeName'] == nodesToDisplay[j]){
+        Data = dict[k]['nodeData'];
+      }
+    }
+    
+    let day = dateFrom * 1000;
+    let dayAdd1 = dateFrom * 1000 + 24 * 60 * 60 * 1000;
 while (day <= dateTo * 1000) {
   const date = new Date(day);
   var monthNum = date.getMonth();
@@ -58,20 +66,22 @@ while (day <= dateTo * 1000) {
   var dato = new Date(day);
   while (dato.getMonth() == monthNum && day <= dateTo * 1000) {
     //så lenge dagen vi ser på fortsatt er inne i samme måned og i gyldighetsområdet
-    for (var i = 0; i < myData.length; ++i) {
-      const oneDate = myData[i].TimeStamp * 1000;
-      if (oneDate >= day+timeFrom*1000 && day+timeTo*1000 >= oneDate) {//innenfor riktig tidsintervall
-        ++countBird; // øker tellevariabelen med 1
+    for (var i = 0; i < Data.length; ++i) {
+        const oneDate = Data[i].TimeStamp * 1000;
+        if (oneDate >= day+timeFrom*1000 && day+timeTo*1000 >= oneDate) {//innenfor riktig tidsintervall
+          ++countBird; // øker tellevariabelen med 1
+        }
       }
-    }
-    day = dayAdd1; //ser på neste dag
-    dayAdd1 += 24 * 60 * 60 * 1000; //øker neste dag med en
-    dato = new Date(day);
+      day = dayAdd1; //ser på neste dag
+      dayAdd1 += 24 * 60 * 60 * 1000; //øker neste dag med en
+      dato = new Date(day);
   }
   det.push([monthNames[monthNum], countBird]);
 }
-
-
+const test = det;
+det = [];
+myNode.push({name: nodesToDisplay[j], data: test});
+}
   const options = {
     chart: {
       type: "line",
@@ -99,12 +109,7 @@ while (day <= dateTo * 1000) {
         enableMouseTracking: true
       }
     },
-    series: [
-      {
-        name: "Bird activity",
-        data: det
-      }
-    ]
+    series: myNode
   };
 
   Highcharts.theme = {
