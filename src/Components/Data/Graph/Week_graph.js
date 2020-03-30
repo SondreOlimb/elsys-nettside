@@ -5,25 +5,34 @@ import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
 
 export const WeekInput = ({
-  myData,
+  //myData,
+
+  nodesToDisplay,
+  dict,
+  chosenNode,
+  
+
+
+  timeInterval,
   dateFrom,
   dateTo,
-  timeInterval,
   timeFrom,
   timeTo,
- // seriesName
+  //seriesName
 }) => {
 
   //dette ellementet render en graf med som sammler all data for en node pr uke
   //hvis timeFrom og timeTo ineholder data skal dette tas hensyn til eller ikke.
   //seriesName er navnet på grafhen
 
-  const det = [];
+  let myNode = [];
+  let det = [];
  
-  let isMonth = false;
+ // let isMonth = false;
   let tittelen = "uker";
   let typeXakse = "category";
 
+  //Tror dette kan kommenteres ut
   const date = new Date(1313564400000);
   const month = date.getMonth();
 
@@ -37,6 +46,15 @@ export const WeekInput = ({
     );
   }
 
+
+
+for (let j = 0; j<nodesToDisplay.length; ++j){
+    let Data = [];
+    for(var k=0;k<dict.length;k++){
+      if(dict[k]['nodeName'] == nodesToDisplay[j]){
+        Data = dict[k]['nodeData'];
+      }
+    }
   var day = dateFrom * 1000;
   var dayAdd1 = day + 24 * 60 * 60 * 1000;
 
@@ -46,8 +64,8 @@ export const WeekInput = ({
     var birdCounting = 0;
     while (getWeekNumber(day) == uke && day <= dateTo * 1000) {
       //så lenge dagen vi ser på fortsatt er inne i samme uke og i gyldighetsområdet
-      for (var i = 0; i < myData.length; ++i) {
-        const oneDate = myData[i].TimeStamp * 1000;
+      for (var i = 0; i < Data.length; ++i) {
+        const oneDate = Data[i].TimeStamp * 1000;
         if (oneDate >= day+timeFrom*1000 && day+timeTo*1000 >= oneDate) {//innenfor riktig tidsintervall
           ++birdCounting; // øker tellevariabelen med 1
         }
@@ -58,6 +76,10 @@ export const WeekInput = ({
     var ukenavn = "Uke " + uke;
     det.push([ukenavn, birdCounting]);
   }
+  const test = det;
+  det = [];
+  myNode.push({name: nodesToDisplay[j], data: test});
+}
 
 
   const options = {
@@ -87,12 +109,7 @@ export const WeekInput = ({
         enableMouseTracking: true
       }
     },
-    series: [
-      {
-        name: "Bird activity",
-        data: det
-      }
-    ]
+    series: myNode
   };
 
   Highcharts.theme = {
