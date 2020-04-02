@@ -5,12 +5,20 @@ import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
 
 export const WeekInput = ({
+  //myData,
+
   nodesToDisplay,
   dict,
+  chosenNode,
+  
+
+
+  timeInterval,
   dateFrom,
   dateTo,
   timeFrom,
   timeTo,
+  //seriesName
 }) => {
 
   //dette ellementet render en graf med som sammler all data for en node pr uke
@@ -20,7 +28,8 @@ export const WeekInput = ({
   let myNode = [];
   let det = [];
  
-  let tittelen = "Week";
+ // let isMonth = false;
+  let tittelen = "uker";
   let typeXakse = "category";
 
   //Tror dette kan kommenteres ut
@@ -88,6 +97,7 @@ for (let j = 0; j<nodesToDisplay.length; ++j){
       textColor: "#000000"
     },
     title: {
+      //text: "Birds",
       text: tittelen,
       color: "#000000"
     },
