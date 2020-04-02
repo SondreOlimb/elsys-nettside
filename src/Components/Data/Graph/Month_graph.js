@@ -6,18 +6,12 @@ import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
 
 export const MonthInput = ({
-  //myData,
-
   nodesToDisplay,
   dict,
-  chosenNode,
-  
-  timeInterval,
   dateFrom,
   dateTo,
   timeFrom,
   timeTo,
-  //seriesName
 }) => {
   //dette ellementet render en graf med som sammler all data for en node pr dag
   //hvis timeFrom og timeTo ineholder data skal dette tas hensyn til eller ikke.
@@ -90,14 +84,13 @@ myNode.push({name: nodesToDisplay[j], data: test});
       textColor: "#000000"
     },
     xAxis: {
-      allowDecimals: false, //vil ikke ha halve uker
+      allowDecimals: false, //vil ikke ha halve måneder
       type: typeXakse
     },
     style: {
       textColor: "#000000"
     },
     title: {
-      //text: "Birds",
       text: tittelen,
       color: "#000000"
     },
