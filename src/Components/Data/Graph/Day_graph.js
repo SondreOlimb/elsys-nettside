@@ -1,26 +1,16 @@
 import React from "react";
 import firebase from "../../../firebase.js";
-//import "./Data.scss";
 import "../Data.scss";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
 
 export const DayInput = ({
-  
-  //myData,
-
   nodesToDisplay,
   dict,
-  chosenNode,
-  
-
-
-  timeInterval,
   dateFrom,
   dateTo,
   timeFrom,
   timeTo,
-  //seriesName
 }) => {
   
   let myNode = [];
@@ -28,7 +18,6 @@ export const DayInput = ({
 
   let tittelen = "Day"; //brukes til å sette riktig tittel på grafen
   let typeXakse = "datetime"; //brukes til å få riktig indeksering på x-aksen
-  //let isMonth = false;
 
   //tror disse kan fjernes
   //const date = new Date(1313564400000);
@@ -48,26 +37,26 @@ export const DayInput = ({
       }
     }
 
-  let day = dateFrom * 1000;
-  let dayAdd1 = dateFrom * 1000 + 24 * 60 * 60 * 1000;
+    let day = dateFrom * 1000;
+    let dayAdd1 = dateFrom * 1000 + 24 * 60 * 60 * 1000;
 
-  while (day <= dateTo * 1000) {
-    let countBird = 0;
-      for (var i = 0; i < Data.length; i++) {
-        const oneDate = Data[i].TimeStamp * 1000;
-        if (oneDate >= day+timeFrom*1000 && day+timeTo*1000 >= oneDate) {//innenfor riktig tidsintervall && Data[i].TimeStamp >= dateFrom && Data[i].TimeStamp <= dateTo
-          countBird = countBird + 1;
+    while (day <= dateTo * 1000) {
+      let countBird = 0;
+        for (var i = 0; i < Data.length; i++) {
+          const oneDate = Data[i].TimeStamp * 1000;
+          if (oneDate >= day+timeFrom*1000 && day+timeTo*1000 >= oneDate) {
+            countBird = countBird + 1;
+          }
         }
-      }
       
       det.push([day, countBird]);
       day = dayAdd1;
       dayAdd1 = dayAdd1 + 24 * 60 * 60 * 1000;
+    }
+    const test = det;
+    det = [];
+    myNode.push({name: nodesToDisplay[j], data: test});
   }
-  const test = det;
-  det = [];
-  myNode.push({name: nodesToDisplay[j], data: test});
-}
 
   const options = {
     chart: {
@@ -77,14 +66,13 @@ export const DayInput = ({
       textColor: "#000000"
     },
     xAxis: {
-      allowDecimals: false, //vil ikke ha halve uker
+      allowDecimals: false, //vil ikke ha halve dager
       type: typeXakse
     },
     style: {
       textColor: "#000000"
     },
     title: {
-      //text: "Birds",
       text: tittelen,
       color: "#000000"
     },

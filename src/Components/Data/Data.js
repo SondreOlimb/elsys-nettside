@@ -1,6 +1,5 @@
 import React from "react";
 import firebase from "../../firebase.js";
-import { DataInput } from "./DataInput";
 import { DayInput } from "./Graph/Day_graph";
 import { WeekInput } from "./Graph/Week_graph";
 import { MonthInput } from "./Graph/Month_graph";
@@ -8,32 +7,26 @@ import { MonthInput } from "./Graph/Month_graph";
 import "./Data.scss";
 
 function Data() {
-  const [Data, setData] = React.useState([]);
-  const [newData, setNewData] = React.useState();
   const [dateFrom, setDateFrom] = React.useState();
   const [dateTo, setDateTo] = React.useState();
   const [timeFrom, setTimeFrom] = React.useState(0);
   const [timeTo, setTimeTo] = React.useState(60 * 60 * 24 - 61);
+  
   const [chosenNode, setChosenNode] = React.useState([]);
   const [dayNodesToDisplay, setDayNodesToDisplay] = React.useState([]); 
   const [weekNodesToDisplay, setWeekNodesToDisplay] = React.useState([]);
   const [monthNodesToDisplay, setMonthNodesToDisplay] = React.useState([]);
-  let nrBird = [];
-  let x = [];
-  nrBird = Data;
-  const [correctObs, setCorrectObs] = React.useState([{ id: 1 }]);
+  
   const [myButtons, setMyButtons] = React.useState([]);
+  
+  
 
-  let dayChart; 
+  //Values that indicate if the chart is open
+  let dayChart;
   let weekChart;
   let monthChart; 
 
-  for (var i = 0; i < nrBird.length; i++) {
-    x.push(parseInt(Data[i].Bird));
-    //Do something
-  }
-
-  const nodene = ["Node1", "Node2", "Node3"]; 
+  const nodene = ["Node1", "Node2", "Node3"]; //The name of the users nodes.
   
   const [dict, setDict] = React.useState([]);
   React.useEffect(() => {
@@ -51,61 +44,79 @@ function Data() {
     return;
   }, []);
 
-  const setTime = () => {
-    let intData = [];
-    setMyButtons([...myButtons, 1]);
-
-    for (var i = 0; i < Data.length; i++) {
-      if (Data[i].TimeStamp >= dateFrom && Data[i].TimeStamp <= dateTo) {
-        intData.push(Data[i]);
-      }
-
-      //inter = Data[i];
-    }
-
-    setCorrectObs(intData);
-  };
+  
 
   const setDay = () => {
     setDayNodesToDisplay([...dayNodesToDisplay, chosenNode]); //add the chosenNode to the existing array of nodes to display
-    if (dayChart){
-      setMyButtons([...myButtons, 0]);
-    }
-    else{
+    if(!dayChart){
       setMyButtons([...myButtons, 1]);
+      document.querySelector('#SetDayBtn').innerHTML = "Add to day-chart"; //update the button-text
+    }
+  };
+  const clearDay = () =>{
+    if (dayChart){
+      document.querySelector('#SetDayBtn').innerHTML = "Create day-chart"; //change the button-text back
+      setDayNodesToDisplay([]);
+      var array = [];
+      for (var i = 0; i<myButtons.length; ++i){
+        if (myButtons[i] !== 1){
+          array.push(myButtons[i]);
+        }
+      }
+      setMyButtons(array);
     }
   };
   const setWeek = () => {
-    //setMyButtons([...myButtons, 2]);
     setWeekNodesToDisplay([...weekNodesToDisplay, chosenNode]);
-    if (weekChart){
-      setMyButtons([...myButtons, 0]);
-    }
-    else{
+    if (!weekChart){
       setMyButtons([...myButtons, 2]);
+      document.querySelector('#SetWeekBtn').innerHTML = "Add to week-chart";
+    }
+  };
+  const clearWeek = () =>{
+    if (weekChart){
+      document.querySelector('#SetWeekBtn').innerHTML = "Create week-chart";
+      setWeekNodesToDisplay([]);
+      var array = [];
+      for (var i = 0; i<myButtons.length; ++i){
+        if (myButtons[i] !== 2){
+          array.push(myButtons[i]);
+        }
+      }
+      setMyButtons(array);
     }
   };
   const setMonth = () => {
     setMonthNodesToDisplay([...monthNodesToDisplay, chosenNode]);
-    if (monthChart){
-      setMyButtons([...myButtons, 0]);
-    }
-    else{
+    if (!monthChart){
       setMyButtons([...myButtons, 3]);
+      document.querySelector('#SetMonthBtn').innerHTML = "Add to month-chart";
     }
-//    setMyButtons([...myButtons, 3]);
   };
+  const clearMonth = () =>{
+    if (monthChart){
+      document.querySelector('#SetMonthBtn').innerHTML = "Create month-chart";
+      setMonthNodesToDisplay([]);
+      var array = [];
+      for (var i = 0; i<myButtons.length; ++i){
+        if (myButtons[i] !== 3){
+          array.push(myButtons[i]);
+        }
+      }
+      setMyButtons(array);
+    }
+  };
+
 
   var options;
   var options2 = [];
-  if (true) {
-    const startOption = <option value= {"None"} >Choose a node</option>; //i tilfelle noen velger tilbake til "Choose a node" er value her satt til Node1
-    options2.push(startOption);
-    for (var i = 0; i < 3; i++){
+  const startOption = <option value= {"None"} >Choose a node</option>;
+  options2.push(startOption);
+  for (var i = 0; i < 3; i++){
       options = <option value= {nodene[i]} >Node {i+1}</option>;
       options2.push(options);
-    }
   }
+  
   console.log(options2);
 
   const handleChangedNode = (event) => {
@@ -142,21 +153,25 @@ function Data() {
             onChange={e => setDateTo(e.target.valueAsNumber / 1000)}
           />
         </div>
-        <div className="datoBoks">
-          <button id="demo" className="dataButton" onClick={setTime}>
-            Get data from node
-          </button>
-        </div>
       </div>
       <div className="selectButtons">
-        <button className="selectButton" onClick={setDay}>
-          Day
+        <button className="selectButton" id="SetDayBtn" onClick={setDay}>
+          Create day-chart
         </button>
-        <button className="selectButton" onClick={setWeek}>
-          Week
+        <button className="selectButton" onClick={clearDay}>
+          Delete day-chart
         </button>
-        <button className="selectButton" onClick={setMonth}>
-          Month
+        <button className="selectButton" id="SetWeekBtn" onClick={setWeek}>
+          Create week-chart
+        </button>
+        <button className="selectButton" onClick={clearWeek}>
+          Delete week-chart
+        </button>
+        <button className="selectButton" id="SetMonthBtn" onClick={setMonth}>
+          Create month-chart
+        </button>
+        <button className="selectButton" onClick={clearMonth}>
+          Delete month-chart
         </button>
         <input
           type="time"
@@ -182,31 +197,25 @@ function Data() {
       <div className="Wrapper">
         {myButtons.map(timeInterval => (
           <div className="Card">
-            <div className="TheChart" id="chart" key={correctObs.id}>
+            <div className="TheChart" id="chart">
               {(() => {
-                switch (timeInterval) {
+                switch (timeInterval) { //det er i timeinterval 1/2/3 fra button ligger
                   case 1:
                     dayChart= (
                       <DayInput
-                        //myData={correctObs}
                         nodesToDisplay = {dayNodesToDisplay}
                         dict = {dict}
-                        chosenNode = {chosenNode}
-                        timeInterval={timeInterval}
                         dateFrom={dateFrom}
                         dateTo={dateTo}
-                        timeFrom={timeFrom} //gi disse en defaultverdi
+                        timeFrom={timeFrom}
                         timeTo={timeTo}
                       />
                     );
                     return dayChart;
                   case 2:
                       weekChart= (<WeekInput
-                        //myData={correctObs}
                         nodesToDisplay = {weekNodesToDisplay}
                         dict = {dict}
-                        chosenNode = {chosenNode}
-                        timeInterval={timeInterval} //det er i timeinterval 1/2/3 fra button ligger?
                         dateFrom={dateFrom}
                         dateTo={dateTo}
                         timeFrom={timeFrom} 
@@ -217,11 +226,8 @@ function Data() {
                   case 3:
                     monthChart= (
                       <MonthInput
-                        //myData={correctObs}
                         nodesToDisplay = {monthNodesToDisplay}
                         dict = {dict}
-                        chosenNode = {chosenNode}
-                        timeInterval={timeInterval}
                         dateFrom={dateFrom}
                         dateTo={dateTo}
                         timeFrom={timeFrom} 
@@ -241,6 +247,6 @@ function Data() {
 
 export default Data;
 
-//fjernes igjen ved klikk
+//fjernes igjen ved klikk. DONE
 //kunne legge inn spesifikke start/slutt-tidspunkt. DONE
 //Hente fra flere noder, vil at alle noder skal legge seg inn i samme graf (for lettere sammenlign). DONE
