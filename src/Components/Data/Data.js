@@ -5,29 +5,32 @@ import { WeekInput } from "./Graph/Week_graph";
 import { MonthInput } from "./Graph/Month_graph";
 
 import "./Data.scss";
+import Highcharts from "highcharts";
+
+require("highcharts/modules/exporting")(Highcharts);
+require("highcharts/modules/export-data")(Highcharts);
 
 function Data() {
   const [dateFrom, setDateFrom] = React.useState();
   const [dateTo, setDateTo] = React.useState();
   const [timeFrom, setTimeFrom] = React.useState(0);
   const [timeTo, setTimeTo] = React.useState(60 * 60 * 24 - 61);
-  
+
   const [chosenNode, setChosenNode] = React.useState([]);
-  const [dayNodesToDisplay, setDayNodesToDisplay] = React.useState([]); 
+  const [dayNodesToDisplay, setDayNodesToDisplay] = React.useState([]);
   const [weekNodesToDisplay, setWeekNodesToDisplay] = React.useState([]);
   const [monthNodesToDisplay, setMonthNodesToDisplay] = React.useState([]);
-  
+
   const [myButtons, setMyButtons] = React.useState([]);
-  
-  
 
   //Values that indicate if the chart is open
   let dayChart;
   let weekChart;
-  let monthChart; 
+  let monthChart;
+  let test;
 
   const nodene = ["Node1", "Node2", "Node3"]; //The name of the users nodes.
-  
+
   const [dict, setDict] = React.useState([]);
   React.useEffect(() => {
     const db = firebase.firestore();
@@ -38,28 +41,31 @@ function Data() {
         .onSnapshot(snapsshot => {
           let intData = [];
           snapsshot.forEach(doc => intData.push({ ...doc.data(), id: doc.id }));
-          setDict(dict => [...dict, {nodeName: nodene[i], nodeData: intData}]);
+          setDict(dict => [
+            ...dict,
+            { nodeName: nodene[i], nodeData: intData }
+          ]);
         });
     }
     return;
   }, []);
 
-  
-
   const setDay = () => {
     setDayNodesToDisplay([...dayNodesToDisplay, chosenNode]); //add the chosenNode to the existing array of nodes to display
-    if(!dayChart){
+
+    if (!dayChart) {
       setMyButtons([...myButtons, 1]);
-      document.querySelector('#SetDayBtn').innerHTML = "Add to day-chart"; //update the button-text
+      document.querySelector("#SetDayBtn").innerHTML = "Add to day-chart"; //update the button-text
     }
   };
-  const clearDay = () =>{
-    if (dayChart){
-      document.querySelector('#SetDayBtn').innerHTML = "Create day-chart"; //change the button-text back
+  const clearDay = () => {
+    if (dayChart) {
+      document.querySelector("#SetDayBtn").innerHTML = "Create day-chart"; //change the button-text back
       setDayNodesToDisplay([]);
       var array = [];
-      for (var i = 0; i<myButtons.length; ++i){
-        if (myButtons[i] !== 1){
+
+      for (var i = 0; i < myButtons.length; ++i) {
+        if (myButtons[i] !== 1) {
           array.push(myButtons[i]);
         }
       }
@@ -68,18 +74,18 @@ function Data() {
   };
   const setWeek = () => {
     setWeekNodesToDisplay([...weekNodesToDisplay, chosenNode]);
-    if (!weekChart){
+    if (!weekChart) {
       setMyButtons([...myButtons, 2]);
-      document.querySelector('#SetWeekBtn').innerHTML = "Add to week-chart";
+      document.querySelector("#SetWeekBtn").innerHTML = "Add to week-chart";
     }
   };
-  const clearWeek = () =>{
-    if (weekChart){
-      document.querySelector('#SetWeekBtn').innerHTML = "Create week-chart";
+  const clearWeek = () => {
+    if (weekChart) {
+      document.querySelector("#SetWeekBtn").innerHTML = "Create week-chart";
       setWeekNodesToDisplay([]);
       var array = [];
-      for (var i = 0; i<myButtons.length; ++i){
-        if (myButtons[i] !== 2){
+      for (var i = 0; i < myButtons.length; ++i) {
+        if (myButtons[i] !== 2) {
           array.push(myButtons[i]);
         }
       }
@@ -88,18 +94,18 @@ function Data() {
   };
   const setMonth = () => {
     setMonthNodesToDisplay([...monthNodesToDisplay, chosenNode]);
-    if (!monthChart){
+    if (!monthChart) {
       setMyButtons([...myButtons, 3]);
-      document.querySelector('#SetMonthBtn').innerHTML = "Add to month-chart";
+      document.querySelector("#SetMonthBtn").innerHTML = "Add to month-chart";
     }
   };
-  const clearMonth = () =>{
-    if (monthChart){
-      document.querySelector('#SetMonthBtn').innerHTML = "Create month-chart";
+  const clearMonth = () => {
+    if (monthChart) {
+      document.querySelector("#SetMonthBtn").innerHTML = "Create month-chart";
       setMonthNodesToDisplay([]);
       var array = [];
-      for (var i = 0; i<myButtons.length; ++i){
-        if (myButtons[i] !== 3){
+      for (var i = 0; i < myButtons.length; ++i) {
+        if (myButtons[i] !== 3) {
           array.push(myButtons[i]);
         }
       }
@@ -107,21 +113,20 @@ function Data() {
     }
   };
 
-
   var options;
   var options2 = [];
-  const startOption = <option value= {"None"} >Choose a node</option>;
+  const startOption = <option value={"None"}>Choose a node</option>;
   options2.push(startOption);
-  for (var i = 0; i < 3; i++){
-      options = <option value= {nodene[i]} >Node {i+1}</option>;
-      options2.push(options);
+  for (var i = 0; i < 3; i++) {
+    options = <option value={nodene[i]}>Node {i + 1}</option>;
+    options2.push(options);
   }
-  
+
   console.log(options2);
 
-  const handleChangedNode = (event) => {
+  const handleChangedNode = event => {
     setChosenNode(event.target.value);
-  }
+  };
 
   return (
     <div className="Data">
@@ -129,7 +134,11 @@ function Data() {
         <div className="datoBoks">
           <label for="Node">Choose a node:</label>
 
-          <select className="nodeSelect" id="Node" onChange={e => handleChangedNode(e)}>
+          <select
+            className="nodeSelect"
+            id="Node"
+            onChange={e => handleChangedNode(e)}
+          >
             {options2}
           </select>
         </div>
@@ -158,21 +167,15 @@ function Data() {
         <button className="selectButton" id="SetDayBtn" onClick={setDay}>
           Create day-chart
         </button>
-        <button className="selectButton" onClick={clearDay}>
-          Delete day-chart
-        </button>
+
         <button className="selectButton" id="SetWeekBtn" onClick={setWeek}>
           Create week-chart
         </button>
-        <button className="selectButton" onClick={clearWeek}>
-          Delete week-chart
-        </button>
+
         <button className="selectButton" id="SetMonthBtn" onClick={setMonth}>
           Create month-chart
         </button>
-        <button className="selectButton" onClick={clearMonth}>
-          Delete month-chart
-        </button>
+
         <input
           type="time"
           id="appt"
@@ -199,40 +202,68 @@ function Data() {
           <div className="Card">
             <div className="TheChart" id="chart">
               {(() => {
-                switch (timeInterval) { //det er i timeinterval 1/2/3 fra button ligger
+                switch (
+                  timeInterval //det er i timeinterval 1/2/3 fra button ligger
+                ) {
                   case 1:
-                    dayChart= (
-                      <DayInput
-                        nodesToDisplay = {dayNodesToDisplay}
-                        dict = {dict}
-                        dateFrom={dateFrom}
-                        dateTo={dateTo}
-                        timeFrom={timeFrom}
-                        timeTo={timeTo}
-                      />
+                    dayChart = (
+                      <div className="chartElement">
+                        <button className="deleteButton" onClick={clearDay}>
+                          &#10006;
+                        </button>
+                        <div className="parent">
+                          <DayInput
+                            nodesToDisplay={dayNodesToDisplay}
+                            dict={dict}
+                            dateFrom={dateFrom}
+                            dateTo={dateTo}
+                            timeFrom={timeFrom}
+                            timeTo={timeTo}
+                          />
+                        </div>
+                      </div>
                     );
                     return dayChart;
                   case 2:
-                      weekChart= (<WeekInput
-                        nodesToDisplay = {weekNodesToDisplay}
-                        dict = {dict}
-                        dateFrom={dateFrom}
-                        dateTo={dateTo}
-                        timeFrom={timeFrom} 
-                        timeTo={timeTo}
-                      />
+                    weekChart = (
+                      <div className="chartElement">
+                        <div className="flexer">
+                          <button className="deleteButton" onClick={clearWeek}>
+                            &#10006;
+                          </button>
+                        </div>
+                        <div className="parent">
+                          <WeekInput
+                            nodesToDisplay={weekNodesToDisplay}
+                            dict={dict}
+                            dateFrom={dateFrom}
+                            dateTo={dateTo}
+                            timeFrom={timeFrom}
+                            timeTo={timeTo}
+                          />
+                        </div>
+                      </div>
                     );
                     return weekChart;
                   case 3:
-                    monthChart= (
-                      <MonthInput
-                        nodesToDisplay = {monthNodesToDisplay}
-                        dict = {dict}
-                        dateFrom={dateFrom}
-                        dateTo={dateTo}
-                        timeFrom={timeFrom} 
-                        timeTo={timeTo}
-                      />
+                    monthChart = (
+                      <div className="chartElement">
+                        <div className="chartElement">
+                          <button className="deleteButton" onClick={clearMonth}>
+                            &#10006;
+                          </button>
+                        </div>
+                        <div className="parent">
+                          <MonthInput
+                            nodesToDisplay={monthNodesToDisplay}
+                            dict={dict}
+                            dateFrom={dateFrom}
+                            dateTo={dateTo}
+                            timeFrom={timeFrom}
+                            timeTo={timeTo}
+                          />
+                        </div>
+                      </div>
                     );
                     return monthChart;
                 }

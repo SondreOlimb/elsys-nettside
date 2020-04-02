@@ -181,3 +181,39 @@ p {
   width: 100%;
   //border: 1px solid green;
 }
+
+.deleteButton {
+  display: flex;
+  justify-content: flex-end;
+  position: absolute;
+  z-index: 1;
+  margin: 1%;
+
+  //align-self: flex-end;
+
+  text-decoration: none;
+  margin-top: 0.8rem;
+
+  margin-bottom: 1rem;
+  font-weight: bold;
+
+  padding-right: 0.3vw;
+  padding-left: 0.2vw;
+  font-size: 1.3vw;
+
+  color: red;
+  background-color: lighten(map-get($colors, Component), 40%);
+  border-radius: 3px;
+  border: 0px;
+
+  &:hover {
+    color: map-get($colors, t-green);
+
+    background-color: darken(map-get($colors, Component), 5%);
+    //border: 10px outset ligthen(map-get($colors, t-green), 40%);
+    border-radius: 3px;
+  }
+}
+.parent {
+  position: relative;
+}

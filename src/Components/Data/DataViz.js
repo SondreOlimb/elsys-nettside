@@ -6,6 +6,9 @@ import "./DataViz.scss";
 
 import Compared from "../Default/Elements/Compared";
 import MapsNodes from "../Default/Elements/MapsElement/MapsNodes";
+import HighchartsReact from "highcharts-react-official";
+import Highcharts from "highcharts";
+require("highcharts/modules/export-data")(Highcharts);
 
 function DataViz() {
   const [Node, setNode] = React.useState([]);
