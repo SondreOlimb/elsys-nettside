@@ -4,7 +4,7 @@ import firebase from "../../../../firebase";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
 import MapsData from "./MapsData";
-
+// dette elemntet får inn navne på alle nodene og henter ut all dataen til disse. Sender daten videre til maosData som et arayy med objekter
 function MapsNodes({ myData, timeInterval, timeFrom, timeTo }) {
   const det = [];
   const [Data, setData] = React.useState([]);
@@ -15,11 +15,13 @@ function MapsNodes({ myData, timeInterval, timeFrom, timeTo }) {
       db.collection("Unit")
         .doc(myData[i])
         .collection("Activity")
-        .onSnapshot(snapsshot => {
+        .onSnapshot((snapsshot) => {
           let intData = [];
-          snapsshot.forEach(doc => intData.push({ ...doc.data(), id: doc.id }));
+          snapsshot.forEach((doc) =>
+            intData.push({ ...doc.data(), id: doc.id })
+          );
 
-          setData(Data => [...Data, { name: myData[i], y: intData }]);
+          setData((Data) => [...Data, { name: myData[i], y: intData }]);
         });
     }
     return;

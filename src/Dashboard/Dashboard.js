@@ -12,25 +12,29 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  withRouter
+  withRouter,
 } from "react-router-dom";
 
+//dette elementet hånderer autentiseringen og routingen til alle elementene på my page.
+
 class Dashboard extends Component {
+  //implementerer firbaseui
   state = { isSignedIn: false };
   uiConfig = {
     signInFlow: "popup",
     signInOptions: [
       firebase.auth.GoogleAuthProvider.PROVIDER_ID,
 
-      firebase.auth.EmailAuthProvider.PROVIDER_ID
+      firebase.auth.EmailAuthProvider.PROVIDER_ID,
     ],
     callbacks: {
-      signInSuccess: () => false
-    }
+      signInSuccess: () => false, //håndterer inloginger som feiler
+    },
   };
 
   componentDidMount = () => {
-    firebase.auth().onAuthStateChanged(user => {
+    //hvis brukeren logger inn renderes dette elementet.
+    firebase.auth().onAuthStateChanged((user) => {
       this.setState({ isSignedIn: !!user });
       console.log("user", user);
     });
@@ -42,6 +46,9 @@ class Dashboard extends Component {
         {this.state.isSignedIn ? (
           <div className="Dash">
             <Router>
+              {
+                //router håndterer hvilket av elementene som skal hvises
+              }
               <div className="navbar">
                 <Navbar />
               </div>
@@ -73,8 +80,10 @@ class Dashboard extends Component {
             </Router>
           </div>
         ) : (
+          //hvis brukere ikke er ligget rendres dette elementet
+
           <span className="signin">
-            <h1>Sign in to se your Dashboard</h1>
+            <h1>Sign in to see your dashboard</h1>
             <StyledFirebaseAuth
               uiConfig={this.uiConfig}
               firebaseAuth={firebase.auth()}

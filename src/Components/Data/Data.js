@@ -7,6 +7,8 @@ import { MonthInput } from "./Graph/Month_graph";
 import "./Data.scss";
 import Highcharts from "highcharts";
 
+//Dette elemntet håndterer inputt for hvilken node og tidsinterval brukeren ønsker å hente dada og sender request til et annet element etter denne informasjonen
+
 require("highcharts/modules/exporting")(Highcharts);
 require("highcharts/modules/export-data")(Highcharts);
 
@@ -27,7 +29,6 @@ function Data() {
   let dayChart;
   let weekChart;
   let monthChart;
-  let test;
 
   const nodene = ["Node1", "Node2", "Node3"]; //The name of the users nodes.
 
@@ -38,12 +39,14 @@ function Data() {
       db.collection("Unit")
         .doc(nodene[i])
         .collection("Activity")
-        .onSnapshot(snapsshot => {
+        .onSnapshot((snapsshot) => {
           let intData = [];
-          snapsshot.forEach(doc => intData.push({ ...doc.data(), id: doc.id }));
-          setDict(dict => [
+          snapsshot.forEach((doc) =>
+            intData.push({ ...doc.data(), id: doc.id })
+          );
+          setDict((dict) => [
             ...dict,
-            { nodeName: nodene[i], nodeData: intData }
+            { nodeName: nodene[i], nodeData: intData },
           ]);
         });
     }
@@ -124,7 +127,7 @@ function Data() {
 
   console.log(options2);
 
-  const handleChangedNode = event => {
+  const handleChangedNode = (event) => {
     setChosenNode(event.target.value);
   };
 
@@ -137,7 +140,7 @@ function Data() {
           <select
             className="nodeSelect"
             id="Node"
-            onChange={e => handleChangedNode(e)}
+            onChange={(e) => handleChangedNode(e)}
           >
             {options2}
           </select>
@@ -149,7 +152,7 @@ function Data() {
             type="date"
             className="dateForm"
             valueAsNumber={dateFrom}
-            onChange={e => setDateFrom(e.target.valueAsNumber / 1000)}
+            onChange={(e) => setDateFrom(e.target.valueAsNumber / 1000)}
           />
         </div>
         <div className="datoBoks">
@@ -159,7 +162,7 @@ function Data() {
             type="date"
             className="dateForm"
             valueAsNumber={dateTo}
-            onChange={e => setDateTo(e.target.valueAsNumber / 1000)}
+            onChange={(e) => setDateTo(e.target.valueAsNumber / 1000)}
           />
         </div>
       </div>
@@ -175,30 +178,37 @@ function Data() {
         <button className="selectButton" id="SetMonthBtn" onClick={setMonth}>
           Create month-chart
         </button>
-
-        <input
-          type="time"
-          id="appt"
-          name="appt"
-          valueAsNumber={timeFrom}
-          min="00:00"
-          max="23:59"
-          required
-          onChange={e => setTimeFrom(e.target.valueAsNumber / 1000)}
-        ></input>
-        <input
-          type="time"
-          id="appt"
-          name="appt"
-          valueAsNumber={timeTo}
-          min="00:00"
-          max="23:59"
-          required
-          onChange={e => setTimeTo(e.target.valueAsNumber / 1000)}
-        ></input>
+        <div className="tidElement">
+          <label for="tfrom">Time from:</label>
+          <input
+            type="time"
+            className="timeButton"
+            id="tfrom"
+            name="appt"
+            valueAsNumber={timeFrom}
+            min="00:00"
+            max="23:59"
+            required
+            onChange={(e) => setTimeFrom(e.target.valueAsNumber / 1000)}
+          ></input>
+        </div>
+        <div className="tidElement">
+          <label for="tto">Time to:</label>
+          <input
+            className="timeButton"
+            type="time"
+            id="tto"
+            name="appt"
+            valueAsNumber={timeTo}
+            min="00:00"
+            max="23:59"
+            required
+            onChange={(e) => setTimeTo(e.target.valueAsNumber / 1000)}
+          ></input>
+        </div>
       </div>
       <div className="Wrapper">
-        {myButtons.map(timeInterval => (
+        {myButtons.map((timeInterval) => (
           <div className="Card">
             <div className="TheChart" id="chart">
               {(() => {

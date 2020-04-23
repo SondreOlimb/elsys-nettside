@@ -5,10 +5,10 @@ import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
 import Maps from "../../../Maps/Maps";
 
+// dette elemntet tar inn data fra mapsNodes, henter ut koordinatene til alle observasjonene og sender dette videre til MAPS elemntet under maps
+
 export default function MapsData({ myData }) {
   const det = [];
-  const dateTo = Math.round(new Date().getTime() / 1000);
-  const dateFrom = dateTo - 60 * 60 * 24 * 30;
 
   const [mapsData, setMapsData] = React.useState([]);
   const [nodeInfo, setNodeInfo] = React.useState([]);
@@ -18,9 +18,10 @@ export default function MapsData({ myData }) {
     for (let i = 0; i < myData.length; i++) {
       //setData(Data => [...Data, { name: myData[i], y: [] }])
       const intName = myData[i].name;
-      const nodeCord = setNodeInfo(nodeInfo => [
+      const nodeCord = setNodeInfo((nodeInfo) => [
+        //dette elementet gir info om koordinatene til nodene
         ...nodeInfo,
-        { name: intName, nodeCord: myData[i].y[0].Cord }
+        { name: intName, nodeCord: myData[i].y[0].Cord },
       ]);
 
       const length = myData[i].y.length;
@@ -33,14 +34,13 @@ export default function MapsData({ myData }) {
           console.error(error);
         }
       }
-      //setMapsData(mapsData => [...mapsData, intData]);
     }
-    setMapsData(mapsData => [...mapsData, intData]);
+    setMapsData((mapsData) => [...mapsData, intData]); //her lagres koordinantene til hver observasjon.
   }, []);
 
   let Wait;
   if (mapsData.length > 0) {
-    Wait = <Maps myData={mapsData[0]} nodes={nodeInfo} />;
+    Wait = <Maps myData={mapsData[0]} nodes={nodeInfo} />; //kaller på maps elementet for å rendere et kart
   } else {
     Wait = "Loading...";
   }

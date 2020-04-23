@@ -3,25 +3,30 @@ import firebase from "../../../../firebase.js";
 import { map } from "highcharts";
 import "./Status.scss";
 
+// dette elementet sjekker om det har vært en status oppdatering fra nodene i løpet av de sidte 10 minuttene eller så skriver det en feilmelding
+
 function Status({ myData }) {
   const [Data, setData] = React.useState([]);
   const [Data2, setData2] = React.useState([1, 1, 1, 1]);
 
   React.useEffect(() => {
+    //henter ut siste timestamp fra hver node og samenligner not nåtid -10min
     const db = firebase.firestore();
     const intData2 = [];
     for (let i = 0; i < myData.length; i++) {
       db.collection("Unit")
         .doc(myData[i])
         .collection("Status")
-        .onSnapshot(snapsshot => {
+        .onSnapshot((snapsshot) => {
           const intData = [];
-          snapsshot.forEach(doc => intData.push({ ...doc.data(), id: doc.id }));
+          snapsshot.forEach((doc) =>
+            intData.push({ ...doc.data(), id: doc.id })
+          );
           intData2.push({ Node: myData[i], time: intData[0].LastUpdate });
 
-          setData(Data => [
+          setData((Data) => [
             ...Data,
-            { Node: myData[i], time: intData[0].LastUpdate }
+            { Node: myData[i], time: intData[0].LastUpdate },
           ]);
         });
     }
@@ -49,7 +54,7 @@ function Status({ myData }) {
           "Sep",
           "Oct",
           "Nov",
-          "Dec"
+          "Dec",
         ];
         var date = new Date(Data[i].time * 1000);
 
@@ -95,7 +100,7 @@ function Status({ myData }) {
   return (
     <div className="StatusCard">
       <h3>Status:</h3>
-      {notActive.map(mapItem => (
+      {notActive.map((mapItem) => (
         <div className="SubCard">
           <div className="NodeLine">
             <p>{mapItem.Node}</p>
@@ -105,7 +110,7 @@ function Status({ myData }) {
           <p> Last response: {mapItem.time}</p>
         </div>
       ))}
-      {Active.map(Item => (
+      {Active.map((Item) => (
         <div className="SubCard">
           <div className="NodeLine">
             <p>All Nodes active</p>

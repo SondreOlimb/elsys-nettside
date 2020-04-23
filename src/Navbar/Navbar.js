@@ -6,16 +6,19 @@ import firebase from "../firebase";
 import ReactMapGL, {
   NavigationControl,
   GeolocateControl,
-  FullscreenControl
+  FullscreenControl,
 } from "react-map-gl";
+
+//dette er navigajsons elementet på venstre side på mypage
+//link brukes til til å bytte mellom elementer med router i dashboard elementet
 
 function Navbar() {
   var img = new Image();
 
   if (firebase.auth().currentUser.photoURL) {
-    img.src = firebase.auth().currentUser.photoURL;
+    img.src = firebase.auth().currentUser.photoURL; //henter bilde til profilen som er logget inn
   } else {
-    img.src = logo;
+    img.src = logo; //hvis bilde ikke eksisterer brukes et sandard bilde
   }
   return (
     <div className="Flex-navbar">
@@ -24,8 +27,12 @@ function Navbar() {
           <Link to="/" className="logolink">
             <img alt="pic" src={img.src} className="pic" />
           </Link>
+          {
+            //henter fram naven til brukeren og lager en utlogings knapp.
+          }
 
           <p className="user"> {firebase.auth().currentUser.displayName}</p>
+
           <button onClick={() => firebase.auth().signOut()} className="signout">
             Sign out
           </button>

@@ -3,6 +3,9 @@ import logo from "../Bilder/bird-logos-png.png";
 import { Link } from "react-router-dom";
 import "./Header.scss";
 
+//header ellementet som alltid er øverst på skjermen
+//link endrer router i app elementet å som velger mellom de forkjellige elementen home, about og mypage
+
 function Header() {
   return (
     <ul className="FlexContainer">
@@ -22,7 +25,7 @@ function Header() {
         </Link>
 
         <Link to="/dashboard" className="log-inn">
-          Dashboard
+          My Page
         </Link>
       </li>
     </ul>

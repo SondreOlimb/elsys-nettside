@@ -6,6 +6,8 @@ import ntnu from "../Bilder/logo_stor.svg";
 
 import "./Home.scss";
 
+//hjem elementet.
+
 function Home() {
   return (
     <div className="Home">

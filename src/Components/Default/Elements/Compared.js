@@ -1,9 +1,9 @@
 import React from "react";
 import firebase from "../../../firebase.js";
 
-import HighchartsReact from "highcharts-react-official";
-import Highcharts from "highcharts";
 import TimeMonth from "./ComparedElements/TimeMonth";
+
+//Dette elmentet henter ut får inn navne på nodene og sender videre at aray med objekter som innholder navn på node og observasjoner
 
 function Compared({ myData, timeInterval, timeFrom, timeTo }) {
   const det = [];
@@ -17,11 +17,13 @@ function Compared({ myData, timeInterval, timeFrom, timeTo }) {
       db.collection("Unit")
         .doc(myData[i])
         .collection("Activity")
-        .onSnapshot(snapsshot => {
+        .onSnapshot((snapsshot) => {
           let intData = [];
-          snapsshot.forEach(doc => intData.push({ ...doc.data(), id: doc.id }));
+          snapsshot.forEach((doc) =>
+            intData.push({ ...doc.data(), id: doc.id })
+          );
 
-          setData(Data => [...Data, { name: myData[i], y: intData }]);
+          setData((Data) => [...Data, { name: myData[i], y: intData }]);
         });
     }
     return;

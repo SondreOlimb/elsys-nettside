@@ -9,6 +9,7 @@ import MapsNodes from "../Default/Elements/MapsElement/MapsNodes";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
 require("highcharts/modules/export-data")(Highcharts);
+// Dette elementet henter ut navne på nodene får å se dende dette videre til Mapsnode
 
 function DataViz() {
   const [Node, setNode] = React.useState([]);
@@ -19,9 +20,9 @@ function DataViz() {
       .collection("Unit")
       .doc("Nodes")
       .collection("Nodes")
-      .onSnapshot(snapsshot => {
+      .onSnapshot((snapsshot) => {
         let intData = [];
-        snapsshot.forEach(doc => intData.push({ ...doc.data(), id: doc.id }));
+        snapsshot.forEach((doc) => intData.push({ ...doc.data(), id: doc.id }));
         for (var i = 0; i < intData[0].Node.length; i++) {
           intData2.push(intData[0].Node[i]);
         }
@@ -36,6 +37,7 @@ function DataViz() {
   console.log(Node.length);
 
   if (Node.length > 0) {
+    // venter på at nodene er hentet før den kaller på neste element
     myMaps = <MapsNodes myData={Node} />;
   } else {
     myMaps = <p>Loading...</p>;

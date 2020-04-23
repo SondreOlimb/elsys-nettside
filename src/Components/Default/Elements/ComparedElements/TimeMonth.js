@@ -1,25 +1,24 @@
 import React from "react";
 //import firebase from "../../../firebase.js";
 
-import HighchartsReact from "highcharts-react-official";
-import Highcharts from "highcharts";
 import { Chart } from "./Chart";
+// dette elemntet finner alle registrerte aktiviteter forn de siste 30 dagene
+//sender det videre til Chart filen som lager et linjediagram med aktiviteten
 
 export default function TimeMonth({ myData }) {
   const det = [];
   const dateTo = Math.round(new Date().getTime() / 1000);
-  const dateFrom = dateTo - 60 * 60 * 24 * 30;
+  const dateFrom = dateTo - 60 * 60 * 24 * 30; //30 dager tilbake fra nåtid i unix time
 
   const [timeData, setTimeData] = React.useState([]);
   let intData = [];
 
   React.useEffect(() => {
     for (let i = 0; i < myData.length; i++) {
-      //setData(Data => [...Data, { name: myData[i], y: [] }])
       const intName = myData[i].name;
 
       const length = myData[i].y.length;
-      //console.log(myData.length);
+
       intData = [];
       for (let j = 0; j < length; j++) {
         try {
@@ -35,15 +34,14 @@ export default function TimeMonth({ myData }) {
       }
       const intData2 = intData;
 
-      setTimeData(timeData => [...timeData, { name: intName, y: intData2 }]); //det er her feielen ligger
-      // console.log(timeData);
+      setTimeData((timeData) => [...timeData, { name: intName, y: intData2 }]);
     }
   }, []);
 
-  //<Chart myData={Data} timeFrom={dateFrom} timeTo={dateTo} />
   let Wait;
   if (timeData.length == myData.length) {
-    //console.log(timeData);
+    //sjekker alle nodene har blitt sjekket for aktivitet
+
     Wait = <Chart myData={timeData} timeFrom={dateFrom} timeTo={dateTo} />;
   } else {
     Wait = "Loading...";

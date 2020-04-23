@@ -9,9 +9,11 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  withRouter
+  withRouter,
 } from "react-router-dom";
 import Footer from "./Footer/Footer.js";
+
+//Grunn elementet. her hånderes routingen mellom de forksjelllige elementene.
 
 function App() {
   return (

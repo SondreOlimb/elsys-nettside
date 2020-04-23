@@ -3,6 +3,8 @@ import "./Footer.scss";
 import elsys from "../Bilder/elsys.png";
 import ntnu from "../Bilder/logo_stor.svg";
 
+//Footer elementet som altid er nederst på skjermen
+
 function Footer() {
   return (
     <div className="FlexFooter">

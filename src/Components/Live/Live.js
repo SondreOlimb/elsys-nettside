@@ -3,6 +3,8 @@ import firebase from "../../firebase.js";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
 
+//dette er et element som viser live data fra en node. ble brukt til testing av systemet
+
 function Live() {
   const [Data, setData] = React.useState([]);
 
@@ -12,9 +14,9 @@ function Live() {
       .collection("Unit")
       .doc("Node1")
       .collection("Activity")
-      .onSnapshot(snapsshot => {
+      .onSnapshot((snapsshot) => {
         const intData = [];
-        snapsshot.forEach(doc => intData.push({ ...doc.data(), id: doc.id }));
+        snapsshot.forEach((doc) => intData.push({ ...doc.data(), id: doc.id }));
 
         let intdata2 = [];
 
@@ -34,34 +36,34 @@ function Live() {
       type: "line",
       //width: 900,
       backgroundColor: "#1d1d1d",
-      textColor: "#000000"
+      textColor: "#000000",
     },
     xAxis: {
       allowDecimals: false, //vil ikke ha halve uker
-      type: "datetime"
+      type: "datetime",
     },
     style: {
-      textColor: "#000000"
+      textColor: "#000000",
     },
     title: {
       //text: "Birds",
       text: "Live activity",
-      color: "#000000"
+      color: "#000000",
     },
     plotOptions: {
       line: {
         dataLabels: {
-          enabled: true
+          enabled: true,
         },
-        enableMouseTracking: true
-      }
+        enableMouseTracking: true,
+      },
     },
     series: [
       {
         name: "Bird activity",
-        data: Data
-      }
-    ]
+        data: Data,
+      },
+    ],
   };
 
   Highcharts.theme = {
@@ -76,57 +78,57 @@ function Live() {
       "#55BF3B",
       "#DF5353",
       "#7798BF",
-      "#aaeeee"
+      "#aaeeee",
     ],
     chart: {
       backgroundColor: {
         linearGradient: { x1: 0, y1: 0, x2: 1, y2: 1 },
         stops: [
           [0, "#2a2a2b"],
-          [1, "#3e3e40"]
-        ]
+          [1, "#3e3e40"],
+        ],
       },
       style: {
-        fontFamily: "'Unica One', sans-serif"
+        fontFamily: "'Unica One', sans-serif",
       },
-      plotBorderColor: "#606063"
+      plotBorderColor: "#606063",
     },
     title: {
       style: {
         color: "#E0E0E3",
         textTransform: "uppercase",
-        fontSize: "20px"
-      }
+        fontSize: "20px",
+      },
     },
     subtitle: {
       style: {
         color: "#E0E0E3",
-        textTransform: "uppercase"
-      }
+        textTransform: "uppercase",
+      },
     },
     xAxis: {
       gridLineColor: "#707073",
       labels: {
         style: {
-          color: "#E0E0E3"
-        }
+          color: "#E0E0E3",
+        },
       },
       lineColor: "#707073",
       minorGridLineColor: "#505053",
       tickColor: "#707073",
       title: {
         style: {
-          color: "#A0A0A3"
-        }
-      }
+          color: "#A0A0A3",
+        },
+      },
     },
     yAxis: {
       allowDecimals: false, //ingen halve fugler
       gridLineColor: "#707073",
       labels: {
         style: {
-          color: "#E0E0E3"
-        }
+          color: "#E0E0E3",
+        },
       },
       lineColor: "#707073",
       minorGridLineColor: "#505053",
@@ -134,80 +136,80 @@ function Live() {
       tickWidth: 1,
       title: {
         style: {
-          color: "#A0A0A3"
-        }
-      }
+          color: "#A0A0A3",
+        },
+      },
     },
     tooltip: {
       backgroundColor: "rgba(0, 0, 0, 0.85)",
       style: {
-        color: "#F0F0F0"
-      }
+        color: "#F0F0F0",
+      },
     },
     plotOptions: {
       series: {
         dataLabels: {
           color: "#F0F0F3",
           style: {
-            fontSize: "13px"
-          }
+            fontSize: "13px",
+          },
         },
         marker: {
-          lineColor: "#333"
-        }
+          lineColor: "#333",
+        },
       },
       boxplot: {
-        fillColor: "#505053"
+        fillColor: "#505053",
       },
       candlestick: {
-        lineColor: "white"
+        lineColor: "white",
       },
       errorbar: {
-        color: "white"
-      }
+        color: "white",
+      },
     },
     legend: {
       backgroundColor: "rgba(0, 0, 0, 0.5)",
       itemStyle: {
-        color: "#E0E0E3"
+        color: "#E0E0E3",
       },
       itemHoverStyle: {
-        color: "#FFF"
+        color: "#FFF",
       },
       itemHiddenStyle: {
-        color: "#606063"
+        color: "#606063",
       },
       title: {
         style: {
-          color: "#C0C0C0"
-        }
-      }
+          color: "#C0C0C0",
+        },
+      },
     },
     credits: {
       style: {
-        color: "#666"
-      }
+        color: "#666",
+      },
     },
     labels: {
       style: {
-        color: "#707073"
-      }
+        color: "#707073",
+      },
     },
     drilldown: {
       activeAxisLabelStyle: {
-        color: "#F0F0F3"
+        color: "#F0F0F3",
       },
       activeDataLabelStyle: {
-        color: "#F0F0F3"
-      }
+        color: "#F0F0F3",
+      },
     },
     navigation: {
       buttonOptions: {
         symbolStroke: "#DDDDDD",
         theme: {
-          fill: "#505053"
-        }
-      }
+          fill: "#505053",
+        },
+      },
     },
     // scroll charts
     rangeSelector: {
@@ -215,48 +217,48 @@ function Live() {
         fill: "#505053",
         stroke: "#000000",
         style: {
-          color: "#CCC"
+          color: "#CCC",
         },
         states: {
           hover: {
             fill: "#707073",
             stroke: "#000000",
             style: {
-              color: "white"
-            }
+              color: "white",
+            },
           },
           select: {
             fill: "#000003",
             stroke: "#000000",
             style: {
-              color: "white"
-            }
-          }
-        }
+              color: "white",
+            },
+          },
+        },
       },
       inputBoxBorderColor: "#505053",
       inputStyle: {
         backgroundColor: "#333",
-        color: "silver"
+        color: "silver",
       },
       labelStyle: {
-        color: "silver"
-      }
+        color: "silver",
+      },
     },
     navigator: {
       handles: {
         backgroundColor: "#666",
-        borderColor: "#AAA"
+        borderColor: "#AAA",
       },
       outlineColor: "#CCC",
       maskFill: "rgba(255,255,255,0.1)",
       series: {
         color: "#7798BF",
-        lineColor: "#A6C7ED"
+        lineColor: "#A6C7ED",
       },
       xAxis: {
-        gridLineColor: "#505053"
-      }
+        gridLineColor: "#505053",
+      },
     },
     scrollbar: {
       barBackgroundColor: "#808083",
@@ -266,8 +268,8 @@ function Live() {
       buttonBorderColor: "#606063",
       rifleColor: "#FFF",
       trackBackgroundColor: "#404043",
-      trackBorderColor: "#404043"
-    }
+      trackBorderColor: "#404043",
+    },
   };
   // Apply the theme
   Highcharts.setOptions(Highcharts.theme);
@@ -297,7 +299,7 @@ function Live() {
         "Sep",
         "Oct",
         "Nov",
-        "Dec"
+        "Dec",
       ];
 
       // Convert timestamp to milliseconds
@@ -339,7 +341,7 @@ function Live() {
       saveDate.push(convdataTime);
     }
 
-    print = saveDate.map(item => <p>{item}</p>);
+    print = saveDate.map((item) => <p>{item}</p>);
   } else {
     load = "Loading...";
   }
