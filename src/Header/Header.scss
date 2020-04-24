@@ -32,8 +32,11 @@
   }
 
   .pic {
-    height: 80%;
-    width: 40%;
+    height: 1%;
+    width: 6%;
+    margin-left: 2%;
+    margin-top: auto;
+    margin-bottom: 1%;
 
     //border: 1px solid map-get($colors, Prim-text);
   }
@@ -62,16 +65,17 @@
     margin-top: 1rem;
     margin-bottom: 1rem;
     font-weight: bold;
+    width: 13vh;
 
-    padding-right: 1rem;
-    padding-left: 1rem;
-    font-size: 25px;
+    padding-right: 0.5rem;
+    padding-left: 0.5rem;
 
     color: map-get($colors, Prim-text);
     background-color: darken(map-get($colors, Component), 5%);
     border: 2px outset map-get($colors, t-green);
 
     border-radius: 300px;
+    font-size: 1.6rem;
 
     &:hover {
       color: map-get($colors, t-green);
@@ -79,8 +83,6 @@
 
       margin-top: 1rem;
       margin-bottom: 1rem;
-      padding-right: 1rem;
-      padding-left: 1rem;
 
       background-color: darken(map-get($colors, Component), 5%);
       //border: 10px outset ligthen(map-get($colors, t-green), 40%);

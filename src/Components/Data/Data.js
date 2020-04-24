@@ -9,9 +9,6 @@ import Highcharts from "highcharts";
 
 //Dette elemntet håndterer inputt for hvilken node og tidsinterval brukeren ønsker å hente dada og sender request til et annet element etter denne informasjonen
 
-require("highcharts/modules/exporting")(Highcharts);
-require("highcharts/modules/export-data")(Highcharts);
-
 function Data() {
   const [dateFrom, setDateFrom] = React.useState();
   const [dateTo, setDateTo] = React.useState();

@@ -17,12 +17,7 @@ function Footer() {
         </div>
       </div>
       <div className="component">
-        <a
-          className="BirdLogo"
-          href="https://webstockreview.net/image/sample-png-images/2237843.html?fbclid=IwAR3_ezc2F8ttQFWn4SlH8hNcSSEOIJh-ehFaoII1K_v83kUy0tWgZ7oOU3I"
-        >
-          Logo attribution
-        </a>
+        <p className="design">Developed by: Sondre Olimb and Asta Skirbek</p>
       </div>
     </div>
   );

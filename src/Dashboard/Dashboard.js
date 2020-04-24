@@ -8,12 +8,17 @@ import Default from "../Components/Default/Default";
 import Data from "../Components/Data/Data";
 import DataViz from "../Components/Data/DataViz";
 import Live from "../Components/Live/Live";
+import HighchartsExporting from "highcharts/modules/exporting";
+import HighchartsReact from "highcharts-react-official";
+import Highcharts from "highcharts";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   withRouter,
 } from "react-router-dom";
+require("highcharts/modules/exporting")(Highcharts);
+require("highcharts/modules/export-data")(Highcharts);
 
 //dette elementet hånderer autentiseringen og routingen til alle elementene på my page.
 

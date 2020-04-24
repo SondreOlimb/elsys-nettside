@@ -8,7 +8,7 @@ import Compared from "../Default/Elements/Compared";
 import MapsNodes from "../Default/Elements/MapsElement/MapsNodes";
 import HighchartsReact from "highcharts-react-official";
 import Highcharts from "highcharts";
-require("highcharts/modules/export-data")(Highcharts);
+
 // Dette elementet henter ut navne på nodene får å se dende dette videre til Mapsnode
 
 function DataViz() {

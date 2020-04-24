@@ -1,5 +1,6 @@
 import React from "react";
 import logo from "../Bilder/bird-logos-png.png";
+import dodo from "../Bilder/Dodoradlogo.png";
 import { Link } from "react-router-dom";
 import "./Header.scss";
 
@@ -11,7 +12,7 @@ function Header() {
     <ul className="FlexContainer">
       <div className="logo">
         <Link to="/" className="logolink">
-          <img className="pic" src={logo} alt="" />
+          <img className="pic" src={dodo} alt="" />
         </Link>
       </div>
 
